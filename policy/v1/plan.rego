@@ -53,3 +53,6 @@ deny contains {"id":"IAM_DOCUMENT","address":r.address,"message":"IAM document m
 deny contains {"id":"INGRESS_UNKNOWN","address":r.address,"message":"Ingress rules must be known"} if {some r in input.resource_changes;r.type == "aws_security_group";not is_array(object.get(r.change.after,"ingress",null))}
 
 deny contains {"id":"INGRESS_UNKNOWN","address":r.address,"message":"Ingress address families must be known arrays"} if {some r in input.resource_changes;r.type == "aws_security_group";some rule in r.change.after.ingress;some family in ["cidr_blocks","ipv6_cidr_blocks"];not is_array(object.get(rule,family,[]))}
+
+deny contains {"id":"INGRESS_UNKNOWN","address":r.address,"message":"Ingress entries must be objects"} if {some r in input.resource_changes;r.type == "aws_security_group";some rule in r.change.after.ingress;not is_object(rule)}
+deny contains {"id":"INGRESS_UNKNOWN","address":r.address,"message":"CIDRs must be known strings"} if {some r in input.resource_changes;r.type == "aws_security_group";some rule in r.change.after.ingress;some family in ["cidr_blocks","ipv6_cidr_blocks"];some cidr in object.get(rule,family,[]);not is_string(cidr)}

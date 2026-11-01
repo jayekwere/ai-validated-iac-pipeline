@@ -172,3 +172,6 @@ test_ingress_unknown_allowed if not "INGRESS_UNKNOWN" in ids([rc("aws_security_g
 test_open_ipv4_cannot_hide_behind_null_ipv6 if "ADMIN_INGRESS" in ids([rc("aws_security_group","x",{"ingress":[{"cidr_blocks":["0.0.0.0/0"],"ipv6_cidr_blocks":null}]})])
 test_open_ipv6_cannot_hide_behind_null_ipv4 if "ADMIN_INGRESS" in ids([rc("aws_security_group","x",{"ingress":[{"cidr_blocks":null,"ipv6_cidr_blocks":["::/0"]}]})])
 test_malformed_address_family_denied if "INGRESS_UNKNOWN" in ids([rc("aws_security_group","x",{"ingress":[{"cidr_blocks":null}]})])
+
+test_null_ingress_entry_denied if "INGRESS_UNKNOWN" in ids([rc("aws_security_group","x",{"ingress":[null]})])
+test_unknown_cidr_denied if "INGRESS_UNKNOWN" in ids([rc("aws_security_group","x",{"ingress":[{"cidr_blocks":[null]}]})])
