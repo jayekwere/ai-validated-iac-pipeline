@@ -44,7 +44,7 @@ jobs:
           AUTHORIZE_PAID_API: ${{ inputs.authorize_paid_api }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: node --experimental-strip-types src/candidate.ts generate candidate
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: candidate
           path: candidate/
@@ -70,7 +70,7 @@ jobs:
           path: candidate
       - run: python3 scripts/bootstrap.py
       - run: node --experimental-strip-types src/candidate.ts verify candidate
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
           name: candidate-evidence
