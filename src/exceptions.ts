@@ -16,7 +16,9 @@ function utcDay(value: string): number {
 }
 
 export function activeScannerExceptions(doc: unknown, now: Date = new Date()): ScannerException[] {
+  if (!(now instanceof Date) || !Number.isFinite(now.getTime())) throw Error('EXCEPTION_CLOCK: valid clock required');
   if (typeof doc !== 'object' || doc === null || !Array.isArray((doc as any).exceptions)) throw Error('EXCEPTIONS_FORMAT: expected an exceptions array');
+  if (Array.isArray(doc) || (doc as any).version !== '1.0.0' || Object.keys(doc as object).sort().join() !== 'exceptions,version') throw Error('EXCEPTIONS_FORMAT: expected version 1.0.0 and exceptions only');
   const today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
   const seen = new Set<string>();
   return (doc as any).exceptions.map((entry: any, index: number): ScannerException => {
@@ -26,7 +28,10 @@ export function activeScannerExceptions(doc: unknown, now: Date = new Date()): S
     if (keys.join() !== [...FIELDS].sort().join()) throw Error(`EXCEPTION_FORMAT: ${where} must have exactly ${FIELDS.join(', ')}`);
     for (const field of FIELDS) if (typeof entry[field] !== 'string' || entry[field].trim() === '') throw Error(`EXCEPTION_FORMAT: ${where} ${field} must be a non-empty string`);
     if (!/^[A-Z]+(-[A-Z]+)?-\d{4}$/.test(entry.id)) throw Error(`EXCEPTION_FORMAT: ${where} id ${entry.id} is not a scanner check ID`);
-    if (!entry.source.startsWith('https://')) throw Error(`EXCEPTION_FORMAT: ${where} source must be an https documentation URL`);
+    let source: URL;
+    try { source = new URL(entry.source); } catch { throw Error(`EXCEPTION_FORMAT: ${where} source must be a documentation URL`); }
+    if (source.protocol !== 'https:' || source.hostname !== 'docs.aws.amazon.com' || source.username || source.password || source.port) throw Error(`EXCEPTION_FORMAT: ${where} source must be primary AWS HTTPS documentation`);
+    if (!/^aws_[a-z0-9_]+\.[A-Za-z0-9_-]+$/.test(entry.resource)) throw Error(`EXCEPTION_FORMAT: ${where} must name one exact approved resource`);
     const key = entry.id + '\u0000' + entry.resource;
     if (seen.has(key)) throw Error(`EXCEPTION_DUPLICATE: ${entry.id} on ${entry.resource}`);
     seen.add(key);

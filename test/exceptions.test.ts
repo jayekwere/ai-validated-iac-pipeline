@@ -21,3 +21,8 @@ test('non https source is rejected',()=>assert.throws(()=>activeScannerException
 test('wildcard or malformed check ID is rejected',()=>{for(const id of ['*','AWS-*','aws-0132'])assert.throws(()=>activeScannerExceptions(doc({...entry,id}),now),/EXCEPTION_FORMAT/);});
 test('duplicate exception is rejected',()=>assert.throws(()=>activeScannerExceptions(doc(entry,{...entry}),now),/EXCEPTION_DUPLICATE/));
 for(const value of [null,{},{exceptions:{}},[entry]]) test('malformed document '+JSON.stringify(value)?.slice(0,30)+' is rejected',()=>assert.throws(()=>activeScannerExceptions(value,now),/EXCEPTIONS?_FORMAT/));
+
+test('invalid clock cannot activate an expired exception',()=>assert.throws(()=>activeScannerExceptions(doc({...entry,expires:'2020-01-01'}),new Date('invalid')),/EXCEPTION_CLOCK/));
+test('document version and fields are strict',()=>{for(const value of [{version:'2',exceptions:[entry]},{...doc(entry),skip:true}])assert.throws(()=>activeScannerExceptions(value,now),/EXCEPTIONS_FORMAT/);});
+test('malformed or credentialed documentation links rejected',()=>{for(const source of ['https://','https://evil.invalid/a','https://user:password@docs.aws.amazon.com/a'])assert.throws(()=>activeScannerExceptions(doc({...entry,source}),now),/EXCEPTION_FORMAT/);});
+test('resource wildcard rejected',()=>assert.throws(()=>activeScannerExceptions(doc({...entry,resource:'aws_s3_bucket.*'}),now),/EXCEPTION_FORMAT/));
