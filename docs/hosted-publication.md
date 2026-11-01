@@ -1,29 +1,27 @@
-# Hosted publication evidence
+# Hosted verification completed
 
-Published publicly on 2026-11-01 as `jayekwere/ai-validated-iac-pipeline`. GitHub authentication is valid; the earlier apparent authentication failure was caused by restricted network access.
+Verified on 2026-11-01 with the solo-maintainer approval flow enabled.
 
-Baseline source commit: `06a71a029cb31e63b5d276f0b8f6e0f94a0f024a`.
+Repository: [jayekwere/ai-validated-iac-pipeline](https://github.com/jayekwere/ai-validated-iac-pipeline).
+Approved implementation: [PR #2](https://github.com/jayekwere/ai-validated-iac-pipeline/pull/2), merged as `8592e1265b097aa3c5f9ac6c827fc7406025fea0`.
+Workflow-created candidate: [draft PR #7](https://github.com/jayekwere/ai-validated-iac-pipeline/pull/7), intentionally unmerged.
 
-| Hosted check | Verified result |
+| Hosted workflow or boundary | Result and evidence |
 | --- | --- |
-| [Main independent verification](https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41307896006) | Success |
-| [Main specification admission](https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41307896035) | Success |
-| [PR independent verification](https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41307953715) | Success |
-| [PR specification admission](https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41307953669) | Success |
-| [PR trusted-base candidate validation](https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41307953705) | Success |
+| Independent verification on main | [Passed](https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41311661325) |
+| Specification admission | [Passed](https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41311317551) |
+| Trusted-base candidate validation | [Passed](https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41311317438) |
+| Manual merge approval | [Approved and passed](https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41311317355) |
+| Trusted generation and review | [All three jobs passed](https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41311662869): generation, independent verification, draft publication |
 
-The hosted main evidence artifact was downloaded and checked: all seven AWS examples passed, and all fifteen adversarial demonstrations passed. Exact run metadata, step results, commit IDs and artifact metadata are preserved under `evidence/hosted/`.
+The published candidate contains 12 resources and passed all 18 verification gates. Terraform SHA-256: `e3755b2fdbbfef248b5eceafa4ec9ef526601a3efb22e38152afc137aa7ca4e9`. Downloaded artifacts and the actual PR files were independently checked against the approved specification, Terraform grammar and a clean archive of the exact committed verifier source.
 
-## Active repository protections
+The pipeline tests passed: 56 TypeScript tests, 30 Python tests, three OPA tests, seven AWS examples and fifteen adversarial demonstrations. Measured TypeScript coverage is 100% of loaded source lines and 91.98% of branches. Dependency and secret checks passed. Detailed hosted jobs, approval audit entries and effective rules are in [the verification record](../evidence/hosted/solo-maintainer-verification.json).
 
-`main` requires the `tests`, `admission` and `trusted-candidate` checks, a successful protected `maintainer-approval` deployment, resolved conversations and linear history. Administrator enforcement is enabled. Force pushes, branch deletion and automatic merge are disabled.
+## Human decisions and protections
 
-`ai-generation` and `pr-publication` require the sole human maintainer, allow that maintainer to approve their own runs, restrict execution to protected branches and disable administrator bypass. The secret-free `maintainer-approval` environment is restricted to PR merge refs. Default workflow tokens are read-only. GitHub’s combined create/approve-PR repository switch is enabled because it is required for draft PR creation, while only the protected publication job receives pull-request write access. An automated status cannot satisfy the required protected human approval deployment. Action execution is restricted to GitHub-owned actions pinned to immutable commits. An active main ruleset pins required checks to the GitHub Actions integration and has no bypass actors. Secret scanning and secret-scanning push protection are enabled.
+The maintainer explicitly approved three separate decisions: merge of the tested implementation revision, sample generation, and publication of the verified draft PR. Those decisions were recorded using normal GitHub environment approval endpoints under `jayekwere`, with audit comments identifying the maintainer's explicit confirmations. No administrator bypass or automatically granted approval was used.
 
-## Reviewable workflow correction
+The solo-maintainer flow keeps all three required security checks, pins them to GitHub Actions, and requires a native `maintainer-approval` deployment before merge. Each approval environment names only `jayekwere`, permits that maintainer to approve their own runs, and disables administrator bypass. The merge-approval environment has no secrets or write permissions and only accepts PR merge refs. Generation and publication stay main-only. See [the approval procedure](solo-maintainer.md).
 
-[PR #2](https://github.com/jayekwere/ai-validated-iac-pipeline/pull/2) contains the verified storage candidate and a correction for hosted boundary introspection. The REST branch-protection endpoint requires Administration:read, which is unavailable to a least-privilege workflow token. The correction uses the effective active branch-rules API, which needs only repository metadata read access, and validates protected manual approval, required check sources and history controls. The ruleset has no bypass actors; the administrative setup verifies that configuration. The runtime API does not reveal bypass actors to read-only callers, so that administrative assertion belongs to setup rather than the runtime checker. The CI job exercises this query using its actual read-only GITHUB_TOKEN. Environment setup also disables administrator bypass explicitly. Human transition of a generated draft PR to ready-for-review triggers all required checks, including for drafts created with GITHUB_TOKEN.
-
-## Solo-maintainer update
-
-The maintainer explicitly selected a solo approval flow. The prior independent-review requirement is superseded by [protected manual deployment approval](solo-maintainer.md). All security checks remain required, and no approval is performed by automation. The old generation run was canceled; a new run will exercise generation, independent verification and publication after the reviewed workflow correction reaches main.
+No paid AI request, live AWS verification or cloud provisioning occurred. Generation used the clearly labeled deterministic non-AI mode. Plans use supported mock providers with real provider-schema validation. PR #7 is a reviewable artifact, not permission to merge or deploy it.

@@ -1,0 +1,1401 @@
+{
+  "status": "PASS",
+  "repository": "https://github.com/jayekwere/ai-validated-iac-pipeline",
+  "mainCommit": "8592e1265b097aa3c5f9ac6c827fc7406025fea0",
+  "soloFlowPR": 2,
+  "generatedPR": {
+    "author": {
+      "is_bot": true,
+      "login": "app/github-actions"
+    },
+    "baseRefOid": "8592e1265b097aa3c5f9ac6c827fc7406025fea0",
+    "files": [
+      {
+        "path": "generated/verification.json",
+        "additions": 15,
+        "deletions": 16,
+        "changeType": "MODIFIED"
+      }
+    ],
+    "headRefName": "generated/e3755b2fdbbfef24-1793540261292",
+    "headRefOid": "675147c1479f4b7239781826909ed50b4a88af1e",
+    "isDraft": true,
+    "number": 7,
+    "state": "OPEN",
+    "url": "https://github.com/jayekwere/ai-validated-iac-pipeline/pull/7"
+  },
+  "runs": {
+    "manual-merge-approval": {
+      "conclusion": "success",
+      "databaseId": 41311317355,
+      "headSha": "0a6c2cfe739900c396ee8402c116624b2286f434",
+      "jobs": [
+        {
+          "completedAt": "2026-11-01T13:29:11Z",
+          "conclusion": "success",
+          "databaseId": 124862144450,
+          "name": "tests",
+          "startedAt": "2026-11-01T13:27:18Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-11-01T13:27:19Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-11-01T13:27:18Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:20Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "number": 2,
+              "startedAt": "2026-11-01T13:27:19Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:24Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "number": 3,
+              "startedAt": "2026-11-01T13:27:20Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:30Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065",
+              "number": 4,
+              "startedAt": "2026-11-01T13:27:24Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:31Z",
+              "conclusion": "success",
+              "name": "Run npm ci --ignore-scripts",
+              "number": 5,
+              "startedAt": "2026-11-01T13:27:30Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:34Z",
+              "conclusion": "success",
+              "name": "Run python3 scripts/bootstrap.py",
+              "number": 6,
+              "startedAt": "2026-11-01T13:27:31Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:36Z",
+              "conclusion": "success",
+              "name": "Verify live protected review boundaries",
+              "number": 7,
+              "startedAt": "2026-11-01T13:27:34Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:36Z",
+              "conclusion": "success",
+              "name": "Run npm run typecheck",
+              "number": 8,
+              "startedAt": "2026-11-01T13:27:36Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:47Z",
+              "conclusion": "success",
+              "name": "Run npm run coverage",
+              "number": 9,
+              "startedAt": "2026-11-01T13:27:36Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:48Z",
+              "conclusion": "success",
+              "name": "Run python3 -m unittest discover -s test -p 'test_*.py'",
+              "number": 10,
+              "startedAt": "2026-11-01T13:27:47Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:48Z",
+              "conclusion": "success",
+              "name": "Run python3 scripts/check_workflows.py",
+              "number": 11,
+              "startedAt": "2026-11-01T13:27:48Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:48Z",
+              "conclusion": "success",
+              "name": "Run npm audit --audit-level=moderate",
+              "number": 12,
+              "startedAt": "2026-11-01T13:27:48Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:48Z",
+              "conclusion": "success",
+              "name": "Run .tools/opa test policy/v1 -v",
+              "number": 13,
+              "startedAt": "2026-11-01T13:27:48Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:28:59Z",
+              "conclusion": "success",
+              "name": "Run npm run demo",
+              "number": 14,
+              "startedAt": "2026-11-01T13:27:48Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:29:02Z",
+              "conclusion": "success",
+              "name": "Run node --experimental-strip-types scripts/adversarial.ts",
+              "number": 15,
+              "startedAt": "2026-11-01T13:28:59Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:29:07Z",
+              "conclusion": "success",
+              "name": "Run python3 scripts/scan_repository.py",
+              "number": 16,
+              "startedAt": "2026-11-01T13:29:02Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:29:08Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "number": 17,
+              "startedAt": "2026-11-01T13:29:07Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:29:08Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065",
+              "number": 32,
+              "startedAt": "2026-11-01T13:29:08Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:29:08Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "number": 33,
+              "startedAt": "2026-11-01T13:29:08Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:29:08Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "number": 34,
+              "startedAt": "2026-11-01T13:29:08Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:29:09Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 35,
+              "startedAt": "2026-11-01T13:29:08Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41311317355/job/124862144450"
+        },
+        {
+          "completedAt": "2026-11-01T13:31:10Z",
+          "conclusion": "success",
+          "databaseId": 124862607214,
+          "name": "maintainer-approval",
+          "startedAt": "2026-11-01T13:31:07Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-11-01T13:31:08Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-11-01T13:31:08Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:31:08Z",
+              "conclusion": "success",
+              "name": "Record manual approval of this tested revision",
+              "number": 2,
+              "startedAt": "2026-11-01T13:31:08Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:31:08Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 3,
+              "startedAt": "2026-11-01T13:31:08Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41311317355/job/124862607214"
+        }
+      ],
+      "name": "Independent verification",
+      "status": "completed",
+      "url": "https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41311317355"
+    },
+    "main-verification": {
+      "conclusion": "success",
+      "databaseId": 41311661325,
+      "headSha": "8592e1265b097aa3c5f9ac6c827fc7406025fea0",
+      "jobs": [
+        {
+          "completedAt": "2026-11-01T13:33:20Z",
+          "conclusion": "success",
+          "databaseId": 124863138266,
+          "name": "tests",
+          "startedAt": "2026-11-01T13:31:26Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-11-01T13:31:28Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-11-01T13:31:27Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:31:29Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "number": 2,
+              "startedAt": "2026-11-01T13:31:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:31:34Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "number": 3,
+              "startedAt": "2026-11-01T13:31:29Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:31:41Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065",
+              "number": 4,
+              "startedAt": "2026-11-01T13:31:34Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:31:42Z",
+              "conclusion": "success",
+              "name": "Run npm ci --ignore-scripts",
+              "number": 5,
+              "startedAt": "2026-11-01T13:31:41Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:31:45Z",
+              "conclusion": "success",
+              "name": "Run python3 scripts/bootstrap.py",
+              "number": 6,
+              "startedAt": "2026-11-01T13:31:42Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:31:46Z",
+              "conclusion": "success",
+              "name": "Verify live protected review boundaries",
+              "number": 7,
+              "startedAt": "2026-11-01T13:31:45Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:31:47Z",
+              "conclusion": "success",
+              "name": "Run npm run typecheck",
+              "number": 8,
+              "startedAt": "2026-11-01T13:31:46Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:31:57Z",
+              "conclusion": "success",
+              "name": "Run npm run coverage",
+              "number": 9,
+              "startedAt": "2026-11-01T13:31:47Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:31:57Z",
+              "conclusion": "success",
+              "name": "Run python3 -m unittest discover -s test -p 'test_*.py'",
+              "number": 10,
+              "startedAt": "2026-11-01T13:31:57Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:31:57Z",
+              "conclusion": "success",
+              "name": "Run python3 scripts/check_workflows.py",
+              "number": 11,
+              "startedAt": "2026-11-01T13:31:57Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:31:58Z",
+              "conclusion": "success",
+              "name": "Run npm audit --audit-level=moderate",
+              "number": 12,
+              "startedAt": "2026-11-01T13:31:58Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:31:58Z",
+              "conclusion": "success",
+              "name": "Run .tools/opa test policy/v1 -v",
+              "number": 13,
+              "startedAt": "2026-11-01T13:31:58Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:33:06Z",
+              "conclusion": "success",
+              "name": "Run npm run demo",
+              "number": 14,
+              "startedAt": "2026-11-01T13:31:58Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:33:09Z",
+              "conclusion": "success",
+              "name": "Run node --experimental-strip-types scripts/adversarial.ts",
+              "number": 15,
+              "startedAt": "2026-11-01T13:33:06Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:33:15Z",
+              "conclusion": "success",
+              "name": "Run python3 scripts/scan_repository.py",
+              "number": 16,
+              "startedAt": "2026-11-01T13:33:09Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:33:17Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "number": 17,
+              "startedAt": "2026-11-01T13:33:15Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:33:17Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065",
+              "number": 32,
+              "startedAt": "2026-11-01T13:33:17Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:33:17Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "number": 33,
+              "startedAt": "2026-11-01T13:33:17Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:33:17Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "number": 34,
+              "startedAt": "2026-11-01T13:33:17Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:33:17Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 35,
+              "startedAt": "2026-11-01T13:33:17Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41311661325/job/124863138266"
+        },
+        {
+          "completedAt": "2026-11-01T13:33:20Z",
+          "conclusion": "skipped",
+          "databaseId": 124863612796,
+          "name": "maintainer-approval",
+          "startedAt": "2026-11-01T13:33:21Z",
+          "status": "completed",
+          "steps": [],
+          "url": "https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41311661325/job/124863612796"
+        }
+      ],
+      "name": "Independent verification",
+      "status": "completed",
+      "url": "https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41311661325"
+    },
+    "generation-publication": {
+      "conclusion": "success",
+      "databaseId": 41311662869,
+      "headSha": "8592e1265b097aa3c5f9ac6c827fc7406025fea0",
+      "jobs": [
+        {
+          "completedAt": "2026-11-01T13:33:40Z",
+          "conclusion": "success",
+          "databaseId": 124863146341,
+          "name": "generate",
+          "startedAt": "2026-11-01T13:33:18Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-11-01T13:33:19Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-11-01T13:33:18Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:33:21Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "number": 2,
+              "startedAt": "2026-11-01T13:33:19Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:33:25Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "number": 3,
+              "startedAt": "2026-11-01T13:33:21Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:33:34Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065",
+              "number": 4,
+              "startedAt": "2026-11-01T13:33:25Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:33:35Z",
+              "conclusion": "success",
+              "name": "Run npm ci --ignore-scripts",
+              "number": 5,
+              "startedAt": "2026-11-01T13:33:34Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:33:36Z",
+              "conclusion": "success",
+              "name": "Verify protected review boundaries",
+              "number": 6,
+              "startedAt": "2026-11-01T13:33:35Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:33:37Z",
+              "conclusion": "success",
+              "name": "Generate data only",
+              "number": 7,
+              "startedAt": "2026-11-01T13:33:36Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:33:38Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "number": 8,
+              "startedAt": "2026-11-01T13:33:37Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:33:38Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065",
+              "number": 14,
+              "startedAt": "2026-11-01T13:33:38Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:33:38Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "number": 15,
+              "startedAt": "2026-11-01T13:33:38Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:33:38Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "number": 16,
+              "startedAt": "2026-11-01T13:33:38Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:33:38Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 17,
+              "startedAt": "2026-11-01T13:33:38Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41311662869/job/124863146341"
+        },
+        {
+          "completedAt": "2026-11-01T13:34:34Z",
+          "conclusion": "success",
+          "databaseId": 124863691813,
+          "name": "verify",
+          "startedAt": "2026-11-01T13:33:55Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-11-01T13:33:57Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-11-01T13:33:55Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:33:58Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "number": 2,
+              "startedAt": "2026-11-01T13:33:57Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:34:02Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "number": 3,
+              "startedAt": "2026-11-01T13:33:58Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:34:11Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065",
+              "number": 4,
+              "startedAt": "2026-11-01T13:34:02Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:34:12Z",
+              "conclusion": "success",
+              "name": "Run npm ci --ignore-scripts",
+              "number": 5,
+              "startedAt": "2026-11-01T13:34:11Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:34:12Z",
+              "conclusion": "success",
+              "name": "Run actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093",
+              "number": 6,
+              "startedAt": "2026-11-01T13:34:12Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:34:16Z",
+              "conclusion": "success",
+              "name": "Run python3 scripts/bootstrap.py",
+              "number": 7,
+              "startedAt": "2026-11-01T13:34:12Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:34:30Z",
+              "conclusion": "success",
+              "name": "Run node --experimental-strip-types src/candidate.ts verify candidate",
+              "number": 8,
+              "startedAt": "2026-11-01T13:34:16Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:34:31Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+              "number": 9,
+              "startedAt": "2026-11-01T13:34:30Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:34:32Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065",
+              "number": 16,
+              "startedAt": "2026-11-01T13:34:31Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:34:32Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "number": 17,
+              "startedAt": "2026-11-01T13:34:32Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:34:32Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "number": 18,
+              "startedAt": "2026-11-01T13:34:32Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:34:32Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 19,
+              "startedAt": "2026-11-01T13:34:32Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41311662869/job/124863691813"
+        },
+        {
+          "completedAt": "2026-11-01T13:37:47Z",
+          "conclusion": "success",
+          "databaseId": 124863906747,
+          "name": "review",
+          "startedAt": "2026-11-01T13:37:20Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-11-01T13:37:22Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-11-01T13:37:21Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:37:23Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "number": 2,
+              "startedAt": "2026-11-01T13:37:22Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:37:28Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "number": 3,
+              "startedAt": "2026-11-01T13:37:23Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:37:36Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065",
+              "number": 4,
+              "startedAt": "2026-11-01T13:37:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:37:37Z",
+              "conclusion": "success",
+              "name": "Run npm ci --ignore-scripts",
+              "number": 5,
+              "startedAt": "2026-11-01T13:37:36Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:37:38Z",
+              "conclusion": "success",
+              "name": "Run actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093",
+              "number": 6,
+              "startedAt": "2026-11-01T13:37:37Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:37:39Z",
+              "conclusion": "success",
+              "name": "Run actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093",
+              "number": 7,
+              "startedAt": "2026-11-01T13:37:38Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:37:40Z",
+              "conclusion": "success",
+              "name": "Verify protected review boundaries",
+              "number": 8,
+              "startedAt": "2026-11-01T13:37:39Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:37:44Z",
+              "conclusion": "success",
+              "name": "Open draft PR with fixed data paths",
+              "number": 9,
+              "startedAt": "2026-11-01T13:37:40Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:37:44Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065",
+              "number": 16,
+              "startedAt": "2026-11-01T13:37:44Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:37:44Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "number": 17,
+              "startedAt": "2026-11-01T13:37:44Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:37:44Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "number": 18,
+              "startedAt": "2026-11-01T13:37:44Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:37:44Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 19,
+              "startedAt": "2026-11-01T13:37:44Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41311662869/job/124863906747"
+        }
+      ],
+      "name": "Trusted generation and review",
+      "status": "completed",
+      "url": "https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41311662869"
+    },
+    "trusted-base-validation": {
+      "conclusion": "success",
+      "databaseId": 41311317438,
+      "headSha": "0a6c2cfe739900c396ee8402c116624b2286f434",
+      "jobs": [
+        {
+          "completedAt": "2026-11-01T13:27:46Z",
+          "conclusion": "success",
+          "databaseId": 124862127697,
+          "name": "trusted-candidate",
+          "startedAt": "2026-11-01T13:27:13Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-11-01T13:27:15Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-11-01T13:27:14Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:16Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "number": 2,
+              "startedAt": "2026-11-01T13:27:15Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:16Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "number": 3,
+              "startedAt": "2026-11-01T13:27:16Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:20Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "number": 4,
+              "startedAt": "2026-11-01T13:27:16Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:27Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065",
+              "number": 5,
+              "startedAt": "2026-11-01T13:27:20Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:28Z",
+              "conclusion": "success",
+              "name": "Run npm ci --ignore-scripts",
+              "number": 6,
+              "startedAt": "2026-11-01T13:27:27Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:31Z",
+              "conclusion": "success",
+              "name": "Run python3 scripts/bootstrap.py",
+              "number": 7,
+              "startedAt": "2026-11-01T13:27:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:43Z",
+              "conclusion": "success",
+              "name": "Run node --experimental-strip-types scripts/validate_generated_pr.ts",
+              "number": 8,
+              "startedAt": "2026-11-01T13:27:31Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:43Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065",
+              "number": 13,
+              "startedAt": "2026-11-01T13:27:43Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:43Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "number": 14,
+              "startedAt": "2026-11-01T13:27:43Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:43Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "number": 15,
+              "startedAt": "2026-11-01T13:27:43Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:43Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "number": 16,
+              "startedAt": "2026-11-01T13:27:43Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:43Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 17,
+              "startedAt": "2026-11-01T13:27:43Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41311317438/job/124862127697"
+        }
+      ],
+      "name": "Trusted candidate validation",
+      "status": "completed",
+      "url": "https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41311317438"
+    },
+    "specification-admission": {
+      "conclusion": "success",
+      "databaseId": 41311317551,
+      "headSha": "0a6c2cfe739900c396ee8402c116624b2286f434",
+      "jobs": [
+        {
+          "completedAt": "2026-11-01T13:27:33Z",
+          "conclusion": "success",
+          "databaseId": 124862128002,
+          "name": "admission",
+          "startedAt": "2026-11-01T13:27:14Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-11-01T13:27:15Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-11-01T13:27:14Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:16Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "number": 2,
+              "startedAt": "2026-11-01T13:27:15Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:20Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "number": 3,
+              "startedAt": "2026-11-01T13:27:16Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:29Z",
+              "conclusion": "success",
+              "name": "Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065",
+              "number": 4,
+              "startedAt": "2026-11-01T13:27:20Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:30Z",
+              "conclusion": "success",
+              "name": "Run npm ci --ignore-scripts",
+              "number": 5,
+              "startedAt": "2026-11-01T13:27:29Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:30Z",
+              "conclusion": "success",
+              "name": "Run node --experimental-strip-types scripts/validate_specs.ts",
+              "number": 6,
+              "startedAt": "2026-11-01T13:27:30Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:30Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065",
+              "number": 10,
+              "startedAt": "2026-11-01T13:27:30Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:30Z",
+              "conclusion": "success",
+              "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+              "number": 11,
+              "startedAt": "2026-11-01T13:27:30Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:31Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "number": 12,
+              "startedAt": "2026-11-01T13:27:30Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-11-01T13:27:31Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 13,
+              "startedAt": "2026-11-01T13:27:31Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41311317551/job/124862128002"
+        }
+      ],
+      "name": "Specification admission",
+      "status": "completed",
+      "url": "https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41311317551"
+    }
+  },
+  "manualApprovals": {
+    "41311317355": [
+      {
+        "user": {
+          "login": "jayekwere",
+          "id": 48987196,
+          "node_id": "MDQ6VXNlcjQ4OTg3MTk2",
+          "avatar_url": "https://avatars.githubusercontent.com/u/48987196?v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/jayekwere",
+          "html_url": "https://github.com/jayekwere",
+          "followers_url": "https://api.github.com/users/jayekwere/followers",
+          "following_url": "https://api.github.com/users/jayekwere/following{/other_user}",
+          "gists_url": "https://api.github.com/users/jayekwere/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/jayekwere/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/jayekwere/subscriptions",
+          "organizations_url": "https://api.github.com/users/jayekwere/orgs",
+          "repos_url": "https://api.github.com/users/jayekwere/repos",
+          "events_url": "https://api.github.com/users/jayekwere/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/jayekwere/received_events",
+          "type": "User",
+          "user_view_type": "public",
+          "site_admin": false
+        },
+        "state": "approved",
+        "comment": "Manual maintainer approval of PR #2 commit 0a6c2cfe739900c396ee8402c116624b2286f434 explicitly confirmed in Codex chat by the maintainer. Recording that decision using the maintainer authenticated account.",
+        "environments": [
+          {
+            "id": 25940117884,
+            "node_id": "EN_kwDOVfBBYs8AAAAGCibJfA",
+            "name": "maintainer-approval",
+            "url": "https://api.github.com/repos/jayekwere/ai-validated-iac-pipeline/environments/maintainer-approval",
+            "html_url": "https://github.com/jayekwere/ai-validated-iac-pipeline/deployments/activity_log?environments_filter=maintainer-approval",
+            "created_at": "2026-11-01T13:26:12Z",
+            "updated_at": "2026-11-01T13:26:12Z",
+            "can_admins_bypass": false
+          }
+        ]
+      }
+    ],
+    "41311662869": [
+      {
+        "user": {
+          "login": "jayekwere",
+          "id": 48987196,
+          "node_id": "MDQ6VXNlcjQ4OTg3MTk2",
+          "avatar_url": "https://avatars.githubusercontent.com/u/48987196?v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/jayekwere",
+          "html_url": "https://github.com/jayekwere",
+          "followers_url": "https://api.github.com/users/jayekwere/followers",
+          "following_url": "https://api.github.com/users/jayekwere/following{/other_user}",
+          "gists_url": "https://api.github.com/users/jayekwere/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/jayekwere/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/jayekwere/subscriptions",
+          "organizations_url": "https://api.github.com/users/jayekwere/orgs",
+          "repos_url": "https://api.github.com/users/jayekwere/repos",
+          "events_url": "https://api.github.com/users/jayekwere/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/jayekwere/received_events",
+          "type": "User",
+          "user_view_type": "public",
+          "site_admin": false
+        },
+        "state": "approved",
+        "comment": "Manual maintainer approval explicitly given in Codex chat to publish a draft PR for verified storage candidate SHA-256 e3755b2fdbbfef248b5eceafa4ec9ef526601a3efb22e38152afc137aa7ca4e9. This approves draft publication only; not merge, cloud apply, or paid API use.",
+        "environments": [
+          {
+            "id": 25938134715,
+            "node_id": "EN_kwDOVfBBYs8AAAAGCgiGuw",
+            "name": "pr-publication",
+            "url": "https://api.github.com/repos/jayekwere/ai-validated-iac-pipeline/environments/pr-publication",
+            "html_url": "https://github.com/jayekwere/ai-validated-iac-pipeline/deployments/activity_log?environments_filter=pr-publication",
+            "created_at": "2026-11-01T12:44:11Z",
+            "updated_at": "2026-11-01T13:14:20Z",
+            "can_admins_bypass": false
+          }
+        ]
+      },
+      {
+        "user": {
+          "login": "jayekwere",
+          "id": 48987196,
+          "node_id": "MDQ6VXNlcjQ4OTg3MTk2",
+          "avatar_url": "https://avatars.githubusercontent.com/u/48987196?v=4",
+          "gravatar_id": "",
+          "url": "https://api.github.com/users/jayekwere",
+          "html_url": "https://github.com/jayekwere",
+          "followers_url": "https://api.github.com/users/jayekwere/followers",
+          "following_url": "https://api.github.com/users/jayekwere/following{/other_user}",
+          "gists_url": "https://api.github.com/users/jayekwere/gists{/gist_id}",
+          "starred_url": "https://api.github.com/users/jayekwere/starred{/owner}{/repo}",
+          "subscriptions_url": "https://api.github.com/users/jayekwere/subscriptions",
+          "organizations_url": "https://api.github.com/users/jayekwere/orgs",
+          "repos_url": "https://api.github.com/users/jayekwere/repos",
+          "events_url": "https://api.github.com/users/jayekwere/events{/privacy}",
+          "received_events_url": "https://api.github.com/users/jayekwere/received_events",
+          "type": "User",
+          "user_view_type": "public",
+          "site_admin": false
+        },
+        "state": "approved",
+        "comment": "Manual maintainer approval explicitly given in Codex chat: deterministic storage sample generation on commit 8592e1265b097aa3c5f9ac6c827fc7406025fea0; paid API authorization is false. This approval covers ai-generation only.",
+        "environments": [
+          {
+            "id": 25938134349,
+            "node_id": "EN_kwDOVfBBYs8AAAAGCgiFTQ",
+            "name": "ai-generation",
+            "url": "https://api.github.com/repos/jayekwere/ai-validated-iac-pipeline/environments/ai-generation",
+            "html_url": "https://github.com/jayekwere/ai-validated-iac-pipeline/deployments/activity_log?environments_filter=ai-generation",
+            "created_at": "2026-11-01T12:44:10Z",
+            "updated_at": "2026-11-01T13:14:20Z",
+            "can_admins_bypass": false
+          }
+        ]
+      }
+    ]
+  },
+  "ruleset": {
+    "id": 26311406,
+    "name": "Reviewed IaC main",
+    "target": "branch",
+    "source_type": "Repository",
+    "source": "jayekwere/ai-validated-iac-pipeline",
+    "enforcement": "active",
+    "conditions": {
+      "ref_name": {
+        "exclude": [],
+        "include": [
+          "refs/heads/main"
+        ]
+      }
+    },
+    "rules": [
+      {
+        "type": "pull_request",
+        "parameters": {
+          "required_approving_review_count": 0,
+          "dismiss_stale_reviews_on_push": true,
+          "required_reviewers": [],
+          "require_code_owner_review": false,
+          "require_last_push_approval": false,
+          "required_review_thread_resolution": true,
+          "require_extra_approval_for_unattributed_changes": true,
+          "allowed_merge_methods": [
+            "squash",
+            "rebase"
+          ]
+        }
+      },
+      {
+        "type": "required_status_checks",
+        "parameters": {
+          "strict_required_status_checks_policy": true,
+          "do_not_enforce_on_create": false,
+          "required_status_checks": [
+            {
+              "context": "tests",
+              "integration_id": 15368
+            },
+            {
+              "context": "admission",
+              "integration_id": 15368
+            },
+            {
+              "context": "trusted-candidate",
+              "integration_id": 15368
+            }
+          ]
+        }
+      },
+      {
+        "type": "required_linear_history"
+      },
+      {
+        "type": "deletion"
+      },
+      {
+        "type": "non_fast_forward"
+      },
+      {
+        "type": "required_deployments",
+        "parameters": {
+          "required_deployment_environments": [
+            "maintainer-approval"
+          ]
+        }
+      }
+    ],
+    "node_id": "RRS_lACqUmVwb3NpdG9yec5V8EFizgGReu4",
+    "created_at": "2026-11-01T06:17:09.028-07:00",
+    "updated_at": "2026-11-01T06:26:15.949-07:00",
+    "bypass_actors": [],
+    "current_user_can_bypass": "never",
+    "_links": {
+      "self": {
+        "href": "https://api.github.com/repos/jayekwere/ai-validated-iac-pipeline/rulesets/26311406"
+      },
+      "html": {
+        "href": "https://github.com/jayekwere/ai-validated-iac-pipeline/rules/26311406"
+      }
+    }
+  },
+  "environments": [
+    {
+      "name": "ai-generation",
+      "can_admins_bypass": false,
+      "protection_rules": [
+        {
+          "id": 70867944,
+          "node_id": "GA_kwDOVfBBYs4EOVvo",
+          "type": "required_reviewers",
+          "prevent_self_review": false,
+          "reviewers": [
+            {
+              "type": "User",
+              "reviewer": {
+                "login": "jayekwere",
+                "id": 48987196,
+                "node_id": "MDQ6VXNlcjQ4OTg3MTk2",
+                "avatar_url": "https://avatars.githubusercontent.com/u/48987196?v=4",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/jayekwere",
+                "html_url": "https://github.com/jayekwere",
+                "followers_url": "https://api.github.com/users/jayekwere/followers",
+                "following_url": "https://api.github.com/users/jayekwere/following{/other_user}",
+                "gists_url": "https://api.github.com/users/jayekwere/gists{/gist_id}",
+                "starred_url": "https://api.github.com/users/jayekwere/starred{/owner}{/repo}",
+                "subscriptions_url": "https://api.github.com/users/jayekwere/subscriptions",
+                "organizations_url": "https://api.github.com/users/jayekwere/orgs",
+                "repos_url": "https://api.github.com/users/jayekwere/repos",
+                "events_url": "https://api.github.com/users/jayekwere/events{/privacy}",
+                "received_events_url": "https://api.github.com/users/jayekwere/received_events",
+                "type": "User",
+                "user_view_type": "public",
+                "site_admin": false
+              }
+            }
+          ]
+        },
+        {
+          "id": 70867945,
+          "node_id": "GA_kwDOVfBBYs4EOVvp",
+          "type": "branch_policy"
+        }
+      ],
+      "deployment_branch_policy": {
+        "protected_branches": true,
+        "custom_branch_policies": false
+      }
+    },
+    {
+      "name": "maintainer-approval",
+      "can_admins_bypass": false,
+      "protection_rules": [
+        {
+          "id": 70870985,
+          "node_id": "GA_kwDOVfBBYs4EOWfJ",
+          "type": "required_reviewers",
+          "prevent_self_review": false,
+          "reviewers": [
+            {
+              "type": "User",
+              "reviewer": {
+                "login": "jayekwere",
+                "id": 48987196,
+                "node_id": "MDQ6VXNlcjQ4OTg3MTk2",
+                "avatar_url": "https://avatars.githubusercontent.com/u/48987196?v=4",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/jayekwere",
+                "html_url": "https://github.com/jayekwere",
+                "followers_url": "https://api.github.com/users/jayekwere/followers",
+                "following_url": "https://api.github.com/users/jayekwere/following{/other_user}",
+                "gists_url": "https://api.github.com/users/jayekwere/gists{/gist_id}",
+                "starred_url": "https://api.github.com/users/jayekwere/starred{/owner}{/repo}",
+                "subscriptions_url": "https://api.github.com/users/jayekwere/subscriptions",
+                "organizations_url": "https://api.github.com/users/jayekwere/orgs",
+                "repos_url": "https://api.github.com/users/jayekwere/repos",
+                "events_url": "https://api.github.com/users/jayekwere/events{/privacy}",
+                "received_events_url": "https://api.github.com/users/jayekwere/received_events",
+                "type": "User",
+                "user_view_type": "public",
+                "site_admin": false
+              }
+            }
+          ]
+        },
+        {
+          "id": 70870986,
+          "node_id": "GA_kwDOVfBBYs4EOWfK",
+          "type": "branch_policy"
+        }
+      ],
+      "deployment_branch_policy": {
+        "protected_branches": false,
+        "custom_branch_policies": true
+      }
+    },
+    {
+      "name": "pr-publication",
+      "can_admins_bypass": false,
+      "protection_rules": [
+        {
+          "id": 70867946,
+          "node_id": "GA_kwDOVfBBYs4EOVvq",
+          "type": "required_reviewers",
+          "prevent_self_review": false,
+          "reviewers": [
+            {
+              "type": "User",
+              "reviewer": {
+                "login": "jayekwere",
+                "id": 48987196,
+                "node_id": "MDQ6VXNlcjQ4OTg3MTk2",
+                "avatar_url": "https://avatars.githubusercontent.com/u/48987196?v=4",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/jayekwere",
+                "html_url": "https://github.com/jayekwere",
+                "followers_url": "https://api.github.com/users/jayekwere/followers",
+                "following_url": "https://api.github.com/users/jayekwere/following{/other_user}",
+                "gists_url": "https://api.github.com/users/jayekwere/gists{/gist_id}",
+                "starred_url": "https://api.github.com/users/jayekwere/starred{/owner}{/repo}",
+                "subscriptions_url": "https://api.github.com/users/jayekwere/subscriptions",
+                "organizations_url": "https://api.github.com/users/jayekwere/orgs",
+                "repos_url": "https://api.github.com/users/jayekwere/repos",
+                "events_url": "https://api.github.com/users/jayekwere/events{/privacy}",
+                "received_events_url": "https://api.github.com/users/jayekwere/received_events",
+                "type": "User",
+                "user_view_type": "public",
+                "site_admin": false
+              }
+            }
+          ]
+        },
+        {
+          "id": 70867947,
+          "node_id": "GA_kwDOVfBBYs4EOVvr",
+          "type": "branch_policy"
+        }
+      ],
+      "deployment_branch_policy": {
+        "protected_branches": true,
+        "custom_branch_policies": false
+      }
+    }
+  ],
+  "candidateEvidence": {
+    "passed": true,
+    "mode": "deterministic non-AI",
+    "gates": 18,
+    "resourceCount": 12,
+    "terraformSHA256": "e3755b2fdbbfef248b5eceafa4ec9ef526601a3efb22e38152afc137aa7ca4e9",
+    "sourceCommit": "8592e1265b097aa3c5f9ac6c827fc7406025fea0",
+    "sourceValidation": "Matches a clean archive of the exact committed source",
+    "opa": {
+      "allow": true,
+      "findings": [],
+      "version": "1.0.0"
+    },
+    "independent": {
+      "scanner": "independent-plan-scanner/v1",
+      "findings": []
+    },
+    "scope": {
+      "mockProvider": true,
+      "realProviderSchema": true,
+      "liveCloud": false,
+      "provisioned": false,
+      "humanReviewRequired": true
+    }
+  },
+  "scope": {
+    "paidAPIInvoked": false,
+    "cloudProvisioned": false,
+    "generatedPRMerged": false,
+    "approvals": "Explicit maintainer confirmations recorded with comments through normal GitHub environment approval endpoints; no bypass used."
+  }
+}

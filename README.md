@@ -4,7 +4,7 @@
 
 This project owns specification-driven generation and independent AI-output validation. It does not inventory deployed cloud estates or replace a cloud posture management system.
 
-Published repository: [jayekwere/ai-validated-iac-pipeline](https://github.com/jayekwere/ai-validated-iac-pipeline). Baseline hosted verification passed. See [hosted evidence and approval status](docs/hosted-publication.md).
+Published repository: [jayekwere/ai-validated-iac-pipeline](https://github.com/jayekwere/ai-validated-iac-pipeline). All four hosted workflows are verified, including manually approved generation and draft PR publication. See [hosted evidence and approval status](docs/hosted-publication.md).
 
 ## Run the complete local demonstration
 
