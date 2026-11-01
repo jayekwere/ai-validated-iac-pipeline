@@ -12,7 +12,7 @@ class ScannerTests(unittest.TestCase):
     def test_companions(self):self.assertEqual(len(scan.scan(plan('aws_s3_bucket',{}))),4)
     def test_admin(self):self.assertTrue(scan.scan(plan('aws_security_group',{'ingress':[{'cidr_blocks':['0.0.0.0/0'],'from_port':22}]})))
     def test_ipv6(self):self.assertTrue(scan.scan(plan('aws_security_group',{'ingress':[{'ipv6_cidr_blocks':['::/0']}]})))
-    def test_compute(self):self.assertEqual(len(scan.scan(plan('aws_instance',{}))),2)
+    def test_compute(self):self.assertEqual(len(scan.scan(plan('aws_instance',{}))),3)
     def test_iam(self):
         for action,resource in [('*','arn:aws:s3:::one'),('s3:GetObject','*')]:self.assertTrue(scan.scan(plan('aws_iam_role_policy',{'policy':json.dumps({'Statement':[{'Effect':'Allow','Action':action,'Resource':resource}]})})))
     def test_iam_single_statement_object(self):
@@ -33,4 +33,9 @@ class ScannerTests(unittest.TestCase):
             with self.subTest(document=document):self.assertIn('IAM_DOCUMENT',{f['id'] for f in scan.scan(plan('aws_iam_role_policy',{'policy':json.dumps(document)}))})
     def test_invalid_iam_json(self):self.assertIn('IAM_DOCUMENT',{f['id'] for f in scan.scan(plan('aws_iam_role_policy',{'policy':'{bad'}))})
     def test_null_iam_negation(self):self.assertIn('IAM_NEGATION',{f['id'] for f in scan.scan(plan('aws_iam_role_policy',{'policy':json.dumps({'Statement':{'Effect':'Allow','Action':'s3:GetObject','Resource':'arn:aws:s3:::b/k','NotAction':None}})}))})
+    def test_missing_encryption_values(self):
+        for after in [{},{'rule':[]},{'rule':None},{'rule':[{}]},{'rule':[{'apply_server_side_encryption_by_default':None}]}]:
+            with self.subTest(after=after):self.assertIn('ENCRYPTION',{f['id'] for f in scan.scan(plan('aws_s3_bucket_server_side_encryption_configuration',after))})
+    def test_missing_ingress(self):self.assertIn('INGRESS_UNKNOWN',{f['id'] for f in scan.scan(plan('aws_security_group',{}))})
+    def test_all_root_disk_entries_checked(self):self.assertIn('DISK_ENCRYPTION',{f['id'] for f in scan.scan(plan('aws_instance',{'associate_public_ip_address':False,'root_block_device':[{'encrypted':True},{'encrypted':False}],'metadata_options':[{'http_tokens':'required'}]}))})
 if __name__=='__main__':unittest.main()
