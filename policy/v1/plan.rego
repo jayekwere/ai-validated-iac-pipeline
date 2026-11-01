@@ -22,9 +22,28 @@ deny contains {"id":"UNKNOWN_IAM","address":r.address,"message":"IAM policy must
 deny contains {"id":"WILDCARD_RESOURCE","address":r.address,"message":"IAM global resources forbidden"} if {some r in input.resource_changes;r.type == "aws_iam_role_policy";some stmt in allow_statements(r);some arn in as_array(object.get(stmt,"Resource",[]));arn == "*"}
 deny contains {"id":"MODULE","address":r.address,"message":"Module addresses are not approved"} if {some r in input.resource_changes;startswith(r.address,"module.")}
 deny contains {"id":"ENCRYPTION_UNKNOWN","address":r.address,"message":"Encryption algorithm must be known"} if {some r in input.resource_changes;r.type == "aws_s3_bucket_server_side_encryption_configuration";not is_array(object.get(r.change.after,"rule",null))}
-deny contains {"id":"IAM_NEGATION","address":r.address,"message":"Allow statements cannot use NotAction or NotResource"} if {some r in input.resource_changes;r.type == "aws_iam_role_policy";some stmt in allow_statements(r);some k in ["NotAction","NotResource"];object.get(stmt,k,null) != null}
+deny contains {"id":"IAM_NEGATION","address":r.address,"message":"Allow statements cannot use NotAction or NotResource"} if {some r in input.resource_changes;r.type == "aws_iam_role_policy";some stmt in allow_statements(r);some k in ["NotAction","NotResource"];k in object.keys(stmt)}
 
 # IAM accepts Statement, Action and Resource as a single value or an array. Normalize before iterating so the string form cannot bypass the checks.
 as_array(x) := x if is_array(x)
 as_array(x) := [x] if not is_array(x)
 allow_statements(r) := [stmt | some stmt in as_array(json.unmarshal(r.change.after.policy).Statement); stmt.Effect == "Allow"] if is_string(object.get(r.change.after,"policy",null))
+
+# Invalid or incomplete IAM documents cannot be cleared by an undefined rule.
+valid_strings(x) if { is_string(x); x != "" }
+valid_strings(x) if { is_array(x); count(x) > 0; every value in x { is_string(value); value != "" } }
+valid_iam(r) if {
+    document := json.unmarshal(r.change.after.policy)
+    is_object(document)
+    statements := as_array(object.get(document,"Statement",null))
+    count(statements) > 0
+    every stmt in statements {
+        is_object(stmt)
+        stmt.Effect in {"Allow","Deny"}
+        valid_strings(object.get(stmt,"Action",object.get(stmt,"NotAction",null)))
+        valid_strings(object.get(stmt,"Resource",object.get(stmt,"NotResource",null)))
+        not {"Action","NotAction"} <= object.keys(stmt)
+        not {"Resource","NotResource"} <= object.keys(stmt)
+    }
+}
+deny contains {"id":"IAM_DOCUMENT","address":r.address,"message":"IAM document must contain valid explicit statements"} if {some r in input.resource_changes; r.type == "aws_iam_role_policy"; not valid_iam(r)}

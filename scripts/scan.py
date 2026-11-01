@@ -20,12 +20,20 @@ def scan(plan):
             if a.get('associate_public_ip_address') is not False:fail(r,'PUBLIC_COMPUTE','Public IP prohibited')
             if not all(d.get('encrypted') is True for d in a.get('root_block_device',[])) or not a.get('root_block_device'):fail(r,'DISK_ENCRYPTION','Encrypted root disk required')
         if t=='aws_iam_role_policy':
-            statements=json.loads(a['policy']).get('Statement',[]);statements=[statements] if isinstance(statements,dict) else statements
+            try: document=json.loads(a.get('policy',''))
+            except (ValueError,TypeError): fail(r,'IAM_DOCUMENT','Invalid IAM JSON');continue
+            statements=document.get('Statement') if isinstance(document,dict) else None
+            if isinstance(statements,dict):statements=[statements]
+            if not isinstance(statements,list) or not statements:fail(r,'IAM_DOCUMENT','Explicit IAM statements required');continue
+            def strings(value):return isinstance(value,str) and bool(value) or isinstance(value,list) and bool(value) and all(isinstance(x,str) and bool(x) for x in value)
             for stmt in statements:
-                actions=stmt.get('Action',[]);actions=[actions] if isinstance(actions,str) else actions
-                resources_=stmt.get('Resource',[]);resources_=[resources_] if isinstance(resources_,str) else resources_
-                if stmt.get('Effect')=='Allow' and (any('*' in x for x in actions) or '*' in resources_):fail(r,'WILDCARD_IAM','Wildcard action or global resource')
+                if not isinstance(stmt,dict):fail(r,'IAM_DOCUMENT','IAM statement must be an object');continue
                 if stmt.get('Effect')=='Allow' and ('NotAction' in stmt or 'NotResource' in stmt):fail(r,'IAM_NEGATION','Allow statements cannot use NotAction or NotResource')
+                actions=stmt.get('Action',stmt.get('NotAction')); resources_=stmt.get('Resource',stmt.get('NotResource'))
+                if stmt.get('Effect') not in ('Allow','Deny') or not strings(actions) or not strings(resources_) or {'Action','NotAction'}<=stmt.keys() or {'Resource','NotResource'}<=stmt.keys():fail(r,'IAM_DOCUMENT','Malformed IAM statement');continue
+                actions=[actions] if isinstance(actions,str) else actions
+                resources_=[resources_] if isinstance(resources_,str) else resources_
+                if stmt.get('Effect')=='Allow' and (any('*' in x for x in actions) or '*' in resources_):fail(r,'WILDCARD_IAM','Wildcard action or global resource')
         if t=='aws_lb' and a.get('internal') is not True:fail(r,'PUBLIC_LB','Internal load balancer required')
         if t=='aws_lb_listener' and (a.get('protocol')!='HTTPS' or a.get('port')!=443):fail(r,'TLS','HTTPS 443 required')
         if t=='aws_cloudtrail' and (a.get('enable_log_file_validation') is not True or a.get('is_multi_region_trail') is not True):fail(r,'AUDIT','Validated multi-region trail required')
