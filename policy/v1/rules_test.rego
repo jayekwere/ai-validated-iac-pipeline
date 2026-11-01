@@ -99,6 +99,12 @@ test_imds_allowed if not "IMDS" in ids([rc("aws_instance", "x", secure_instance)
 # ADMIN_INGRESS
 test_admin_ingress_denied if "ADMIN_INGRESS" in ids([rc("aws_security_group", "x", {"ingress": [{"from_port": 22, "cidr_blocks": ["0.0.0.0/0"]}]})])
 
+test_admin_ingress_ipv6_denied if "ADMIN_INGRESS" in ids([rc("aws_security_group", "x", {"ingress": [{"from_port": 22, "ipv6_cidr_blocks": ["::/0"]}]})])
+
+test_admin_ingress_dual_stack_denied if "ADMIN_INGRESS" in ids([rc("aws_security_group", "x", {"ingress": [{"from_port": 22, "cidr_blocks": ["10.42.0.0/16"], "ipv6_cidr_blocks": ["::/0"]}]})])
+
+test_admin_ingress_private_ipv6_allowed if not "ADMIN_INGRESS" in ids([rc("aws_security_group", "x", {"ingress": [{"from_port": 443, "ipv6_cidr_blocks": ["fd00::/8"]}]})])
+
 test_admin_ingress_allowed if not "ADMIN_INGRESS" in ids([rc("aws_security_group", "x", {"ingress": [{"from_port": 443, "cidr_blocks": ["10.42.0.0/16"]}]})])
 
 # WILDCARD_IAM
