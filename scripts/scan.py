@@ -25,7 +25,8 @@ def scan(plan):
                 if '0.0.0.0/0' in rule.get('cidr_blocks',[]) or '::/0' in rule.get('ipv6_cidr_blocks',[]):fail(r,'PUBLIC_INGRESS','Unrestricted network ingress')
         if t=='aws_instance':
             if a.get('associate_public_ip_address') is not False:fail(r,'PUBLIC_COMPUTE','Public IP prohibited')
-            if dig(a,'root_block_device',0,'encrypted') is not True:fail(r,'DISK_ENCRYPTION','Encrypted root disk required')
+            disks=a.get('root_block_device')
+            if not isinstance(disks,list) or not disks or any(not isinstance(d,dict) or d.get('encrypted') is not True for d in disks):fail(r,'DISK_ENCRYPTION','Encrypted root disk required')
             if dig(a,'metadata_options',0,'http_tokens')!='required':fail(r,'IMDS','IMDSv2 required')
         if t=='aws_iam_role_policy':
             try: document=json.loads(a.get('policy',''))
