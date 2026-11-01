@@ -1,0 +1,898 @@
+[
+  {
+    "kind": "storage",
+    "passed": true,
+    "gates": [
+      {
+        "name": "Specification admission",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Generated output allowlist",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Reproducibility",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Tool integrity",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Tool-integrity.log",
+          "sha256": "c31b107480215157ef46e4a54a2b1468dfec52aae6480e384f0c7f8953d2a460"
+        }
+      },
+      {
+        "name": "Terraform format",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-format.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "name": "Terraform initialize",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-initialize.log",
+          "sha256": "6b304b22de232a6338c2c5b988c75d02ca58514ade6b42e681e4c16774149ac3"
+        }
+      },
+      {
+        "name": "Terraform syntax",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-syntax.log",
+          "sha256": "4cd9eddc4d07c5aff74dadb6b3544f98186f6705ac60e0d94d545fc42b45b9b6"
+        }
+      },
+      {
+        "name": "Terraform mock tests",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-mock-tests.log",
+          "sha256": "14982dc37a61c8592c26ae7f10acf5779a13b5dbee2afeed35c078ebb7d47f6a"
+        }
+      },
+      {
+        "name": "Mock test evidence",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Terraform mock plan",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Terraform plan JSON",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "OPA unit tests",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "OPA-unit-tests.log",
+          "sha256": "654a13785a1f89fdca4343e0034fc598cfe1078d8c1ffb3ead8fc9f9865fd909"
+        }
+      },
+      {
+        "name": "OPA evaluation",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "OPA-evaluation.log",
+          "sha256": "eb28b7cd1a6f531d5f64c224b82637203a1f82217a3b29e1ff6852a6c9a5c6db"
+        }
+      },
+      {
+        "name": "OPA security decision",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Independent plan scanner",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Trivy scanner",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Trivy-scanner.log",
+          "sha256": "d71a45b416cbd43d5687a9a422bcc1023c849a1b80c3c6687c14e3c2db815f62"
+        }
+      },
+      {
+        "name": "Trivy security decision",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Trusted source integrity",
+        "passed": true,
+        "detail": "Compare trusted source hashes before and after evaluation"
+      }
+    ]
+  },
+  {
+    "kind": "compute",
+    "passed": true,
+    "gates": [
+      {
+        "name": "Specification admission",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Generated output allowlist",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Reproducibility",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Tool integrity",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Tool-integrity.log",
+          "sha256": "c31b107480215157ef46e4a54a2b1468dfec52aae6480e384f0c7f8953d2a460"
+        }
+      },
+      {
+        "name": "Terraform format",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-format.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "name": "Terraform initialize",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-initialize.log",
+          "sha256": "6b304b22de232a6338c2c5b988c75d02ca58514ade6b42e681e4c16774149ac3"
+        }
+      },
+      {
+        "name": "Terraform syntax",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-syntax.log",
+          "sha256": "4cd9eddc4d07c5aff74dadb6b3544f98186f6705ac60e0d94d545fc42b45b9b6"
+        }
+      },
+      {
+        "name": "Terraform mock tests",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-mock-tests.log",
+          "sha256": "ce976ea6da01291d5e10f2d111c957fbcfeec3c3015baef5b1a0d452d140c32b"
+        }
+      },
+      {
+        "name": "Mock test evidence",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Terraform mock plan",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Terraform plan JSON",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "OPA unit tests",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "OPA-unit-tests.log",
+          "sha256": "fa08fb325479f389801f0f4774bf4192735847fc7131e2ca110d2c5befb6fb75"
+        }
+      },
+      {
+        "name": "OPA evaluation",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "OPA-evaluation.log",
+          "sha256": "eb28b7cd1a6f531d5f64c224b82637203a1f82217a3b29e1ff6852a6c9a5c6db"
+        }
+      },
+      {
+        "name": "OPA security decision",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Independent plan scanner",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Trivy scanner",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Trivy-scanner.log",
+          "sha256": "82c024045ae45d6dcdafc5bc215e03c1d5dba024b228dcc7034a25f5b865fb63"
+        }
+      },
+      {
+        "name": "Trivy security decision",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Trusted source integrity",
+        "passed": true,
+        "detail": "Compare trusted source hashes before and after evaluation"
+      }
+    ]
+  },
+  {
+    "kind": "iam",
+    "passed": true,
+    "gates": [
+      {
+        "name": "Specification admission",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Generated output allowlist",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Reproducibility",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Tool integrity",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Tool-integrity.log",
+          "sha256": "c31b107480215157ef46e4a54a2b1468dfec52aae6480e384f0c7f8953d2a460"
+        }
+      },
+      {
+        "name": "Terraform format",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-format.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "name": "Terraform initialize",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-initialize.log",
+          "sha256": "6b304b22de232a6338c2c5b988c75d02ca58514ade6b42e681e4c16774149ac3"
+        }
+      },
+      {
+        "name": "Terraform syntax",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-syntax.log",
+          "sha256": "4cd9eddc4d07c5aff74dadb6b3544f98186f6705ac60e0d94d545fc42b45b9b6"
+        }
+      },
+      {
+        "name": "Terraform mock tests",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-mock-tests.log",
+          "sha256": "cccbf8f5e1d9ef61475e0677a68e408715778ce3d155e66270045fe3dc220eb7"
+        }
+      },
+      {
+        "name": "Mock test evidence",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Terraform mock plan",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Terraform plan JSON",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "OPA unit tests",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "OPA-unit-tests.log",
+          "sha256": "087bf371caf8a74458e83398eeaf1ff7bbf25608bf394ccebfe75bdaa08e169b"
+        }
+      },
+      {
+        "name": "OPA evaluation",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "OPA-evaluation.log",
+          "sha256": "eb28b7cd1a6f531d5f64c224b82637203a1f82217a3b29e1ff6852a6c9a5c6db"
+        }
+      },
+      {
+        "name": "OPA security decision",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Independent plan scanner",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Trivy scanner",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Trivy-scanner.log",
+          "sha256": "6476eb7405f62a4de56ccd5ec4740e47b035921a29ccf0d0cdc6acbf7208878b"
+        }
+      },
+      {
+        "name": "Trivy security decision",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Trusted source integrity",
+        "passed": true,
+        "detail": "Compare trusted source hashes before and after evaluation"
+      }
+    ]
+  },
+  {
+    "kind": "network",
+    "passed": true,
+    "gates": [
+      {
+        "name": "Specification admission",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Generated output allowlist",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Reproducibility",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Tool integrity",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Tool-integrity.log",
+          "sha256": "c31b107480215157ef46e4a54a2b1468dfec52aae6480e384f0c7f8953d2a460"
+        }
+      },
+      {
+        "name": "Terraform format",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-format.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "name": "Terraform initialize",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-initialize.log",
+          "sha256": "6b304b22de232a6338c2c5b988c75d02ca58514ade6b42e681e4c16774149ac3"
+        }
+      },
+      {
+        "name": "Terraform syntax",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-syntax.log",
+          "sha256": "4cd9eddc4d07c5aff74dadb6b3544f98186f6705ac60e0d94d545fc42b45b9b6"
+        }
+      },
+      {
+        "name": "Terraform mock tests",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-mock-tests.log",
+          "sha256": "94a563a300dd723b03c09465052cd67e4009d8f4b60e33b232571cad103cc64c"
+        }
+      },
+      {
+        "name": "Mock test evidence",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Terraform mock plan",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Terraform plan JSON",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "OPA unit tests",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "OPA-unit-tests.log",
+          "sha256": "1a1581f4f889b78eaee3c89369ef5eecec269d37f70d2c580145a7f5e60ef198"
+        }
+      },
+      {
+        "name": "OPA evaluation",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "OPA-evaluation.log",
+          "sha256": "eb28b7cd1a6f531d5f64c224b82637203a1f82217a3b29e1ff6852a6c9a5c6db"
+        }
+      },
+      {
+        "name": "OPA security decision",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Independent plan scanner",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Trivy scanner",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Trivy-scanner.log",
+          "sha256": "20cbbde7a874b0fecae5728bcb78a6104b77b20753a2c1d72edf5156967dd805"
+        }
+      },
+      {
+        "name": "Trivy security decision",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Trusted source integrity",
+        "passed": true,
+        "detail": "Compare trusted source hashes before and after evaluation"
+      }
+    ]
+  },
+  {
+    "kind": "load-balancer",
+    "passed": true,
+    "gates": [
+      {
+        "name": "Specification admission",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Generated output allowlist",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Reproducibility",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Tool integrity",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Tool-integrity.log",
+          "sha256": "c31b107480215157ef46e4a54a2b1468dfec52aae6480e384f0c7f8953d2a460"
+        }
+      },
+      {
+        "name": "Terraform format",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-format.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "name": "Terraform initialize",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-initialize.log",
+          "sha256": "6b304b22de232a6338c2c5b988c75d02ca58514ade6b42e681e4c16774149ac3"
+        }
+      },
+      {
+        "name": "Terraform syntax",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-syntax.log",
+          "sha256": "4cd9eddc4d07c5aff74dadb6b3544f98186f6705ac60e0d94d545fc42b45b9b6"
+        }
+      },
+      {
+        "name": "Terraform mock tests",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-mock-tests.log",
+          "sha256": "53cc9a3e6bf4248a541fec68a0ae5da62304991c9237b31d394a6f7d086e8175"
+        }
+      },
+      {
+        "name": "Mock test evidence",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Terraform mock plan",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Terraform plan JSON",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "OPA unit tests",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "OPA-unit-tests.log",
+          "sha256": "19f4d8b68064d62aa308f9f9add65841a09ca682a4f71c4f016c889cc96a7314"
+        }
+      },
+      {
+        "name": "OPA evaluation",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "OPA-evaluation.log",
+          "sha256": "eb28b7cd1a6f531d5f64c224b82637203a1f82217a3b29e1ff6852a6c9a5c6db"
+        }
+      },
+      {
+        "name": "OPA security decision",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Independent plan scanner",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Trivy scanner",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Trivy-scanner.log",
+          "sha256": "f4e92826731c2ecd3a4405a49771c2c5f3c400c19df679011780251191c426c1"
+        }
+      },
+      {
+        "name": "Trivy security decision",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Trusted source integrity",
+        "passed": true,
+        "detail": "Compare trusted source hashes before and after evaluation"
+      }
+    ]
+  },
+  {
+    "kind": "audit",
+    "passed": true,
+    "gates": [
+      {
+        "name": "Specification admission",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Generated output allowlist",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Reproducibility",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Tool integrity",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Tool-integrity.log",
+          "sha256": "c31b107480215157ef46e4a54a2b1468dfec52aae6480e384f0c7f8953d2a460"
+        }
+      },
+      {
+        "name": "Terraform format",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-format.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "name": "Terraform initialize",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-initialize.log",
+          "sha256": "6b304b22de232a6338c2c5b988c75d02ca58514ade6b42e681e4c16774149ac3"
+        }
+      },
+      {
+        "name": "Terraform syntax",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-syntax.log",
+          "sha256": "4cd9eddc4d07c5aff74dadb6b3544f98186f6705ac60e0d94d545fc42b45b9b6"
+        }
+      },
+      {
+        "name": "Terraform mock tests",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-mock-tests.log",
+          "sha256": "58f20d63649c3a3788388c90f9d93d745c482a12b358d84fad4c88b02bce4db3"
+        }
+      },
+      {
+        "name": "Mock test evidence",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Terraform mock plan",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Terraform plan JSON",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "OPA unit tests",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "OPA-unit-tests.log",
+          "sha256": "c419b2fea8c5344f88b09a8c7e8a500ce93a39eae6c6c081a2a30f7204589a23"
+        }
+      },
+      {
+        "name": "OPA evaluation",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "OPA-evaluation.log",
+          "sha256": "eb28b7cd1a6f531d5f64c224b82637203a1f82217a3b29e1ff6852a6c9a5c6db"
+        }
+      },
+      {
+        "name": "OPA security decision",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Independent plan scanner",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Trivy scanner",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Trivy-scanner.log",
+          "sha256": "8a88fba8e95d3dc792be7ed1a585e823b6d8e76f9dbb42e4eb2bf05d4ffb3243"
+        }
+      },
+      {
+        "name": "Trivy security decision",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Trusted source integrity",
+        "passed": true,
+        "detail": "Compare trusted source hashes before and after evaluation"
+      }
+    ]
+  },
+  {
+    "kind": "platform",
+    "passed": true,
+    "gates": [
+      {
+        "name": "Specification admission",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Generated output allowlist",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Reproducibility",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Tool integrity",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Tool-integrity.log",
+          "sha256": "c31b107480215157ef46e4a54a2b1468dfec52aae6480e384f0c7f8953d2a460"
+        }
+      },
+      {
+        "name": "Terraform format",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-format.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      {
+        "name": "Terraform initialize",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-initialize.log",
+          "sha256": "6b304b22de232a6338c2c5b988c75d02ca58514ade6b42e681e4c16774149ac3"
+        }
+      },
+      {
+        "name": "Terraform syntax",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-syntax.log",
+          "sha256": "4cd9eddc4d07c5aff74dadb6b3544f98186f6705ac60e0d94d545fc42b45b9b6"
+        }
+      },
+      {
+        "name": "Terraform mock tests",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Terraform-mock-tests.log",
+          "sha256": "375ea8f9c4cfb1545ecb2497f581b09aefea1a1ab07e5d3825fad8105c7f7a5d"
+        }
+      },
+      {
+        "name": "Mock test evidence",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Terraform mock plan",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Terraform plan JSON",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "OPA unit tests",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "OPA-unit-tests.log",
+          "sha256": "8f5537255d690c176cf24fe5170ad560e2876a5b95864647cc8a5af8828847d3"
+        }
+      },
+      {
+        "name": "OPA evaluation",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "OPA-evaluation.log",
+          "sha256": "eb28b7cd1a6f531d5f64c224b82637203a1f82217a3b29e1ff6852a6c9a5c6db"
+        }
+      },
+      {
+        "name": "OPA security decision",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Independent plan scanner",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Trivy scanner",
+        "passed": true,
+        "detail": "Verified",
+        "evidence": {
+          "file": "Trivy-scanner.log",
+          "sha256": "c1e2a7a0b7625d37b92e29fca12e06498d131f80dbccfb5efa48cb296bfd442c"
+        }
+      },
+      {
+        "name": "Trivy security decision",
+        "passed": true,
+        "detail": "Verified"
+      },
+      {
+        "name": "Trusted source integrity",
+        "passed": true,
+        "detail": "Compare trusted source hashes before and after evaluation"
+      }
+    ]
+  }
+]

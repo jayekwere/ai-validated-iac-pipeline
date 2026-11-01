@@ -4,6 +4,8 @@
 
 This project owns specification-driven generation and independent AI-output validation. It does not inventory deployed cloud estates or replace a cloud posture management system.
 
+Published repository: [jayekwere/ai-validated-iac-pipeline](https://github.com/jayekwere/ai-validated-iac-pipeline). Baseline hosted verification passed. See [hosted evidence and approval status](docs/hosted-publication.md).
+
 ## Run the complete local demonstration
 
 Requires Node 22.18+ (CI uses 24.13.0), Python 3.12+, macOS arm64 or Linux amd64, approximately 3 GB of free disk space, and public internet access for initial dependency/tool installation. Verification uses only pinned local tools and the provider mirror after bootstrap. Repository vulnerability scanning separately downloads public advisory data. No AI key, AWS credentials, paid account, or cloud account is needed.
@@ -103,7 +105,9 @@ Four workflows provide specification admission, complete unprivileged PR CI, and
 
 All Actions are pinned to immutable commits. Checkout does not persist credentials. Shell commands do not interpolate event data; controlled inputs pass through environment variables and strict validation. Untrusted PR tests have read-only permissions and no repository secrets. A separate trusted-base workflow verifies generated data without executing candidate code.
 
-Before enabling publication, configure the protected `ai-generation` and `pr-publication` environments with required reviewers and disallow self-review. Protect `main` with required status checks, code owner review, one approving review, stale approval dismissal and administrator enforcement. The boundary checker fails closed if those controls are absent. Setup and publication instructions are in [docs/publication.md](docs/publication.md).
+The active main ruleset has no bypass actors, pins required status checks to GitHub Actions, and requires a successful protected `maintainer-approval` deployment before merge. The runtime boundary check reads effective active rules using metadata read access. Mark generated draft PRs ready for review to start required validation, since GITHUB_TOKEN-created events do not themselves trigger Actions.
+
+The solo maintainer approves manually through `maintainer-approval`, `ai-generation` and `pr-publication`. These environments require `jayekwere`, allow the maintainer to approve their own runs, and disable administrator bypass. Native PR approving-review count is zero; the required approval deployment replaces the impossible self-review while preserving every security check. The boundary checker fails closed if any required gate is absent. See [the solo-maintainer flow](docs/solo-maintainer.md) and [publication setup](docs/publication.md).
 
 ## Evidence and reproducibility
 

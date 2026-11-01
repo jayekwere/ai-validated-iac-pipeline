@@ -1,0 +1,170 @@
+[
+  {
+    "name": "public-storage",
+    "expected": "REJECT",
+    "actual": "REJECT",
+    "gate": {
+      "name": "Generated output allowlist",
+      "passed": false,
+      "detail": "OUTPUT_ALLOWLIST: unapproved differences at $.resource.aws_s3_bucket_public_access_block.logs.block_public_acls"
+    }
+  },
+  {
+    "name": "admin-ingress",
+    "expected": "REJECT",
+    "actual": "REJECT",
+    "gate": {
+      "name": "Generated output allowlist",
+      "passed": false,
+      "detail": "OUTPUT_ALLOWLIST: unapproved differences at $.resource.aws_security_group.app.ingress.0.from_port, $.resource.aws_security_group.app.ingress.0.to_port, $.resource.aws_security_group.app.ingress.0.cidr_blocks.0"
+    }
+  },
+  {
+    "name": "wildcard-iam",
+    "expected": "REJECT",
+    "actual": "REJECT",
+    "gate": {
+      "name": "Generated output allowlist",
+      "passed": false,
+      "detail": "OUTPUT_ALLOWLIST: unapproved differences at $.resource.aws_iam_role_policy.reader.policy"
+    }
+  },
+  {
+    "name": "missing-encryption",
+    "expected": "REJECT",
+    "actual": "REJECT",
+    "gate": {
+      "name": "Generated output allowlist",
+      "passed": false,
+      "detail": "OUTPUT_ALLOWLIST: unapproved differences at $.resource.aws_s3_bucket_server_side_encryption_configuration"
+    }
+  },
+  {
+    "name": "unapproved-module",
+    "expected": "REJECT",
+    "actual": "REJECT",
+    "gate": {
+      "name": "Generated output allowlist",
+      "passed": false,
+      "detail": "OUTPUT_ALLOWLIST: unapproved differences at $.module"
+    }
+  },
+  {
+    "name": "external-command",
+    "expected": "REJECT",
+    "actual": "REJECT",
+    "gate": {
+      "name": "Generated output allowlist",
+      "passed": false,
+      "detail": "OUTPUT_ALLOWLIST: unapproved differences at $.resource.terraform_data"
+    }
+  },
+  {
+    "name": "policy-bypass",
+    "expected": "REJECT",
+    "actual": "REJECT",
+    "gate": {
+      "name": "Generated output allowlist",
+      "passed": false,
+      "detail": "OUTPUT_ALLOWLIST: unapproved differences at $.policy/v1/plan.rego"
+    }
+  },
+  {
+    "name": "workflow-injection",
+    "expected": "REJECT",
+    "actual": "REJECT",
+    "gate": {
+      "name": "Generated output allowlist",
+      "passed": false,
+      "detail": "OUTPUT_ALLOWLIST: unapproved differences at $..github/workflows/owned.yml"
+    }
+  },
+  {
+    "name": "malformed-terraform",
+    "expected": "REJECT",
+    "actual": "REJECT",
+    "gate": {
+      "name": "Pipeline execution",
+      "passed": false,
+      "detail": "Expected property name or '}' in JSON at position 1 (line 1 column 2)"
+    }
+  },
+  {
+    "name": "missing-scanner",
+    "expected": "REJECT",
+    "actual": "REJECT",
+    "gate": {
+      "name": "Tool integrity",
+      "passed": false,
+      "detail": "Exit 1; see gate log"
+    }
+  },
+  {
+    "name": "tampered-scanner",
+    "expected": "REJECT",
+    "actual": "REJECT",
+    "gate": {
+      "name": "Tool integrity",
+      "passed": false,
+      "detail": "Exit 1; see gate log"
+    }
+  },
+  {
+    "name": "public-storage-independent-OPA",
+    "expected": "REJECT",
+    "actual": "REJECT",
+    "findings": [
+      {
+        "address": "aws_s3_bucket_public_access_block.logs",
+        "id": "PUBLIC_STORAGE",
+        "message": "All S3 public access controls must be enabled"
+      }
+    ]
+  },
+  {
+    "name": "admin-ingress-independent-OPA",
+    "expected": "REJECT",
+    "actual": "REJECT",
+    "findings": [
+      {
+        "address": "aws_security_group.app",
+        "id": "ADMIN_INGRESS",
+        "message": "Public ingress forbidden"
+      }
+    ]
+  },
+  {
+    "name": "wildcard-iam-independent-OPA",
+    "expected": "REJECT",
+    "actual": "REJECT",
+    "findings": [
+      {
+        "address": "aws_iam_role_policy.reader",
+        "id": "WILDCARD_IAM",
+        "message": "Wildcard IAM grants forbidden"
+      },
+      {
+        "address": "aws_iam_role_policy.reader",
+        "id": "WILDCARD_RESOURCE",
+        "message": "IAM global resources forbidden"
+      }
+    ]
+  },
+  {
+    "name": "missing-encryption-independent-OPA",
+    "expected": "REJECT",
+    "actual": "REJECT",
+    "findings": [
+      {
+        "address": "aws_s3_bucket.logs",
+        "id": "MISSING_ENCRYPTION",
+        "message": "Bucket needs an encryption companion"
+      },
+      {
+        "address": "aws_s3_bucket.storage",
+        "id": "MISSING_ENCRYPTION",
+        "message": "Bucket needs an encryption companion"
+      }
+    ]
+  }
+]
