@@ -31,3 +31,14 @@ test_invalid_iam_json_denied if {
     p := {"resource_changes":[{"type":"aws_iam_role_policy","address":"aws_iam_role_policy.x","change":{"after":{"policy":"{bad"}}}]}
     "IAM_DOCUMENT" in finding_ids(p)
 }
+# Missing security attributes must fail closed, matching the independent Python scanner.
+plan_of(type, after) := {"resource_changes":[{"address":sprintf("%s.x",[type]),"mode":"managed","type":type,"name":"x","provider_name":"registry.terraform.io/hashicorp/aws","change":{"after":after}}]}
+
+test_missing_public_ip_setting_denied if {"PUBLIC_COMPUTE" in finding_ids(plan_of("aws_instance", {"root_block_device":[{"encrypted":true}],"metadata_options":[{"http_tokens":"required"}]}))}
+test_missing_root_device_denied if {"DISK_ENCRYPTION" in finding_ids(plan_of("aws_instance", {"associate_public_ip_address":false,"metadata_options":[{"http_tokens":"required"}]}))}
+test_missing_metadata_options_denied if {"IMDS" in finding_ids(plan_of("aws_instance", {"associate_public_ip_address":false,"root_block_device":[{"encrypted":true}]}))}
+test_missing_internal_flag_denied if {"PUBLIC_LB" in finding_ids(plan_of("aws_lb", {}))}
+test_missing_listener_protocol_denied if {"TLS" in finding_ids(plan_of("aws_lb_listener", {"port":443}))}
+test_missing_log_validation_denied if {"AUDIT" in finding_ids(plan_of("aws_cloudtrail", {}))}
+test_missing_sse_algorithm_denied if {"ENCRYPTION" in finding_ids(plan_of("aws_s3_bucket_server_side_encryption_configuration", {"rule":[{"apply_server_side_encryption_by_default":[{}]}]}))}
+test_unknown_after_denied if {"UNKNOWN_VALUES" in finding_ids(plan_of("aws_lb", null))}
