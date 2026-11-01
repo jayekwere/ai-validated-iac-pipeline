@@ -1,5 +1,5 @@
 """Independent plan scanner. No code from generated output is imported or evaluated."""
-import json, sys
+import ipaddress, json, sys
 
 def scan(plan):
     if not isinstance(plan,dict) or not isinstance(plan.get('resource_changes'),list): raise ValueError('PLAN_FORMAT')
@@ -22,7 +22,11 @@ def scan(plan):
             ingress=a.get('ingress')
             if not isinstance(ingress,list):fail(r,'INGRESS_UNKNOWN','Ingress must be known');continue
             for rule in ingress:
-                if '0.0.0.0/0' in rule.get('cidr_blocks',[]) or '::/0' in rule.get('ipv6_cidr_blocks',[]):fail(r,'PUBLIC_INGRESS','Unrestricted network ingress')
+                if not isinstance(rule,dict) or any(not isinstance(rule.get(f,[]),list) or any(not isinstance(c,str) for c in rule.get(f,[])) for f in ['cidr_blocks','ipv6_cidr_blocks']):fail(r,'INGRESS_UNKNOWN','Address families must be known arrays');continue
+                for cidr in rule.get('cidr_blocks',[])+rule.get('ipv6_cidr_blocks',[]):
+                    try: network=ipaddress.ip_network(cidr,strict=False)
+                    except ValueError:fail(r,'INGRESS_UNKNOWN','Invalid CIDR');continue
+                    if network.prefixlen==0:fail(r,'PUBLIC_INGRESS','Unrestricted network ingress')
         if t=='aws_instance':
             if a.get('associate_public_ip_address') is not False:fail(r,'PUBLIC_COMPUTE','Public IP prohibited')
             disks=a.get('root_block_device')

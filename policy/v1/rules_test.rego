@@ -99,6 +99,12 @@ test_imds_allowed if not "IMDS" in ids([rc("aws_instance", "x", secure_instance)
 # ADMIN_INGRESS
 test_admin_ingress_denied if "ADMIN_INGRESS" in ids([rc("aws_security_group", "x", {"ingress": [{"from_port": 22, "cidr_blocks": ["0.0.0.0/0"]}]})])
 
+test_admin_ingress_ipv6_denied if "ADMIN_INGRESS" in ids([rc("aws_security_group", "x", {"ingress": [{"from_port": 22, "ipv6_cidr_blocks": ["::/0"]}]})])
+
+test_admin_ingress_dual_stack_denied if "ADMIN_INGRESS" in ids([rc("aws_security_group", "x", {"ingress": [{"from_port": 22, "cidr_blocks": ["10.42.0.0/16"], "ipv6_cidr_blocks": ["::/0"]}]})])
+
+test_admin_ingress_private_ipv6_allowed if not "ADMIN_INGRESS" in ids([rc("aws_security_group", "x", {"ingress": [{"from_port": 443, "ipv6_cidr_blocks": ["fd00::/8"]}]})])
+
 test_admin_ingress_allowed if not "ADMIN_INGRESS" in ids([rc("aws_security_group", "x", {"ingress": [{"from_port": 443, "cidr_blocks": ["10.42.0.0/16"]}]})])
 
 # WILDCARD_IAM
@@ -162,3 +168,16 @@ test_iam_document_denied if "IAM_DOCUMENT" in ids([rc("aws_iam_role_policy","x",
 test_iam_document_allowed if not "IAM_DOCUMENT" in ids([rc("aws_iam_role_policy","x",{"policy":scoped_policy})])
 test_ingress_unknown_denied if "INGRESS_UNKNOWN" in ids([rc("aws_security_group","x",{})])
 test_ingress_unknown_allowed if not "INGRESS_UNKNOWN" in ids([rc("aws_security_group","x",{"ingress":[]})])
+
+test_open_ipv4_cannot_hide_behind_null_ipv6 if "ADMIN_INGRESS" in ids([rc("aws_security_group","x",{"ingress":[{"cidr_blocks":["0.0.0.0/0"],"ipv6_cidr_blocks":null}]})])
+test_open_ipv6_cannot_hide_behind_null_ipv4 if "ADMIN_INGRESS" in ids([rc("aws_security_group","x",{"ingress":[{"cidr_blocks":null,"ipv6_cidr_blocks":["::/0"]}]})])
+test_malformed_address_family_denied if "INGRESS_UNKNOWN" in ids([rc("aws_security_group","x",{"ingress":[{"cidr_blocks":null}]})])
+
+test_null_ingress_entry_denied if "INGRESS_UNKNOWN" in ids([rc("aws_security_group","x",{"ingress":[null]})])
+test_unknown_cidr_denied if "INGRESS_UNKNOWN" in ids([rc("aws_security_group","x",{"ingress":[{"cidr_blocks":[null]}]})])
+
+test_equivalent_ipv6_world_cidrs_denied if {
+ every cidr in ["::/0","0:0:0:0:0:0:0:0/0","::0/0"] {
+  "ADMIN_INGRESS" in ids([rc("aws_security_group","x",{"ingress":[{"ipv6_cidr_blocks":[cidr]}]})])
+ }
+}
