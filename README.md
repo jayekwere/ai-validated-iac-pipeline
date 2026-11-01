@@ -63,7 +63,7 @@ Trusted test files and the provider lock are copied from the verifier, not accep
 | Audit | Multi-region CloudTrail with validation and KMS, retained encrypted CloudWatch log group |
 | Platform | All examples composed into one request |
 
-The shared service log sink uses SSE-S3, as required by [ALB access logging](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/enable-access-logging.html) and [S3 server access logging](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html). The exact exception to the scanner CMK recommendation is versioned in `policy/scanner-exceptions.json`; plaintext storage is never allowed. Low and medium scanner findings are disclosed in full; high and critical findings block unless an exact, reviewed resource exception applies. Log sinks are not recursively access-logged.
+The shared service log sink uses SSE-S3, as required by [ALB access logging](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/enable-access-logging.html) and [S3 server access logging](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html). The exact exception to the scanner CMK recommendation is versioned in `policy/scanner-exceptions.json`; plaintext storage is never allowed. Low and medium scanner findings are disclosed in full; high and critical findings block unless an exact, reviewed, unexpired resource exception applies. Each exception carries an `expires` date at most 365 days ahead, and an expired or malformed entry blocks the pipeline. Log sinks are not recursively access-logged.
 
 ## What is actually verified
 
