@@ -15,9 +15,22 @@ class ScannerTests(unittest.TestCase):
     def test_compute(self):self.assertEqual(len(scan.scan(plan('aws_instance',{}))),2)
     def test_iam(self):
         for action,resource in [('*','arn:aws:s3:::one'),('s3:GetObject','*')]:self.assertTrue(scan.scan(plan('aws_iam_role_policy',{'policy':json.dumps({'Statement':[{'Effect':'Allow','Action':action,'Resource':resource}]})})))
+    def test_iam_single_statement_object(self):
+        ids={f['id'] for f in scan.scan(plan('aws_iam_role_policy',{'policy':json.dumps({'Statement':{'Effect':'Allow','Action':'*','Resource':'*'}})}))}
+        self.assertIn('WILDCARD_IAM',ids)
+    def test_iam_negation(self):
+        for k in ['NotAction','NotResource']:
+            stmt={'Effect':'Allow','Action':'s3:GetObject','Resource':'arn:aws:s3:::b',k:'iam:*'}
+            self.assertIn('IAM_NEGATION',{f['id'] for f in scan.scan(plan('aws_iam_role_policy',{'policy':json.dumps({'Statement':[stmt]})}))})
+    def test_iam_scoped_allowed(self):self.assertEqual(scan.scan(plan('aws_iam_role_policy',{'policy':json.dumps({'Statement':{'Effect':'Allow','Action':'s3:GetObject','Resource':'arn:aws:s3:::b/k'}})})),[])
     def test_lb(self):self.assertTrue(scan.scan(plan('aws_lb',{'internal':False})))
     def test_tls(self):self.assertTrue(scan.scan(plan('aws_lb_listener',{'protocol':'HTTP','port':80})))
     def test_audit(self):self.assertTrue(scan.scan(plan('aws_cloudtrail',{})))
     def test_unknown(self):self.assertTrue(scan.scan(plan('aws_instance',None)))
     def test_secure(self):self.assertEqual(scan.scan(plan('aws_security_group',{'ingress':[{'cidr_blocks':['10.0.0.0/16']}]})),[])
+    def test_invalid_iam_documents(self):
+        for document in [None,[],{}, {'Statement':[]},{'Statement':None},{'Statement':[None]},{'Statement':{'Effect':'Allow','Action':{},'Resource':'*'}}]:
+            with self.subTest(document=document):self.assertIn('IAM_DOCUMENT',{f['id'] for f in scan.scan(plan('aws_iam_role_policy',{'policy':json.dumps(document)}))})
+    def test_invalid_iam_json(self):self.assertIn('IAM_DOCUMENT',{f['id'] for f in scan.scan(plan('aws_iam_role_policy',{'policy':'{bad'}))})
+    def test_null_iam_negation(self):self.assertIn('IAM_NEGATION',{f['id'] for f in scan.scan(plan('aws_iam_role_policy',{'policy':json.dumps({'Statement':{'Effect':'Allow','Action':'s3:GetObject','Resource':'arn:aws:s3:::b/k','NotAction':None}})}))})
 if __name__=='__main__':unittest.main()
