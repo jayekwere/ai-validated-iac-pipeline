@@ -38,4 +38,7 @@ class ScannerTests(unittest.TestCase):
             with self.subTest(after=after):self.assertIn('ENCRYPTION',{f['id'] for f in scan.scan(plan('aws_s3_bucket_server_side_encryption_configuration',after))})
     def test_missing_ingress(self):self.assertIn('INGRESS_UNKNOWN',{f['id'] for f in scan.scan(plan('aws_security_group',{}))})
     def test_all_root_disk_entries_checked(self):self.assertIn('DISK_ENCRYPTION',{f['id'] for f in scan.scan(plan('aws_instance',{'associate_public_ip_address':False,'root_block_device':[{'encrypted':True},{'encrypted':False}],'metadata_options':[{'http_tokens':'required'}]}))})
+    def test_malformed_address_family(self):
+        for rule in [None,{'cidr_blocks':None,'ipv6_cidr_blocks':['::/0']},{'cidr_blocks':['0.0.0.0/0'],'ipv6_cidr_blocks':None}]:
+            with self.subTest(rule=rule):self.assertIn('INGRESS_UNKNOWN',{f['id'] for f in scan.scan(plan('aws_security_group',{'ingress':[rule]}))})
 if __name__=='__main__':unittest.main()

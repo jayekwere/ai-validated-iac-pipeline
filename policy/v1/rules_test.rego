@@ -168,3 +168,7 @@ test_iam_document_denied if "IAM_DOCUMENT" in ids([rc("aws_iam_role_policy","x",
 test_iam_document_allowed if not "IAM_DOCUMENT" in ids([rc("aws_iam_role_policy","x",{"policy":scoped_policy})])
 test_ingress_unknown_denied if "INGRESS_UNKNOWN" in ids([rc("aws_security_group","x",{})])
 test_ingress_unknown_allowed if not "INGRESS_UNKNOWN" in ids([rc("aws_security_group","x",{"ingress":[]})])
+
+test_open_ipv4_cannot_hide_behind_null_ipv6 if "ADMIN_INGRESS" in ids([rc("aws_security_group","x",{"ingress":[{"cidr_blocks":["0.0.0.0/0"],"ipv6_cidr_blocks":null}]})])
+test_open_ipv6_cannot_hide_behind_null_ipv4 if "ADMIN_INGRESS" in ids([rc("aws_security_group","x",{"ingress":[{"cidr_blocks":null,"ipv6_cidr_blocks":["::/0"]}]})])
+test_malformed_address_family_denied if "INGRESS_UNKNOWN" in ids([rc("aws_security_group","x",{"ingress":[{"cidr_blocks":null}]})])

@@ -22,6 +22,7 @@ def scan(plan):
             ingress=a.get('ingress')
             if not isinstance(ingress,list):fail(r,'INGRESS_UNKNOWN','Ingress must be known');continue
             for rule in ingress:
+                if not isinstance(rule,dict) or any(not isinstance(rule.get(f,[]),list) for f in ['cidr_blocks','ipv6_cidr_blocks']):fail(r,'INGRESS_UNKNOWN','Address families must be known arrays');continue
                 if '0.0.0.0/0' in rule.get('cidr_blocks',[]) or '::/0' in rule.get('ipv6_cidr_blocks',[]):fail(r,'PUBLIC_INGRESS','Unrestricted network ingress')
         if t=='aws_instance':
             if a.get('associate_public_ip_address') is not False:fail(r,'PUBLIC_COMPUTE','Public IP prohibited')
