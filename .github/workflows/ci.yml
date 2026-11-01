@@ -45,3 +45,15 @@ jobs:
           name: verification-evidence
           path: evidence/
           retention-days: 14
+  maintainer-approval:
+    name: maintainer-approval
+    needs: tests
+    if: github.event_name == 'pull_request' && github.event.pull_request.draft == false
+    environment: maintainer-approval
+    permissions:
+      contents: read
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Record manual approval of this tested revision
+        run: printf '%s\n' 'Maintainer approved this tested revision. No infrastructure was provisioned.'

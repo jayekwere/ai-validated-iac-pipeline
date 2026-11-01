@@ -14,3 +14,8 @@ for file in (root/'.github/workflows').glob('*.yml'):
     if 'secrets.' in text: assert 'pull_request:' not in text and 'workflow_dispatch:' in text,file
     if 'contents: write' in text: assert 'environment: pr-publication' in text and "github.ref == 'refs/heads/main'" in text,file
 print('Workflow references, permissions, event boundaries and shell interpolation checks passed')
+
+ci=(root/'.github/workflows/ci.yml').read_text()
+assert 'environment: maintainer-approval' in ci
+assert 'needs: tests' in ci
+assert 'required_deployments' in (root/'.github/review-ruleset.json').read_text()
