@@ -4,6 +4,8 @@
 
 This project owns specification-driven generation and independent AI-output validation. It does not inventory deployed cloud estates or replace a cloud posture management system.
 
+Published repository: [jayekwere/ai-validated-iac-pipeline](https://github.com/jayekwere/ai-validated-iac-pipeline). Baseline hosted verification passed. See [hosted evidence and approval status](docs/hosted-publication.md).
+
 ## Run the complete local demonstration
 
 Requires Node 22.18+ (CI uses 24.13.0), Python 3.12+, macOS arm64 or Linux amd64, approximately 3 GB of free disk space, and public internet access for initial dependency/tool installation. Verification uses only pinned local tools and the provider mirror after bootstrap. Repository vulnerability scanning separately downloads public advisory data. No AI key, AWS credentials, paid account, or cloud account is needed.

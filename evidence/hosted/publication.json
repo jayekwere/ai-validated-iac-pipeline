@@ -1,0 +1,41 @@
+{
+  "repository": "https://github.com/jayekwere/ai-validated-iac-pipeline",
+  "pullRequest": "https://github.com/jayekwere/ai-validated-iac-pipeline/pull/2",
+  "runs": {
+    "main-verification": {
+      "run": 41307896006,
+      "url": "https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41307896006",
+      "commit": "06a71a029cb31e63b5d276f0b8f6e0f94a0f024a",
+      "conclusion": "success"
+    },
+    "main-specification": {
+      "run": 41307896035,
+      "url": "https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41307896035",
+      "commit": "06a71a029cb31e63b5d276f0b8f6e0f94a0f024a",
+      "conclusion": "success"
+    },
+    "pr-verification": {
+      "run": 41307953715,
+      "url": "https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41307953715",
+      "commit": "b943d694e3508830c174d6a2dc8322f5cf230280",
+      "conclusion": "success"
+    },
+    "pr-specification": {
+      "run": 41307953669,
+      "url": "https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41307953669",
+      "commit": "b943d694e3508830c174d6a2dc8322f5cf230280",
+      "conclusion": "success"
+    },
+    "pr-trusted-candidate": {
+      "run": 41307953705,
+      "url": "https://github.com/jayekwere/ai-validated-iac-pipeline/actions/runs/41307953705",
+      "commit": "b943d694e3508830c174d6a2dc8322f5cf230280",
+      "conclusion": "success"
+    }
+  },
+  "downloadedArtifactValidation": {
+    "awsExamplesPassed": 7,
+    "adversarialDemonstrationsPassed": 15
+  },
+  "generation": "Awaiting independent human reviewer; no paid API use"
+}

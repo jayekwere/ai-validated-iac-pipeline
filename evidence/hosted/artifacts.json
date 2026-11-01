@@ -1,0 +1,25 @@
+{
+  "total_count": 1,
+  "artifacts": [
+    {
+      "id": 13083873216,
+      "node_id": "MDg6QXJ0aWZhY3QxMzA4Mzg3MzIxNg==",
+      "name": "verification-evidence",
+      "size_in_bytes": 897490,
+      "url": "https://api.github.com/repos/jayekwere/ai-validated-iac-pipeline/actions/artifacts/13083873216",
+      "archive_download_url": "https://api.github.com/repos/jayekwere/ai-validated-iac-pipeline/actions/artifacts/13083873216/zip",
+      "expired": false,
+      "digest": "sha256:4c330aa44e1fc35df32505fcff1da76e936050da9ab85916cf7126b5433d7c51",
+      "created_at": "2026-11-01T12:46:47Z",
+      "updated_at": "2026-11-01T12:46:47Z",
+      "expires_at": "2026-11-15T12:46:46Z",
+      "workflow_run": {
+        "id": 41307896006,
+        "repository_id": 1441808738,
+        "head_repository_id": 1441808738,
+        "head_branch": "main",
+        "head_sha": "06a71a029cb31e63b5d276f0b8f6e0f94a0f024a"
+      }
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 # Publication and protected review
 
+The repository is now public and baseline hosted CI passed. See [the publication record](hosted-publication.md) for exact runs and the remaining independent-review requirement. The instructions below also describe setup for a fresh copy.
+
 The local implementation can be verified without GitHub authentication. Publication, repository settings, environment protection, hosted Actions runs and actual PR URLs require authenticated access to `jayekwere/ai-validated-iac-pipeline`.
 
 After restoring `gh auth login`, create the public repository with the MIT license source already in this checkout, push `main`, and enable Actions. Use the prepared setup script to configure the required review boundaries. Reviewers must be able to approve environment deployments and PRs. GitHub plan restrictions may affect protected environment availability; publication must stay disabled if required review controls cannot be enabled.

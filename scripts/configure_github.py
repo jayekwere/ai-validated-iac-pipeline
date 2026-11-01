@@ -11,7 +11,7 @@ def main():
     if user['login']!='jayekwere':raise SystemExit('Expected repository owner account')
     api('/branches/main/protection','PUT',{'required_status_checks':{'strict':True,'contexts':['tests','admission','trusted-candidate']},'enforce_admins':True,'required_pull_request_reviews':{'dismiss_stale_reviews':True,'require_code_owner_reviews':True,'required_approving_review_count':1},'restrictions':None,'required_linear_history':True,'allow_force_pushes':False,'allow_deletions':False,'required_conversation_resolution':True})
     for name in ['ai-generation','pr-publication']:
-        api('/environments/'+name,'PUT',{'wait_timer':0,'prevent_self_review':True,'reviewers':[{'type':'User','id':user['id']}],'deployment_branch_policy':{'protected_branches':True,'custom_branch_policies':False}})
+        api('/environments/'+name,'PUT',{'wait_timer':0,'prevent_self_review':True,'can_admins_bypass':False,'reviewers':[{'type':'User','id':user['id']}],'deployment_branch_policy':{'protected_branches':True,'custom_branch_policies':False}})
     api('','PATCH',{'allow_auto_merge':False,'delete_branch_on_merge':True,'security_and_analysis':{'secret_scanning':{'status':'enabled'},'secret_scanning_push_protection':{'status':'enabled'}}})
     print('Review boundaries configured. A different authorized reviewer must approve runs they did not initiate.')
 if __name__=='__main__':main()
