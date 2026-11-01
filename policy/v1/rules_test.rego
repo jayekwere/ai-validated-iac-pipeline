@@ -155,3 +155,10 @@ test_compliant_plan_allowed if {
 		rc("aws_cloudtrail", "audit", {"enable_log_file_validation": true}),
 	]}
 }
+
+test_unknown_values_denied if "UNKNOWN_VALUES" in ids([rc("aws_lb","x",null)])
+test_unknown_values_allowed if not "UNKNOWN_VALUES" in ids([rc("aws_lb","x",{"internal":true})])
+test_iam_document_denied if "IAM_DOCUMENT" in ids([rc("aws_iam_role_policy","x",{"policy":"{bad"})])
+test_iam_document_allowed if not "IAM_DOCUMENT" in ids([rc("aws_iam_role_policy","x",{"policy":scoped_policy})])
+test_ingress_unknown_denied if "INGRESS_UNKNOWN" in ids([rc("aws_security_group","x",{})])
+test_ingress_unknown_allowed if not "INGRESS_UNKNOWN" in ids([rc("aws_security_group","x",{"ingress":[]})])
