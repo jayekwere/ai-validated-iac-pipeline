@@ -3,6 +3,11 @@ import json, sys
 
 def scan(plan):
     if not isinstance(plan,dict) or not isinstance(plan.get('resource_changes'),list): raise ValueError('PLAN_FORMAT')
+    def dig(value,*path):
+        try:
+            for key in path:value=value[key]
+            return value
+        except (KeyError,IndexError,TypeError):return None
     findings=[]; resources=plan['resource_changes']; addresses={r['address'] for r in resources}
     def fail(r,rule,msg): findings.append({'id':rule,'address':r['address'],'message':msg,'severity':'HIGH'})
     for r in resources:
@@ -12,13 +17,16 @@ def scan(plan):
             for companion in ['aws_s3_bucket_public_access_block','aws_s3_bucket_server_side_encryption_configuration','aws_s3_bucket_versioning','aws_s3_bucket_policy']:
                 if r['address'].replace('aws_s3_bucket.',companion+'.') not in addresses: fail(r,'S3_COMPANION','Missing '+companion)
         if t=='aws_s3_bucket_public_access_block' and any(a.get(k) is not True for k in ['block_public_acls','block_public_policy','ignore_public_acls','restrict_public_buckets']): fail(r,'PUBLIC_STORAGE','All public access controls required')
-        if t=='aws_s3_bucket_server_side_encryption_configuration' and a.get('rule',[{}])[0].get('apply_server_side_encryption_by_default',[{}])[0].get('sse_algorithm')!=('AES256' if r.get('name')=='logs' else 'aws:kms'):fail(r,'ENCRYPTION','Approved encryption required')
+        if t=='aws_s3_bucket_server_side_encryption_configuration' and dig(a,'rule',0,'apply_server_side_encryption_by_default',0,'sse_algorithm')!=('AES256' if r.get('name')=='logs' else 'aws:kms'):fail(r,'ENCRYPTION','Approved encryption required')
         if t=='aws_security_group':
-            for rule in a.get('ingress',[]):
+            ingress=a.get('ingress')
+            if not isinstance(ingress,list):fail(r,'INGRESS_UNKNOWN','Ingress must be known');continue
+            for rule in ingress:
                 if '0.0.0.0/0' in rule.get('cidr_blocks',[]) or '::/0' in rule.get('ipv6_cidr_blocks',[]):fail(r,'PUBLIC_INGRESS','Unrestricted network ingress')
         if t=='aws_instance':
             if a.get('associate_public_ip_address') is not False:fail(r,'PUBLIC_COMPUTE','Public IP prohibited')
-            if not all(d.get('encrypted') is True for d in a.get('root_block_device',[])) or not a.get('root_block_device'):fail(r,'DISK_ENCRYPTION','Encrypted root disk required')
+            if dig(a,'root_block_device',0,'encrypted') is not True:fail(r,'DISK_ENCRYPTION','Encrypted root disk required')
+            if dig(a,'metadata_options',0,'http_tokens')!='required':fail(r,'IMDS','IMDSv2 required')
         if t=='aws_iam_role_policy':
             try: document=json.loads(a.get('policy',''))
             except (ValueError,TypeError): fail(r,'IAM_DOCUMENT','Invalid IAM JSON');continue

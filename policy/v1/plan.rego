@@ -2,10 +2,10 @@ package iac.v1
 import rego.v1
 resources := {r.address: r | some r in input.resource_changes; r.mode == "managed"}
 deny contains {"id":"PLAN_FORMAT","address":"plan","message":"Expected Terraform plan JSON with resource changes"} if { not is_array(object.get(input,"resource_changes",null)) }
-deny contains {"id":"PROVIDER","address":r.address,"message":"Unapproved provider"} if {some r in input.resource_changes; r.provider_name != "registry.terraform.io/hashicorp/aws"}
+deny contains {"id":"PROVIDER","address":r.address,"message":"Unapproved provider"} if {some r in input.resource_changes; object.get(r,"provider_name",null) != "registry.terraform.io/hashicorp/aws"}
 deny contains {"id":"PUBLIC_STORAGE","address":r.address,"message":"All S3 public access controls must be enabled"} if {some r in input.resource_changes; r.type == "aws_s3_bucket_public_access_block"; some k in ["block_public_acls","block_public_policy","ignore_public_acls","restrict_public_buckets"]; object.get(r.change.after,k,false) != true}
 deny contains {"id":"MISSING_ENCRYPTION","address":r.address,"message":"Bucket needs an encryption companion"} if {some r in input.resource_changes;r.type == "aws_s3_bucket"; not resources[replace(r.address,"aws_s3_bucket.","aws_s3_bucket_server_side_encryption_configuration.")]}
-deny contains {"id":"ENCRYPTION","address":r.address,"message":"S3 requires KMS encryption"} if {some r in input.resource_changes;r.type == "aws_s3_bucket_server_side_encryption_configuration";r.name != "logs";object.get(r.change.after,["rule",0,"apply_server_side_encryption_by_default",0,"sse_algorithm"],null) != "aws:kms"}
+deny contains {"id":"ENCRYPTION","address":r.address,"message":"S3 requires KMS encryption"} if {some r in input.resource_changes;r.type == "aws_s3_bucket_server_side_encryption_configuration";object.get(r,"name",null) != "logs";object.get(r.change.after,["rule",0,"apply_server_side_encryption_by_default",0,"sse_algorithm"],null) != "aws:kms"}
 deny contains {"id":"PUBLIC_COMPUTE","address":r.address,"message":"Compute cannot have a public IP"} if {some r in input.resource_changes;r.type == "aws_instance";object.get(r.change.after,"associate_public_ip_address",null) != false}
 deny contains {"id":"DISK_ENCRYPTION","address":r.address,"message":"Compute disk must be encrypted"} if {some r in input.resource_changes;r.type == "aws_instance";object.get(r.change.after,["root_block_device",0,"encrypted"],null) != true}
 deny contains {"id":"IMDS","address":r.address,"message":"IMDSv2 required"} if {some r in input.resource_changes;r.type == "aws_instance";object.get(r.change.after,["metadata_options",0,"http_tokens"],null) != "required"}
@@ -17,7 +17,7 @@ deny contains {"id":"AUDIT","address":r.address,"message":"CloudTrail validation
 deny contains {"id":"UNKNOWN_VALUES","address":r.address,"message":"Planned values must be known"} if {some r in input.resource_changes;not is_object(object.get(object.get(r,"change",{}),"after",null))}
 decision := {"version":"1.0.0","allow":count(deny)==0,"findings":deny}
 
-deny contains {"id":"LOG_ENCRYPTION","address":r.address,"message":"Service log sink must use SSE-S3"} if {some r in input.resource_changes;r.type == "aws_s3_bucket_server_side_encryption_configuration";r.name == "logs";object.get(r.change.after,["rule",0,"apply_server_side_encryption_by_default",0,"sse_algorithm"],null) != "AES256"}
+deny contains {"id":"LOG_ENCRYPTION","address":r.address,"message":"Service log sink must use SSE-S3"} if {some r in input.resource_changes;r.type == "aws_s3_bucket_server_side_encryption_configuration";object.get(r,"name",null) == "logs";object.get(r.change.after,["rule",0,"apply_server_side_encryption_by_default",0,"sse_algorithm"],null) != "AES256"}
 
 deny contains {"id":"UNKNOWN_IAM","address":r.address,"message":"IAM policy must be known during planning"} if {some r in input.resource_changes;r.type == "aws_iam_role_policy";not is_string(object.get(r.change.after,"policy",null))}
 deny contains {"id":"WILDCARD_RESOURCE","address":r.address,"message":"IAM global resources forbidden"} if {some r in input.resource_changes;r.type == "aws_iam_role_policy";some stmt in allow_statements(r);some arn in as_array(object.get(stmt,"Resource",[]));arn == "*"}
@@ -48,3 +48,5 @@ valid_iam(r) if {
     }
 }
 deny contains {"id":"IAM_DOCUMENT","address":r.address,"message":"IAM document must contain valid explicit statements"} if {some r in input.resource_changes; r.type == "aws_iam_role_policy"; not valid_iam(r)}
+
+deny contains {"id":"INGRESS_UNKNOWN","address":r.address,"message":"Ingress rules must be known"} if {some r in input.resource_changes;r.type == "aws_security_group";not is_array(object.get(r.change.after,"ingress",null))}

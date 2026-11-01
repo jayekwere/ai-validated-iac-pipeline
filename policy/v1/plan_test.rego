@@ -42,3 +42,8 @@ test_missing_listener_protocol_denied if {"TLS" in finding_ids(plan_of("aws_lb_l
 test_missing_log_validation_denied if {"AUDIT" in finding_ids(plan_of("aws_cloudtrail", {}))}
 test_missing_sse_algorithm_denied if {"ENCRYPTION" in finding_ids(plan_of("aws_s3_bucket_server_side_encryption_configuration", {"rule":[{"apply_server_side_encryption_by_default":[{}]}]}))}
 test_unknown_after_denied if {"UNKNOWN_VALUES" in finding_ids(plan_of("aws_lb", null))}
+
+test_missing_provider_denied if {"PROVIDER" in finding_ids({"resource_changes":[{"address":"aws_lb.x","type":"aws_lb","change":{"after":{"internal":true}}} ]})}
+test_empty_encryption_rules_denied if {"ENCRYPTION" in finding_ids(plan_of("aws_s3_bucket_server_side_encryption_configuration",{"rule":[]}))}
+test_missing_log_algorithm_denied if {"LOG_ENCRYPTION" in finding_ids({"resource_changes":[{"address":"aws_s3_bucket_server_side_encryption_configuration.logs","type":"aws_s3_bucket_server_side_encryption_configuration","name":"logs","change":{"after":{"rule":[{}]}}}]})}
+test_missing_ingress_denied if {"INGRESS_UNKNOWN" in finding_ids(plan_of("aws_security_group",{}))}
