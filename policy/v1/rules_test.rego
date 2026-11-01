@@ -175,3 +175,9 @@ test_malformed_address_family_denied if "INGRESS_UNKNOWN" in ids([rc("aws_securi
 
 test_null_ingress_entry_denied if "INGRESS_UNKNOWN" in ids([rc("aws_security_group","x",{"ingress":[null]})])
 test_unknown_cidr_denied if "INGRESS_UNKNOWN" in ids([rc("aws_security_group","x",{"ingress":[{"cidr_blocks":[null]}]})])
+
+test_equivalent_ipv6_world_cidrs_denied if {
+ every cidr in ["::/0","0:0:0:0:0:0:0:0/0","::0/0"] {
+  "ADMIN_INGRESS" in ids([rc("aws_security_group","x",{"ingress":[{"ipv6_cidr_blocks":[cidr]}]})])
+ }
+}

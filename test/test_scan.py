@@ -41,4 +41,7 @@ class ScannerTests(unittest.TestCase):
     def test_malformed_address_family(self):
         for rule in [None,{'cidr_blocks':None,'ipv6_cidr_blocks':['::/0']},{'cidr_blocks':['0.0.0.0/0'],'ipv6_cidr_blocks':None}]:
             with self.subTest(rule=rule):self.assertIn('INGRESS_UNKNOWN',{f['id'] for f in scan.scan(plan('aws_security_group',{'ingress':[rule]}))})
+    def test_equivalent_ipv6_world_networks(self):
+        for cidr in ['::/0','0:0:0:0:0:0:0:0/0','::0/0']:
+            with self.subTest(cidr=cidr):self.assertIn('PUBLIC_INGRESS',{f['id'] for f in scan.scan(plan('aws_security_group',{'ingress':[{'ipv6_cidr_blocks':[cidr]}]}))})
 if __name__=='__main__':unittest.main()
