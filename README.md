@@ -74,7 +74,7 @@ The shared service log sink uses SSE-S3, as required by [ALB access logging](htt
 | Terraform validate | Actual AWS provider schema checks, with the pinned real provider binary |
 | Terraform test | Supported mock provider, `command = plan`, trusted assertions |
 | Plan JSON | Terraform's real `test_plan` event, including all requested resources; computed values remain unknown where appropriate |
-| OPA and Python decisions | Independent semantic checks of the structured mock plan |
+| OPA and Python decisions | Independent semantic checks of the structured mock plan; every OPA rule is listed in the [policy rule catalog](docs/policy-rules.md) with a passing and failing test |
 | Trivy | Separate IaC checks on the trusted rendering, plus repository secret/dependency scanning |
 | AI API contract tests | Simulated HTTP transport, including rejection/error cases; no paid API call is claimed |
 | GitHub integration tests | Simulated GitHub API calls; no hosted CI result is claimed before publication |
