@@ -1,0 +1,20 @@
+{
+  "result": [
+    {
+      "expressions": [
+        {
+          "value": {
+            "allow": true,
+            "findings": [],
+            "version": "1.0.0"
+          },
+          "text": "data.iac.v1.decision",
+          "location": {
+            "row": 1,
+            "col": 1
+          }
+        }
+      ]
+    }
+  ]
+}

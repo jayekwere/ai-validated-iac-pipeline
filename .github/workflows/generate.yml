@@ -1,0 +1,113 @@
+name: Trusted generation and review
+on:
+  workflow_dispatch:
+    inputs:
+      specification:
+        type: choice
+        options: [storage, compute, iam, network, load-balancer, audit, platform]
+        default: storage
+      mode:
+        type: choice
+        options: [sample, ai]
+        default: sample
+      authorize_paid_api:
+        type: boolean
+        default: false
+permissions:
+  contents: read
+jobs:
+  generate:
+    if: github.ref == 'refs/heads/main'
+    environment: ai-generation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '24.13.0'
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.12.12'
+      - run: npm ci --ignore-scripts
+      - name: Verify protected review boundaries
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/check_github_boundaries.py
+      - name: Generate data only
+        env:
+          SPEC_PATH: examples/${{ inputs.specification }}.json
+          GENERATION_MODE: ${{ inputs.mode }}
+          AUTHORIZE_PAID_API: ${{ inputs.authorize_paid_api }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: node --experimental-strip-types src/candidate.ts generate candidate
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: candidate
+          path: candidate/
+          if-no-files-found: error
+  verify:
+    needs: generate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '24.13.0'
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.12.12'
+      - run: npm ci --ignore-scripts
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: candidate
+          path: candidate
+      - run: python3 scripts/bootstrap.py
+      - run: node --experimental-strip-types src/candidate.ts verify candidate
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: candidate-evidence
+          path: evidence/candidate/
+          if-no-files-found: error
+  review:
+    needs: verify
+    if: github.ref == 'refs/heads/main'
+    environment: pr-publication
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '24.13.0'
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.12.12'
+      - run: npm ci --ignore-scripts
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: candidate
+          path: candidate
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: candidate-evidence
+          path: evidence/candidate
+      - name: Verify protected review boundaries
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/check_github_boundaries.py
+      - name: Open draft PR with fixed data paths
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node --experimental-strip-types src/github.ts evidence/candidate

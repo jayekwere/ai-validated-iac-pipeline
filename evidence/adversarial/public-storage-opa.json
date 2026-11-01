@@ -1,0 +1,11 @@
+{
+  "allow": false,
+  "findings": [
+    {
+      "address": "aws_s3_bucket_public_access_block.logs",
+      "id": "PUBLIC_STORAGE",
+      "message": "All S3 public access controls must be enabled"
+    }
+  ],
+  "version": "1.0.0"
+}

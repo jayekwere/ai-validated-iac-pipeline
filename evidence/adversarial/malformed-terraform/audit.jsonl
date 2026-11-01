@@ -1,0 +1,3 @@
+{"sequence":0,"event":"verification_gate","name":"Specification admission","passed":true,"detail":"Verified","specHash":"24eeeb16b671f3388d57d4e96e3f9f6e74bd510fc6392ffd24a26ecf861cf5b5"}
+{"sequence":1,"event":"verification_gate","name":"Pipeline execution","passed":false,"detail":"Expected property name or '}' in JSON at position 1 (line 1 column 2)","specHash":"24eeeb16b671f3388d57d4e96e3f9f6e74bd510fc6392ffd24a26ecf861cf5b5"}
+{"sequence":2,"event":"verification_gate","name":"Trusted source integrity","passed":true,"detail":"Compare trusted source hashes before and after evaluation","specHash":"24eeeb16b671f3388d57d4e96e3f9f6e74bd510fc6392ffd24a26ecf861cf5b5"}

@@ -1,0 +1,475 @@
+{
+  "version": 1,
+  "mode": "deterministic non-AI",
+  "spec": {
+    "version": 1,
+    "cloud": "aws",
+    "kind": "platform",
+    "name": "validated-platform",
+    "region": "ca-central-1",
+    "environment": "dev",
+    "encryption": "aws:kms",
+    "public": false,
+    "cidr": "10.42.0.0/16",
+    "ami": "ami-00000000000000001",
+    "certificateArn": "arn:aws:acm:ca-central-1:123456789012:certificate/00000000-0000-4000-8000-000000000001",
+    "accountId": "123456789012"
+  },
+  "terraform": {
+    "terraform": {
+      "required_version": "= 1.9.8",
+      "required_providers": {
+        "aws": {
+          "source": "hashicorp/aws",
+          "version": "= 5.76.0"
+        }
+      }
+    },
+    "provider": {
+      "aws": {
+        "region": "ca-central-1",
+        "skip_credentials_validation": true,
+        "skip_requesting_account_id": true,
+        "skip_metadata_api_check": true
+      }
+    },
+    "resource": {
+      "aws_kms_key": {
+        "main": {
+          "description": "validated-platform encryption",
+          "enable_key_rotation": true,
+          "deletion_window_in_days": 30,
+          "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"AccountKeyAdministration\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::123456789012:root\"},\"Action\":[\"kms:CreateAlias\",\"kms:DescribeKey\",\"kms:EnableKeyRotation\",\"kms:GetKeyPolicy\",\"kms:PutKeyPolicy\",\"kms:ScheduleKeyDeletion\",\"kms:TagResource\",\"kms:Encrypt\",\"kms:Decrypt\",\"kms:GenerateDataKey\"],\"Resource\":\"*\"},{\"Sid\":\"CloudTrailEncryption\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"cloudtrail.amazonaws.com\"},\"Action\":[\"kms:GenerateDataKey*\",\"kms:DescribeKey\"],\"Resource\":\"*\",\"Condition\":{\"StringEquals\":{\"aws:SourceArn\":\"arn:aws:cloudtrail:ca-central-1:123456789012:trail/validated-platform\"}}},{\"Sid\":\"CloudWatchLogsEncryption\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"logs.ca-central-1.amazonaws.com\"},\"Action\":[\"kms:Encrypt\",\"kms:Decrypt\",\"kms:ReEncrypt*\",\"kms:GenerateDataKey*\",\"kms:DescribeKey\"],\"Resource\":\"*\",\"Condition\":{\"ArnEquals\":{\"kms:EncryptionContext:aws:logs:arn\":\"arn:aws:logs:ca-central-1:123456789012:log-group:/iac/validated-platform\"}}}]}",
+          "tags": {
+            "Environment": "dev",
+            "ManagedBy": "ai-validated-iac-pipeline"
+          }
+        }
+      },
+      "aws_s3_bucket": {
+        "logs": {
+          "bucket": "validated-platform-logs",
+          "force_destroy": false,
+          "tags": {
+            "Environment": "dev",
+            "ManagedBy": "ai-validated-iac-pipeline"
+          }
+        },
+        "storage": {
+          "bucket": "validated-platform-storage",
+          "force_destroy": false,
+          "tags": {
+            "Environment": "dev",
+            "ManagedBy": "ai-validated-iac-pipeline"
+          }
+        }
+      },
+      "aws_s3_bucket_public_access_block": {
+        "logs": {
+          "bucket": "${aws_s3_bucket.logs.id}",
+          "block_public_acls": true,
+          "block_public_policy": true,
+          "ignore_public_acls": true,
+          "restrict_public_buckets": true
+        },
+        "storage": {
+          "bucket": "${aws_s3_bucket.storage.id}",
+          "block_public_acls": true,
+          "block_public_policy": true,
+          "ignore_public_acls": true,
+          "restrict_public_buckets": true
+        }
+      },
+      "aws_s3_bucket_server_side_encryption_configuration": {
+        "logs": {
+          "bucket": "${aws_s3_bucket.logs.id}",
+          "rule": {
+            "apply_server_side_encryption_by_default": {
+              "sse_algorithm": "AES256"
+            },
+            "bucket_key_enabled": true
+          }
+        },
+        "storage": {
+          "bucket": "${aws_s3_bucket.storage.id}",
+          "rule": {
+            "apply_server_side_encryption_by_default": {
+              "sse_algorithm": "aws:kms",
+              "kms_master_key_id": "${aws_kms_key.main.arn}"
+            },
+            "bucket_key_enabled": true
+          }
+        }
+      },
+      "aws_s3_bucket_versioning": {
+        "logs": {
+          "bucket": "${aws_s3_bucket.logs.id}",
+          "versioning_configuration": {
+            "status": "Enabled"
+          }
+        },
+        "storage": {
+          "bucket": "${aws_s3_bucket.storage.id}",
+          "versioning_configuration": {
+            "status": "Enabled"
+          }
+        }
+      },
+      "aws_s3_bucket_policy": {
+        "logs": {
+          "bucket": "${aws_s3_bucket.logs.id}",
+          "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"DenyInsecureTransport\",\"Effect\":\"Deny\",\"Principal\":\"*\",\"Action\":\"s3:*\",\"Resource\":[\"${aws_s3_bucket.logs.arn}\",\"${aws_s3_bucket.logs.arn}/*\"],\"Condition\":{\"Bool\":{\"aws:SecureTransport\":\"false\"}}},{\"Sid\":\"S3LogDelivery\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"logging.s3.amazonaws.com\"},\"Action\":\"s3:PutObject\",\"Resource\":\"${aws_s3_bucket.logs.arn}/*\",\"Condition\":{\"StringEquals\":{\"aws:SourceAccount\":\"123456789012\"},\"ArnLike\":{\"aws:SourceArn\":\"arn:aws:s3:::validated-platform-*\"}}},{\"Sid\":\"VPCLogDelivery\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"delivery.logs.amazonaws.com\"},\"Action\":\"s3:PutObject\",\"Resource\":\"${aws_s3_bucket.logs.arn}/AWSLogs/123456789012/*\",\"Condition\":{\"StringEquals\":{\"aws:SourceAccount\":\"123456789012\",\"s3:x-amz-acl\":\"bucket-owner-full-control\"},\"ArnLike\":{\"aws:SourceArn\":\"arn:aws:logs:ca-central-1:123456789012:*\"}}},{\"Sid\":\"VPCLogAcl\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"delivery.logs.amazonaws.com\"},\"Action\":\"s3:GetBucketAcl\",\"Resource\":\"${aws_s3_bucket.logs.arn}\",\"Condition\":{\"StringEquals\":{\"aws:SourceAccount\":\"123456789012\"}}},{\"Sid\":\"ALBLogDelivery\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"logdelivery.elasticloadbalancing.amazonaws.com\"},\"Action\":\"s3:PutObject\",\"Resource\":\"${aws_s3_bucket.logs.arn}/alb/AWSLogs/123456789012/*\"},{\"Sid\":\"CloudTrailAcl\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"cloudtrail.amazonaws.com\"},\"Action\":\"s3:GetBucketAcl\",\"Resource\":\"${aws_s3_bucket.logs.arn}\",\"Condition\":{\"StringEquals\":{\"aws:SourceArn\":\"arn:aws:cloudtrail:ca-central-1:123456789012:trail/validated-platform\"}}},{\"Sid\":\"CloudTrailDelivery\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"cloudtrail.amazonaws.com\"},\"Action\":\"s3:PutObject\",\"Resource\":\"${aws_s3_bucket.logs.arn}/AWSLogs/123456789012/*\",\"Condition\":{\"StringEquals\":{\"aws:SourceArn\":\"arn:aws:cloudtrail:ca-central-1:123456789012:trail/validated-platform\",\"s3:x-amz-acl\":\"bucket-owner-full-control\"}}}]}"
+        },
+        "storage": {
+          "bucket": "${aws_s3_bucket.storage.id}",
+          "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"DenyInsecureTransport\",\"Effect\":\"Deny\",\"Principal\":\"*\",\"Action\":\"s3:*\",\"Resource\":[\"${aws_s3_bucket.storage.arn}\",\"${aws_s3_bucket.storage.arn}/*\"],\"Condition\":{\"Bool\":{\"aws:SecureTransport\":\"false\"}}}]}"
+        }
+      },
+      "aws_s3_bucket_logging": {
+        "storage": {
+          "bucket": "${aws_s3_bucket.storage.id}",
+          "target_bucket": "${aws_s3_bucket.logs.id}",
+          "target_prefix": "storage/"
+        }
+      },
+      "aws_vpc": {
+        "main": {
+          "cidr_block": "10.42.0.0/16",
+          "enable_dns_hostnames": true,
+          "enable_dns_support": true,
+          "tags": {
+            "Environment": "dev",
+            "ManagedBy": "ai-validated-iac-pipeline"
+          }
+        }
+      },
+      "aws_subnet": {
+        "app_a": {
+          "vpc_id": "${aws_vpc.main.id}",
+          "cidr_block": "10.42.1.0/24",
+          "availability_zone": "ca-central-1a",
+          "map_public_ip_on_launch": false,
+          "tags": {
+            "Environment": "dev",
+            "ManagedBy": "ai-validated-iac-pipeline"
+          }
+        },
+        "app_b": {
+          "vpc_id": "${aws_vpc.main.id}",
+          "cidr_block": "10.42.2.0/24",
+          "availability_zone": "ca-central-1b",
+          "map_public_ip_on_launch": false,
+          "tags": {
+            "Environment": "dev",
+            "ManagedBy": "ai-validated-iac-pipeline"
+          }
+        },
+        "data_a": {
+          "vpc_id": "${aws_vpc.main.id}",
+          "cidr_block": "10.42.3.0/24",
+          "availability_zone": "ca-central-1a",
+          "map_public_ip_on_launch": false,
+          "tags": {
+            "Environment": "dev",
+            "ManagedBy": "ai-validated-iac-pipeline"
+          }
+        },
+        "data_b": {
+          "vpc_id": "${aws_vpc.main.id}",
+          "cidr_block": "10.42.4.0/24",
+          "availability_zone": "ca-central-1b",
+          "map_public_ip_on_launch": false,
+          "tags": {
+            "Environment": "dev",
+            "ManagedBy": "ai-validated-iac-pipeline"
+          }
+        }
+      },
+      "aws_route_table": {
+        "app": {
+          "vpc_id": "${aws_vpc.main.id}",
+          "tags": {
+            "Environment": "dev",
+            "ManagedBy": "ai-validated-iac-pipeline"
+          }
+        },
+        "data": {
+          "vpc_id": "${aws_vpc.main.id}",
+          "tags": {
+            "Environment": "dev",
+            "ManagedBy": "ai-validated-iac-pipeline"
+          }
+        }
+      },
+      "aws_route_table_association": {
+        "app_a": {
+          "subnet_id": "${aws_subnet.app_a.id}",
+          "route_table_id": "${aws_route_table.app.id}"
+        },
+        "app_b": {
+          "subnet_id": "${aws_subnet.app_b.id}",
+          "route_table_id": "${aws_route_table.app.id}"
+        },
+        "data_a": {
+          "subnet_id": "${aws_subnet.data_a.id}",
+          "route_table_id": "${aws_route_table.data.id}"
+        },
+        "data_b": {
+          "subnet_id": "${aws_subnet.data_b.id}",
+          "route_table_id": "${aws_route_table.data.id}"
+        }
+      },
+      "aws_flow_log": {
+        "main": {
+          "vpc_id": "${aws_vpc.main.id}",
+          "traffic_type": "ALL",
+          "log_destination_type": "s3",
+          "log_destination": "${aws_s3_bucket.logs.arn}",
+          "max_aggregation_interval": 60,
+          "tags": {
+            "Environment": "dev",
+            "ManagedBy": "ai-validated-iac-pipeline"
+          }
+        }
+      },
+      "aws_default_security_group": {
+        "default": {
+          "vpc_id": "${aws_vpc.main.id}",
+          "ingress": [],
+          "egress": [],
+          "tags": {
+            "Environment": "dev",
+            "ManagedBy": "ai-validated-iac-pipeline"
+          }
+        }
+      },
+      "aws_security_group": {
+        "app": {
+          "name": "validated-platform-app",
+          "description": "Private application TLS only",
+          "vpc_id": "${aws_vpc.main.id}",
+          "ingress": [
+            {
+              "description": "Internal TLS",
+              "from_port": 443,
+              "to_port": 443,
+              "protocol": "tcp",
+              "cidr_blocks": [
+                "10.42.0.0/16"
+              ],
+              "ipv6_cidr_blocks": [],
+              "prefix_list_ids": [],
+              "security_groups": [],
+              "self": false
+            }
+          ],
+          "egress": [],
+          "tags": {
+            "Environment": "dev",
+            "ManagedBy": "ai-validated-iac-pipeline"
+          }
+        }
+      },
+      "aws_instance": {
+        "app": {
+          "ami": "ami-00000000000000001",
+          "instance_type": "t3.micro",
+          "subnet_id": "${aws_subnet.app_a.id}",
+          "vpc_security_group_ids": [
+            "${aws_security_group.app.id}"
+          ],
+          "associate_public_ip_address": false,
+          "monitoring": true,
+          "metadata_options": {
+            "http_endpoint": "enabled",
+            "http_tokens": "required",
+            "http_put_response_hop_limit": 1
+          },
+          "root_block_device": {
+            "encrypted": true,
+            "kms_key_id": "${aws_kms_key.main.arn}",
+            "volume_type": "gp3",
+            "volume_size": 20
+          },
+          "tags": {
+            "Environment": "dev",
+            "ManagedBy": "ai-validated-iac-pipeline"
+          }
+        }
+      },
+      "aws_iam_role": {
+        "reader": {
+          "name": "validated-platform-reader",
+          "assume_role_policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}",
+          "tags": {
+            "Environment": "dev",
+            "ManagedBy": "ai-validated-iac-pipeline"
+          }
+        }
+      },
+      "aws_iam_role_policy": {
+        "reader": {
+          "name": "read-one-prefix",
+          "role": "${aws_iam_role.reader.id}",
+          "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":[\"s3:GetObject\"],\"Resource\":[\"arn:aws:s3:::validated-platform-logs/approved/*\"]}]}"
+        }
+      },
+      "aws_lb": {
+        "app": {
+          "name": "validated-platform",
+          "internal": true,
+          "load_balancer_type": "application",
+          "subnets": [
+            "${aws_subnet.app_a.id}",
+            "${aws_subnet.app_b.id}"
+          ],
+          "security_groups": [
+            "${aws_security_group.app.id}"
+          ],
+          "drop_invalid_header_fields": true,
+          "enable_deletion_protection": true,
+          "access_logs": {
+            "bucket": "${aws_s3_bucket.logs.id}",
+            "prefix": "alb",
+            "enabled": true
+          },
+          "tags": {
+            "Environment": "dev",
+            "ManagedBy": "ai-validated-iac-pipeline"
+          }
+        }
+      },
+      "aws_lb_listener": {
+        "https": {
+          "load_balancer_arn": "${aws_lb.app.arn}",
+          "port": 443,
+          "protocol": "HTTPS",
+          "ssl_policy": "ELBSecurityPolicy-TLS13-1-2-2021-06",
+          "certificate_arn": "arn:aws:acm:ca-central-1:123456789012:certificate/00000000-0000-4000-8000-000000000001",
+          "default_action": {
+            "type": "fixed-response",
+            "fixed_response": {
+              "content_type": "text/plain",
+              "message_body": "Private service",
+              "status_code": "200"
+            }
+          }
+        }
+      },
+      "aws_cloudwatch_log_group": {
+        "audit": {
+          "name": "/iac/validated-platform",
+          "retention_in_days": 365,
+          "kms_key_id": "${aws_kms_key.main.arn}",
+          "tags": {
+            "Environment": "dev",
+            "ManagedBy": "ai-validated-iac-pipeline"
+          }
+        }
+      },
+      "aws_cloudtrail": {
+        "audit": {
+          "name": "validated-platform",
+          "s3_bucket_name": "${aws_s3_bucket.logs.id}",
+          "is_multi_region_trail": true,
+          "include_global_service_events": true,
+          "enable_log_file_validation": true,
+          "enable_logging": true,
+          "kms_key_id": "${aws_kms_key.main.arn}",
+          "tags": {
+            "Environment": "dev",
+            "ManagedBy": "ai-validated-iac-pipeline"
+          },
+          "depends_on": [
+            "aws_s3_bucket_policy.logs"
+          ]
+        }
+      }
+    }
+  },
+  "passed": false,
+  "gates": [
+    {
+      "name": "Specification admission",
+      "passed": true,
+      "detail": "Verified"
+    },
+    {
+      "name": "Generated output allowlist",
+      "passed": true,
+      "detail": "Verified"
+    },
+    {
+      "name": "Reproducibility",
+      "passed": true,
+      "detail": "Verified"
+    },
+    {
+      "name": "Tool integrity",
+      "passed": false,
+      "detail": "Exit 1; see gate log"
+    },
+    {
+      "name": "Trusted source integrity",
+      "passed": true,
+      "detail": "Compare trusted source hashes before and after evaluation"
+    }
+  ],
+  "decisions": {},
+  "hashes": {
+    "spec": "24eeeb16b671f3388d57d4e96e3f9f6e74bd510fc6392ffd24a26ecf861cf5b5",
+    "terraform": "3bbb90960b3346e23bd13a7aa39a305a87134443ffbc26ffc15339d972a35ad2",
+    "trustedSources": {
+      "src/ai.ts": "3699baee90ceea698c3b94dba5bdef71cc6366ea41189dcd41c7df856821383c",
+      "src/candidate.ts": "afa61e5fc05f1dfcf839a0fd377928024b50aa91e06cc49bdc2fff22f7f0b285",
+      "src/cli.ts": "dfc12b8b192ee3a4b0e115400e90dd024e18bf7158a592000b43db55dddaa256",
+      "src/engine.ts": "ac9a57845a9b8c5f7b840cf8bc42c9c1986d4d48314fdfe76d6ba91b48d04454",
+      "src/github.ts": "373694f083ec0c8a80e7858370645004c5ed01945cc3a57d3036801a72174aab",
+      "src/hcl.ts": "c358681c59f2e95a8c2dfd41e452f2fdb3a7de5113ec6425796222db5da40997",
+      "src/pipeline.ts": "b639538eed441f91a3beab66f8837379a73ab61bde2ce4866690ba7300f25820",
+      "src/report.ts": "6ae5baebf49f1836fa026c059f534236f85b4e65ebe85fe72e038a88b7ab2dcc",
+      "src/spec.ts": "3022253863a1438e836cf24040d31efe003d3c4783242dfd780bcb223ad98463",
+      "policy/allowlist.json": "62b70ac29ea3b40172e622830bce02f84ac1e7e8799c5a1fc56d1bf8f64a0dea",
+      "policy/scanner-exceptions.json": "ca5ffa4cf2b2206fd5d3b672eb60d8abf19ade8d4da20bbea325686bb63a93c8",
+      "policy/v1/plan.rego": "366bfe0859a2f28d9cfbd3062a514c99b2fa3f3059f705ebb31d978098d7d22f",
+      "policy/v1/plan_test.rego": "6323cebf7e1d73c21535516f3568554858aeaff1a002c4bfef20a344ad138f0a",
+      "trusted/.terraform.lock.hcl": "bf2ff4cacc82a5b3855036a4a146bf83c8a8d84dfea831792f782e88d5b8dfcb",
+      "trusted/assertions/audit.hcl": "d2ba905b9a8861fe701b84b70ff7cfc70bb46b2928f8e2d7462c0bcade2629d3",
+      "trusted/assertions/compute.hcl": "a9c8c3f811f3db4624e69e80afe02cf82fd2cea8ce671f0432bb2da9437bd8f4",
+      "trusted/assertions/iam.hcl": "fe5cab95dbe4156bbd8c887368218327ee6d55221f718303d9293f87c4de7f54",
+      "trusted/assertions/load-balancer.hcl": "f042184a5c59970215e5362404e35cbfae6a1bedcff8691c66f899b96a75b96d",
+      "trusted/assertions/network.hcl": "0d001a9086e59d5b09bf61369c5f931beefbd6a25a6e34b6f1c0076b63016484",
+      "trusted/assertions/platform.hcl": "fc04d4cc93c1a54f37d19ddf0e96ad2db6431aeb3392c34714969499ebbfa761",
+      "trusted/assertions/storage.hcl": "bd577cda8a72448e4a66332dd9d64473fb3076a4f8593885477a45e2e694cb09",
+      "trusted/security.tftest.hcl": "ada4c2aaa282bf967218b76e95c692310b0ad98ba2d4c17fda26f1c2e0068047",
+      "scripts/__pycache__/check_github_boundaries.cpython-314.pyc": "0a673306cff7b14139bbe3129821414aeab67267f560d776d0b51bfc5a499c94",
+      "scripts/__pycache__/scan.cpython-314.pyc": "0971cdd67a16d315cd2417f56cced61842fb72f596984979539ae7afa1ddecf9",
+      "scripts/adversarial.ts": "91f7fdbc92d4b7f77e7bb3577107f5378e9a46ba843afddc1d58c10f53ee5070",
+      "scripts/bootstrap.py": "442f543a0f7db0f1d3361408ee3280f6e38227672cd004148c4d1a2b80845de0",
+      "scripts/build_index.ts": "15f786c14daf89b1010e45b858c18a88cc4fa9ce32619992b55f67d39ba6cb0e",
+      "scripts/check_github_boundaries.py": "9d9fdd9f07295605b07a03b9e309f5c9924db22d7e90d7c6ccd47a234dda0716",
+      "scripts/check_workflows.py": "8fed3f68286227e9893b5f8aa0e82dbb7049e13cf1415332dc13171a70b29968",
+      "scripts/configure_github.py": "89ec97327f54cdfec6c14374c1079fd9c26d86238a4119074abb0a00fb26d5fd",
+      "scripts/scan.py": "4c4c57fe4ee7153a5bbd80d212dc67756eb33e90b478bba5829e0c2cb75ea584",
+      "scripts/scan_repository.py": "baa7bbbe207a89ccf89cd7329bc15654a42d22695451c996f94a5df287d9be07",
+      "scripts/validate_generated_pr.ts": "bc094c4d442c0e506c3c2be3f61c3acb79ab67af6952ca3fd1b10ed75870a882",
+      "scripts/validate_specs.ts": "d9b49240e65e47d49b3f94e67b6e97b28e6576769700aae43d57e81b5a4bf650",
+      "schemas/spec-v1.schema.json": "da5a84e5b049a55629100285344e14f888a6c705a7e2584120ac317b327bf3bd",
+      ".github/CODEOWNERS": "23093c41ebf1b4fa4921c2571acf0fbccda57e105fc95ce5863632ce2b9829b7",
+      ".github/dependabot.yml": "2ccdb1d265770e632a75b40d0b47ed80fbd6c5dcbcf53f7b80545bbfc1583b98",
+      ".github/workflows/ci.yml": "fa825a440386419ebc56ac92e166cf82b7f68a8175cacd13cb30146bb84451db",
+      ".github/workflows/generate.yml": "eb05a657532d61d5f86dca0284c4e4afb0829a0e45cbe645de2125a6b679d730",
+      ".github/workflows/specifications.yml": "a6f84f5592b33018ff3c33f81d1f50a2dbbfc0ce5ff748653d0bfcbfbd6814cd",
+      ".github/workflows/trusted-candidate.yml": "5f7b442e7917399b42a2af28dd499f82e9380911f662aed72caf58c6f4baaa96",
+      "tools.lock.json": "e052500dafb1e1665bb172fec2b1ede1e30d6af30da6b66e9e603036744cd2f7",
+      "package-lock.json": "2b4f04bddab7db6155ae8308a4110018b97301723450a21167359ed5bf2f5454"
+    }
+  },
+  "scope": {
+    "mockProvider": true,
+    "realProviderSchema": true,
+    "liveCloud": false,
+    "provisioned": false,
+    "humanReviewRequired": true
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "terraform": {
+    "required_version": "= 1.9.8",
+    "required_providers": {
+      "aws": {
+        "source": "hashicorp/aws",
+        "version": "= 5.76.0"
+      }
+    }
+  },
+  "provider": {
+    "aws": {
+      "region": "ca-central-1",
+      "skip_credentials_validation": true,
+      "skip_requesting_account_id": true,
+      "skip_metadata_api_check": true
+    }
+  },
+  "resource": {
+    "aws_kms_key": {
+      "main": {
+        "description": "validated-iam encryption",
+        "enable_key_rotation": true,
+        "deletion_window_in_days": 30,
+        "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"AccountKeyAdministration\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::123456789012:root\"},\"Action\":[\"kms:CreateAlias\",\"kms:DescribeKey\",\"kms:EnableKeyRotation\",\"kms:GetKeyPolicy\",\"kms:PutKeyPolicy\",\"kms:ScheduleKeyDeletion\",\"kms:TagResource\",\"kms:Encrypt\",\"kms:Decrypt\",\"kms:GenerateDataKey\"],\"Resource\":\"*\"}]}",
+        "tags": {
+          "Environment": "dev",
+          "ManagedBy": "ai-validated-iac-pipeline"
+        }
+      }
+    },
+    "aws_s3_bucket": {
+      "logs": {
+        "bucket": "validated-iam-logs",
+        "force_destroy": false,
+        "tags": {
+          "Environment": "dev",
+          "ManagedBy": "ai-validated-iac-pipeline"
+        }
+      }
+    },
+    "aws_s3_bucket_public_access_block": {
+      "logs": {
+        "bucket": "${aws_s3_bucket.logs.id}",
+        "block_public_acls": true,
+        "block_public_policy": true,
+        "ignore_public_acls": true,
+        "restrict_public_buckets": true
+      }
+    },
+    "aws_s3_bucket_server_side_encryption_configuration": {
+      "logs": {
+        "bucket": "${aws_s3_bucket.logs.id}",
+        "rule": {
+          "apply_server_side_encryption_by_default": {
+            "sse_algorithm": "AES256"
+          },
+          "bucket_key_enabled": true
+        }
+      }
+    },
+    "aws_s3_bucket_versioning": {
+      "logs": {
+        "bucket": "${aws_s3_bucket.logs.id}",
+        "versioning_configuration": {
+          "status": "Enabled"
+        }
+      }
+    },
+    "aws_s3_bucket_policy": {
+      "logs": {
+        "bucket": "${aws_s3_bucket.logs.id}",
+        "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"DenyInsecureTransport\",\"Effect\":\"Deny\",\"Principal\":\"*\",\"Action\":\"s3:*\",\"Resource\":[\"${aws_s3_bucket.logs.arn}\",\"${aws_s3_bucket.logs.arn}/*\"],\"Condition\":{\"Bool\":{\"aws:SecureTransport\":\"false\"}}},{\"Sid\":\"S3LogDelivery\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"logging.s3.amazonaws.com\"},\"Action\":\"s3:PutObject\",\"Resource\":\"${aws_s3_bucket.logs.arn}/*\",\"Condition\":{\"StringEquals\":{\"aws:SourceAccount\":\"123456789012\"},\"ArnLike\":{\"aws:SourceArn\":\"arn:aws:s3:::validated-iam-*\"}}}]}"
+      }
+    },
+    "aws_iam_role": {
+      "reader": {
+        "name": "validated-iam-reader",
+        "assume_role_policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}",
+        "tags": {
+          "Environment": "dev",
+          "ManagedBy": "ai-validated-iac-pipeline"
+        }
+      }
+    },
+    "aws_iam_role_policy": {
+      "reader": {
+        "name": "read-one-prefix",
+        "role": "${aws_iam_role.reader.id}",
+        "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":[\"s3:GetObject\"],\"Resource\":[\"arn:aws:s3:::validated-iam-logs/approved/*\"]}]}"
+      }
+    }
+  }
+}

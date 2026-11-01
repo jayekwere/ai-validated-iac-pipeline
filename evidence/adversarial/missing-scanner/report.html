@@ -1,0 +1,907 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:"><title>IaC verification evidence</title><style>body{margin:0;background:#0c1424;color:#dce6f8;font:16px/1.6 system-ui}main{max-width:1180px;margin:auto;padding:48px 28px}h1{font-size:44px;line-height:1.15;margin:12px 0}h2{margin-top:42px;color:#b9d6ff}.eyebrow,small{color:#82b8ed;letter-spacing:.08em;font-size:12px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}.card,pre,details{background:#142239;border:1px solid #2a405e;border-radius:12px;padding:20px}.card strong{display:block;font-size:21px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.7 ui-monospace,monospace}.pass{color:#72e6ba}.fail{color:#ffada6}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:12px;border-bottom:1px solid #2a405e}summary{cursor:pointer}a{color:#9cc8ff}.flow{display:flex;flex-wrap:wrap;gap:10px}.flow span{padding:14px;background:#19314c;border-radius:9px}footer{margin:40px 0;color:#9bacc5}</style></head><body><main><div class="eyebrow">INDEPENDENT INFRASTRUCTURE VERIFICATION / V1</div><h1>AI-Validated IaC Pipeline</h1><p>Generated infrastructure earns trust through independent checks and human review.</p><div class="grid"><div class="card"><small>VERDICT</small><strong>REJECTED</strong></div><div class="card"><small>GENERATION</small><strong>deterministic non-AI</strong></div><div class="card"><small>SCOPE</small><strong>platform</strong></div><div class="card"><small>CLOUD EXECUTION</small><strong>No provisioning</strong></div></div><h2>Trust architecture</h2><div class="flow"><span>Strict specification</span><span>→ Untrusted generator</span><span>→ Closed grammar</span><span>→ Trusted tools</span><span>→ Plan policies</span><span>→ Human review</span></div><h2>Verification gates</h2><table><thead><tr><th>Gate</th><th>Decision</th><th>Evidence</th></tr></thead><tbody><tr><td>Specification admission</td><td class="pass">PASS</td><td>Verified</td></tr><tr><td>Generated output allowlist</td><td class="pass">PASS</td><td>Verified</td></tr><tr><td>Reproducibility</td><td class="pass">PASS</td><td>Verified</td></tr><tr><td>Tool integrity</td><td class="fail">FAIL</td><td>Exit 1; see gate log</td></tr><tr><td>Trusted source integrity</td><td class="pass">PASS</td><td>Compare trusted source hashes before and after evaluation</td></tr></tbody></table><h2>Original specification</h2><pre>{
+  &quot;version&quot;: 1,
+  &quot;cloud&quot;: &quot;aws&quot;,
+  &quot;kind&quot;: &quot;platform&quot;,
+  &quot;name&quot;: &quot;validated-platform&quot;,
+  &quot;region&quot;: &quot;ca-central-1&quot;,
+  &quot;environment&quot;: &quot;dev&quot;,
+  &quot;encryption&quot;: &quot;aws:kms&quot;,
+  &quot;public&quot;: false,
+  &quot;cidr&quot;: &quot;10.42.0.0/16&quot;,
+  &quot;ami&quot;: &quot;ami-00000000000000001&quot;,
+  &quot;certificateArn&quot;: &quot;arn:aws:acm:ca-central-1:123456789012:certificate/00000000-0000-4000-8000-000000000001&quot;,
+  &quot;accountId&quot;: &quot;123456789012&quot;
+}</pre><h2>Generated Terraform JSON</h2><details><summary>Inspect generated configuration</summary><pre>{
+  &quot;terraform&quot;: {
+    &quot;required_version&quot;: &quot;= 1.9.8&quot;,
+    &quot;required_providers&quot;: {
+      &quot;aws&quot;: {
+        &quot;source&quot;: &quot;hashicorp/aws&quot;,
+        &quot;version&quot;: &quot;= 5.76.0&quot;
+      }
+    }
+  },
+  &quot;provider&quot;: {
+    &quot;aws&quot;: {
+      &quot;region&quot;: &quot;ca-central-1&quot;,
+      &quot;skip_credentials_validation&quot;: true,
+      &quot;skip_requesting_account_id&quot;: true,
+      &quot;skip_metadata_api_check&quot;: true
+    }
+  },
+  &quot;resource&quot;: {
+    &quot;aws_kms_key&quot;: {
+      &quot;main&quot;: {
+        &quot;description&quot;: &quot;validated-platform encryption&quot;,
+        &quot;enable_key_rotation&quot;: true,
+        &quot;deletion_window_in_days&quot;: 30,
+        &quot;policy&quot;: &quot;{\&quot;Version\&quot;:\&quot;2012-10-17\&quot;,\&quot;Statement\&quot;:[{\&quot;Sid\&quot;:\&quot;AccountKeyAdministration\&quot;,\&quot;Effect\&quot;:\&quot;Allow\&quot;,\&quot;Principal\&quot;:{\&quot;AWS\&quot;:\&quot;arn:aws:iam::123456789012:root\&quot;},\&quot;Action\&quot;:[\&quot;kms:CreateAlias\&quot;,\&quot;kms:DescribeKey\&quot;,\&quot;kms:EnableKeyRotation\&quot;,\&quot;kms:GetKeyPolicy\&quot;,\&quot;kms:PutKeyPolicy\&quot;,\&quot;kms:ScheduleKeyDeletion\&quot;,\&quot;kms:TagResource\&quot;,\&quot;kms:Encrypt\&quot;,\&quot;kms:Decrypt\&quot;,\&quot;kms:GenerateDataKey\&quot;],\&quot;Resource\&quot;:\&quot;*\&quot;},{\&quot;Sid\&quot;:\&quot;CloudTrailEncryption\&quot;,\&quot;Effect\&quot;:\&quot;Allow\&quot;,\&quot;Principal\&quot;:{\&quot;Service\&quot;:\&quot;cloudtrail.amazonaws.com\&quot;},\&quot;Action\&quot;:[\&quot;kms:GenerateDataKey*\&quot;,\&quot;kms:DescribeKey\&quot;],\&quot;Resource\&quot;:\&quot;*\&quot;,\&quot;Condition\&quot;:{\&quot;StringEquals\&quot;:{\&quot;aws:SourceArn\&quot;:\&quot;arn:aws:cloudtrail:ca-central-1:123456789012:trail/validated-platform\&quot;}}},{\&quot;Sid\&quot;:\&quot;CloudWatchLogsEncryption\&quot;,\&quot;Effect\&quot;:\&quot;Allow\&quot;,\&quot;Principal\&quot;:{\&quot;Service\&quot;:\&quot;logs.ca-central-1.amazonaws.com\&quot;},\&quot;Action\&quot;:[\&quot;kms:Encrypt\&quot;,\&quot;kms:Decrypt\&quot;,\&quot;kms:ReEncrypt*\&quot;,\&quot;kms:GenerateDataKey*\&quot;,\&quot;kms:DescribeKey\&quot;],\&quot;Resource\&quot;:\&quot;*\&quot;,\&quot;Condition\&quot;:{\&quot;ArnEquals\&quot;:{\&quot;kms:EncryptionContext:aws:logs:arn\&quot;:\&quot;arn:aws:logs:ca-central-1:123456789012:log-group:/iac/validated-platform\&quot;}}}]}&quot;,
+        &quot;tags&quot;: {
+          &quot;Environment&quot;: &quot;dev&quot;,
+          &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+        }
+      }
+    },
+    &quot;aws_s3_bucket&quot;: {
+      &quot;logs&quot;: {
+        &quot;bucket&quot;: &quot;validated-platform-logs&quot;,
+        &quot;force_destroy&quot;: false,
+        &quot;tags&quot;: {
+          &quot;Environment&quot;: &quot;dev&quot;,
+          &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+        }
+      },
+      &quot;storage&quot;: {
+        &quot;bucket&quot;: &quot;validated-platform-storage&quot;,
+        &quot;force_destroy&quot;: false,
+        &quot;tags&quot;: {
+          &quot;Environment&quot;: &quot;dev&quot;,
+          &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+        }
+      }
+    },
+    &quot;aws_s3_bucket_public_access_block&quot;: {
+      &quot;logs&quot;: {
+        &quot;bucket&quot;: &quot;${aws_s3_bucket.logs.id}&quot;,
+        &quot;block_public_acls&quot;: true,
+        &quot;block_public_policy&quot;: true,
+        &quot;ignore_public_acls&quot;: true,
+        &quot;restrict_public_buckets&quot;: true
+      },
+      &quot;storage&quot;: {
+        &quot;bucket&quot;: &quot;${aws_s3_bucket.storage.id}&quot;,
+        &quot;block_public_acls&quot;: true,
+        &quot;block_public_policy&quot;: true,
+        &quot;ignore_public_acls&quot;: true,
+        &quot;restrict_public_buckets&quot;: true
+      }
+    },
+    &quot;aws_s3_bucket_server_side_encryption_configuration&quot;: {
+      &quot;logs&quot;: {
+        &quot;bucket&quot;: &quot;${aws_s3_bucket.logs.id}&quot;,
+        &quot;rule&quot;: {
+          &quot;apply_server_side_encryption_by_default&quot;: {
+            &quot;sse_algorithm&quot;: &quot;AES256&quot;
+          },
+          &quot;bucket_key_enabled&quot;: true
+        }
+      },
+      &quot;storage&quot;: {
+        &quot;bucket&quot;: &quot;${aws_s3_bucket.storage.id}&quot;,
+        &quot;rule&quot;: {
+          &quot;apply_server_side_encryption_by_default&quot;: {
+            &quot;sse_algorithm&quot;: &quot;aws:kms&quot;,
+            &quot;kms_master_key_id&quot;: &quot;${aws_kms_key.main.arn}&quot;
+          },
+          &quot;bucket_key_enabled&quot;: true
+        }
+      }
+    },
+    &quot;aws_s3_bucket_versioning&quot;: {
+      &quot;logs&quot;: {
+        &quot;bucket&quot;: &quot;${aws_s3_bucket.logs.id}&quot;,
+        &quot;versioning_configuration&quot;: {
+          &quot;status&quot;: &quot;Enabled&quot;
+        }
+      },
+      &quot;storage&quot;: {
+        &quot;bucket&quot;: &quot;${aws_s3_bucket.storage.id}&quot;,
+        &quot;versioning_configuration&quot;: {
+          &quot;status&quot;: &quot;Enabled&quot;
+        }
+      }
+    },
+    &quot;aws_s3_bucket_policy&quot;: {
+      &quot;logs&quot;: {
+        &quot;bucket&quot;: &quot;${aws_s3_bucket.logs.id}&quot;,
+        &quot;policy&quot;: &quot;{\&quot;Version\&quot;:\&quot;2012-10-17\&quot;,\&quot;Statement\&quot;:[{\&quot;Sid\&quot;:\&quot;DenyInsecureTransport\&quot;,\&quot;Effect\&quot;:\&quot;Deny\&quot;,\&quot;Principal\&quot;:\&quot;*\&quot;,\&quot;Action\&quot;:\&quot;s3:*\&quot;,\&quot;Resource\&quot;:[\&quot;${aws_s3_bucket.logs.arn}\&quot;,\&quot;${aws_s3_bucket.logs.arn}/*\&quot;],\&quot;Condition\&quot;:{\&quot;Bool\&quot;:{\&quot;aws:SecureTransport\&quot;:\&quot;false\&quot;}}},{\&quot;Sid\&quot;:\&quot;S3LogDelivery\&quot;,\&quot;Effect\&quot;:\&quot;Allow\&quot;,\&quot;Principal\&quot;:{\&quot;Service\&quot;:\&quot;logging.s3.amazonaws.com\&quot;},\&quot;Action\&quot;:\&quot;s3:PutObject\&quot;,\&quot;Resource\&quot;:\&quot;${aws_s3_bucket.logs.arn}/*\&quot;,\&quot;Condition\&quot;:{\&quot;StringEquals\&quot;:{\&quot;aws:SourceAccount\&quot;:\&quot;123456789012\&quot;},\&quot;ArnLike\&quot;:{\&quot;aws:SourceArn\&quot;:\&quot;arn:aws:s3:::validated-platform-*\&quot;}}},{\&quot;Sid\&quot;:\&quot;VPCLogDelivery\&quot;,\&quot;Effect\&quot;:\&quot;Allow\&quot;,\&quot;Principal\&quot;:{\&quot;Service\&quot;:\&quot;delivery.logs.amazonaws.com\&quot;},\&quot;Action\&quot;:\&quot;s3:PutObject\&quot;,\&quot;Resource\&quot;:\&quot;${aws_s3_bucket.logs.arn}/AWSLogs/123456789012/*\&quot;,\&quot;Condition\&quot;:{\&quot;StringEquals\&quot;:{\&quot;aws:SourceAccount\&quot;:\&quot;123456789012\&quot;,\&quot;s3:x-amz-acl\&quot;:\&quot;bucket-owner-full-control\&quot;},\&quot;ArnLike\&quot;:{\&quot;aws:SourceArn\&quot;:\&quot;arn:aws:logs:ca-central-1:123456789012:*\&quot;}}},{\&quot;Sid\&quot;:\&quot;VPCLogAcl\&quot;,\&quot;Effect\&quot;:\&quot;Allow\&quot;,\&quot;Principal\&quot;:{\&quot;Service\&quot;:\&quot;delivery.logs.amazonaws.com\&quot;},\&quot;Action\&quot;:\&quot;s3:GetBucketAcl\&quot;,\&quot;Resource\&quot;:\&quot;${aws_s3_bucket.logs.arn}\&quot;,\&quot;Condition\&quot;:{\&quot;StringEquals\&quot;:{\&quot;aws:SourceAccount\&quot;:\&quot;123456789012\&quot;}}},{\&quot;Sid\&quot;:\&quot;ALBLogDelivery\&quot;,\&quot;Effect\&quot;:\&quot;Allow\&quot;,\&quot;Principal\&quot;:{\&quot;Service\&quot;:\&quot;logdelivery.elasticloadbalancing.amazonaws.com\&quot;},\&quot;Action\&quot;:\&quot;s3:PutObject\&quot;,\&quot;Resource\&quot;:\&quot;${aws_s3_bucket.logs.arn}/alb/AWSLogs/123456789012/*\&quot;},{\&quot;Sid\&quot;:\&quot;CloudTrailAcl\&quot;,\&quot;Effect\&quot;:\&quot;Allow\&quot;,\&quot;Principal\&quot;:{\&quot;Service\&quot;:\&quot;cloudtrail.amazonaws.com\&quot;},\&quot;Action\&quot;:\&quot;s3:GetBucketAcl\&quot;,\&quot;Resource\&quot;:\&quot;${aws_s3_bucket.logs.arn}\&quot;,\&quot;Condition\&quot;:{\&quot;StringEquals\&quot;:{\&quot;aws:SourceArn\&quot;:\&quot;arn:aws:cloudtrail:ca-central-1:123456789012:trail/validated-platform\&quot;}}},{\&quot;Sid\&quot;:\&quot;CloudTrailDelivery\&quot;,\&quot;Effect\&quot;:\&quot;Allow\&quot;,\&quot;Principal\&quot;:{\&quot;Service\&quot;:\&quot;cloudtrail.amazonaws.com\&quot;},\&quot;Action\&quot;:\&quot;s3:PutObject\&quot;,\&quot;Resource\&quot;:\&quot;${aws_s3_bucket.logs.arn}/AWSLogs/123456789012/*\&quot;,\&quot;Condition\&quot;:{\&quot;StringEquals\&quot;:{\&quot;aws:SourceArn\&quot;:\&quot;arn:aws:cloudtrail:ca-central-1:123456789012:trail/validated-platform\&quot;,\&quot;s3:x-amz-acl\&quot;:\&quot;bucket-owner-full-control\&quot;}}}]}&quot;
+      },
+      &quot;storage&quot;: {
+        &quot;bucket&quot;: &quot;${aws_s3_bucket.storage.id}&quot;,
+        &quot;policy&quot;: &quot;{\&quot;Version\&quot;:\&quot;2012-10-17\&quot;,\&quot;Statement\&quot;:[{\&quot;Sid\&quot;:\&quot;DenyInsecureTransport\&quot;,\&quot;Effect\&quot;:\&quot;Deny\&quot;,\&quot;Principal\&quot;:\&quot;*\&quot;,\&quot;Action\&quot;:\&quot;s3:*\&quot;,\&quot;Resource\&quot;:[\&quot;${aws_s3_bucket.storage.arn}\&quot;,\&quot;${aws_s3_bucket.storage.arn}/*\&quot;],\&quot;Condition\&quot;:{\&quot;Bool\&quot;:{\&quot;aws:SecureTransport\&quot;:\&quot;false\&quot;}}}]}&quot;
+      }
+    },
+    &quot;aws_s3_bucket_logging&quot;: {
+      &quot;storage&quot;: {
+        &quot;bucket&quot;: &quot;${aws_s3_bucket.storage.id}&quot;,
+        &quot;target_bucket&quot;: &quot;${aws_s3_bucket.logs.id}&quot;,
+        &quot;target_prefix&quot;: &quot;storage/&quot;
+      }
+    },
+    &quot;aws_vpc&quot;: {
+      &quot;main&quot;: {
+        &quot;cidr_block&quot;: &quot;10.42.0.0/16&quot;,
+        &quot;enable_dns_hostnames&quot;: true,
+        &quot;enable_dns_support&quot;: true,
+        &quot;tags&quot;: {
+          &quot;Environment&quot;: &quot;dev&quot;,
+          &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+        }
+      }
+    },
+    &quot;aws_subnet&quot;: {
+      &quot;app_a&quot;: {
+        &quot;vpc_id&quot;: &quot;${aws_vpc.main.id}&quot;,
+        &quot;cidr_block&quot;: &quot;10.42.1.0/24&quot;,
+        &quot;availability_zone&quot;: &quot;ca-central-1a&quot;,
+        &quot;map_public_ip_on_launch&quot;: false,
+        &quot;tags&quot;: {
+          &quot;Environment&quot;: &quot;dev&quot;,
+          &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+        }
+      },
+      &quot;app_b&quot;: {
+        &quot;vpc_id&quot;: &quot;${aws_vpc.main.id}&quot;,
+        &quot;cidr_block&quot;: &quot;10.42.2.0/24&quot;,
+        &quot;availability_zone&quot;: &quot;ca-central-1b&quot;,
+        &quot;map_public_ip_on_launch&quot;: false,
+        &quot;tags&quot;: {
+          &quot;Environment&quot;: &quot;dev&quot;,
+          &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+        }
+      },
+      &quot;data_a&quot;: {
+        &quot;vpc_id&quot;: &quot;${aws_vpc.main.id}&quot;,
+        &quot;cidr_block&quot;: &quot;10.42.3.0/24&quot;,
+        &quot;availability_zone&quot;: &quot;ca-central-1a&quot;,
+        &quot;map_public_ip_on_launch&quot;: false,
+        &quot;tags&quot;: {
+          &quot;Environment&quot;: &quot;dev&quot;,
+          &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+        }
+      },
+      &quot;data_b&quot;: {
+        &quot;vpc_id&quot;: &quot;${aws_vpc.main.id}&quot;,
+        &quot;cidr_block&quot;: &quot;10.42.4.0/24&quot;,
+        &quot;availability_zone&quot;: &quot;ca-central-1b&quot;,
+        &quot;map_public_ip_on_launch&quot;: false,
+        &quot;tags&quot;: {
+          &quot;Environment&quot;: &quot;dev&quot;,
+          &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+        }
+      }
+    },
+    &quot;aws_route_table&quot;: {
+      &quot;app&quot;: {
+        &quot;vpc_id&quot;: &quot;${aws_vpc.main.id}&quot;,
+        &quot;tags&quot;: {
+          &quot;Environment&quot;: &quot;dev&quot;,
+          &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+        }
+      },
+      &quot;data&quot;: {
+        &quot;vpc_id&quot;: &quot;${aws_vpc.main.id}&quot;,
+        &quot;tags&quot;: {
+          &quot;Environment&quot;: &quot;dev&quot;,
+          &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+        }
+      }
+    },
+    &quot;aws_route_table_association&quot;: {
+      &quot;app_a&quot;: {
+        &quot;subnet_id&quot;: &quot;${aws_subnet.app_a.id}&quot;,
+        &quot;route_table_id&quot;: &quot;${aws_route_table.app.id}&quot;
+      },
+      &quot;app_b&quot;: {
+        &quot;subnet_id&quot;: &quot;${aws_subnet.app_b.id}&quot;,
+        &quot;route_table_id&quot;: &quot;${aws_route_table.app.id}&quot;
+      },
+      &quot;data_a&quot;: {
+        &quot;subnet_id&quot;: &quot;${aws_subnet.data_a.id}&quot;,
+        &quot;route_table_id&quot;: &quot;${aws_route_table.data.id}&quot;
+      },
+      &quot;data_b&quot;: {
+        &quot;subnet_id&quot;: &quot;${aws_subnet.data_b.id}&quot;,
+        &quot;route_table_id&quot;: &quot;${aws_route_table.data.id}&quot;
+      }
+    },
+    &quot;aws_flow_log&quot;: {
+      &quot;main&quot;: {
+        &quot;vpc_id&quot;: &quot;${aws_vpc.main.id}&quot;,
+        &quot;traffic_type&quot;: &quot;ALL&quot;,
+        &quot;log_destination_type&quot;: &quot;s3&quot;,
+        &quot;log_destination&quot;: &quot;${aws_s3_bucket.logs.arn}&quot;,
+        &quot;max_aggregation_interval&quot;: 60,
+        &quot;tags&quot;: {
+          &quot;Environment&quot;: &quot;dev&quot;,
+          &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+        }
+      }
+    },
+    &quot;aws_default_security_group&quot;: {
+      &quot;default&quot;: {
+        &quot;vpc_id&quot;: &quot;${aws_vpc.main.id}&quot;,
+        &quot;ingress&quot;: [],
+        &quot;egress&quot;: [],
+        &quot;tags&quot;: {
+          &quot;Environment&quot;: &quot;dev&quot;,
+          &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+        }
+      }
+    },
+    &quot;aws_security_group&quot;: {
+      &quot;app&quot;: {
+        &quot;name&quot;: &quot;validated-platform-app&quot;,
+        &quot;description&quot;: &quot;Private application TLS only&quot;,
+        &quot;vpc_id&quot;: &quot;${aws_vpc.main.id}&quot;,
+        &quot;ingress&quot;: [
+          {
+            &quot;description&quot;: &quot;Internal TLS&quot;,
+            &quot;from_port&quot;: 443,
+            &quot;to_port&quot;: 443,
+            &quot;protocol&quot;: &quot;tcp&quot;,
+            &quot;cidr_blocks&quot;: [
+              &quot;10.42.0.0/16&quot;
+            ],
+            &quot;ipv6_cidr_blocks&quot;: [],
+            &quot;prefix_list_ids&quot;: [],
+            &quot;security_groups&quot;: [],
+            &quot;self&quot;: false
+          }
+        ],
+        &quot;egress&quot;: [],
+        &quot;tags&quot;: {
+          &quot;Environment&quot;: &quot;dev&quot;,
+          &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+        }
+      }
+    },
+    &quot;aws_instance&quot;: {
+      &quot;app&quot;: {
+        &quot;ami&quot;: &quot;ami-00000000000000001&quot;,
+        &quot;instance_type&quot;: &quot;t3.micro&quot;,
+        &quot;subnet_id&quot;: &quot;${aws_subnet.app_a.id}&quot;,
+        &quot;vpc_security_group_ids&quot;: [
+          &quot;${aws_security_group.app.id}&quot;
+        ],
+        &quot;associate_public_ip_address&quot;: false,
+        &quot;monitoring&quot;: true,
+        &quot;metadata_options&quot;: {
+          &quot;http_endpoint&quot;: &quot;enabled&quot;,
+          &quot;http_tokens&quot;: &quot;required&quot;,
+          &quot;http_put_response_hop_limit&quot;: 1
+        },
+        &quot;root_block_device&quot;: {
+          &quot;encrypted&quot;: true,
+          &quot;kms_key_id&quot;: &quot;${aws_kms_key.main.arn}&quot;,
+          &quot;volume_type&quot;: &quot;gp3&quot;,
+          &quot;volume_size&quot;: 20
+        },
+        &quot;tags&quot;: {
+          &quot;Environment&quot;: &quot;dev&quot;,
+          &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+        }
+      }
+    },
+    &quot;aws_iam_role&quot;: {
+      &quot;reader&quot;: {
+        &quot;name&quot;: &quot;validated-platform-reader&quot;,
+        &quot;assume_role_policy&quot;: &quot;{\&quot;Version\&quot;:\&quot;2012-10-17\&quot;,\&quot;Statement\&quot;:[{\&quot;Effect\&quot;:\&quot;Allow\&quot;,\&quot;Principal\&quot;:{\&quot;Service\&quot;:\&quot;ec2.amazonaws.com\&quot;},\&quot;Action\&quot;:\&quot;sts:AssumeRole\&quot;}]}&quot;,
+        &quot;tags&quot;: {
+          &quot;Environment&quot;: &quot;dev&quot;,
+          &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+        }
+      }
+    },
+    &quot;aws_iam_role_policy&quot;: {
+      &quot;reader&quot;: {
+        &quot;name&quot;: &quot;read-one-prefix&quot;,
+        &quot;role&quot;: &quot;${aws_iam_role.reader.id}&quot;,
+        &quot;policy&quot;: &quot;{\&quot;Version\&quot;:\&quot;2012-10-17\&quot;,\&quot;Statement\&quot;:[{\&quot;Effect\&quot;:\&quot;Allow\&quot;,\&quot;Action\&quot;:[\&quot;s3:GetObject\&quot;],\&quot;Resource\&quot;:[\&quot;arn:aws:s3:::validated-platform-logs/approved/*\&quot;]}]}&quot;
+      }
+    },
+    &quot;aws_lb&quot;: {
+      &quot;app&quot;: {
+        &quot;name&quot;: &quot;validated-platform&quot;,
+        &quot;internal&quot;: true,
+        &quot;load_balancer_type&quot;: &quot;application&quot;,
+        &quot;subnets&quot;: [
+          &quot;${aws_subnet.app_a.id}&quot;,
+          &quot;${aws_subnet.app_b.id}&quot;
+        ],
+        &quot;security_groups&quot;: [
+          &quot;${aws_security_group.app.id}&quot;
+        ],
+        &quot;drop_invalid_header_fields&quot;: true,
+        &quot;enable_deletion_protection&quot;: true,
+        &quot;access_logs&quot;: {
+          &quot;bucket&quot;: &quot;${aws_s3_bucket.logs.id}&quot;,
+          &quot;prefix&quot;: &quot;alb&quot;,
+          &quot;enabled&quot;: true
+        },
+        &quot;tags&quot;: {
+          &quot;Environment&quot;: &quot;dev&quot;,
+          &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+        }
+      }
+    },
+    &quot;aws_lb_listener&quot;: {
+      &quot;https&quot;: {
+        &quot;load_balancer_arn&quot;: &quot;${aws_lb.app.arn}&quot;,
+        &quot;port&quot;: 443,
+        &quot;protocol&quot;: &quot;HTTPS&quot;,
+        &quot;ssl_policy&quot;: &quot;ELBSecurityPolicy-TLS13-1-2-2021-06&quot;,
+        &quot;certificate_arn&quot;: &quot;arn:aws:acm:ca-central-1:123456789012:certificate/00000000-0000-4000-8000-000000000001&quot;,
+        &quot;default_action&quot;: {
+          &quot;type&quot;: &quot;fixed-response&quot;,
+          &quot;fixed_response&quot;: {
+            &quot;content_type&quot;: &quot;text/plain&quot;,
+            &quot;message_body&quot;: &quot;Private service&quot;,
+            &quot;status_code&quot;: &quot;200&quot;
+          }
+        }
+      }
+    },
+    &quot;aws_cloudwatch_log_group&quot;: {
+      &quot;audit&quot;: {
+        &quot;name&quot;: &quot;/iac/validated-platform&quot;,
+        &quot;retention_in_days&quot;: 365,
+        &quot;kms_key_id&quot;: &quot;${aws_kms_key.main.arn}&quot;,
+        &quot;tags&quot;: {
+          &quot;Environment&quot;: &quot;dev&quot;,
+          &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+        }
+      }
+    },
+    &quot;aws_cloudtrail&quot;: {
+      &quot;audit&quot;: {
+        &quot;name&quot;: &quot;validated-platform&quot;,
+        &quot;s3_bucket_name&quot;: &quot;${aws_s3_bucket.logs.id}&quot;,
+        &quot;is_multi_region_trail&quot;: true,
+        &quot;include_global_service_events&quot;: true,
+        &quot;enable_log_file_validation&quot;: true,
+        &quot;enable_logging&quot;: true,
+        &quot;kms_key_id&quot;: &quot;${aws_kms_key.main.arn}&quot;,
+        &quot;tags&quot;: {
+          &quot;Environment&quot;: &quot;dev&quot;,
+          &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+        },
+        &quot;depends_on&quot;: [
+          &quot;aws_s3_bucket_policy.logs&quot;
+        ]
+      }
+    }
+  }
+}</pre></details><h2>Policy decisions and exact findings</h2><pre>{}</pre><h2>Reproducibility and source evidence</h2><pre>{
+  &quot;spec&quot;: &quot;24eeeb16b671f3388d57d4e96e3f9f6e74bd510fc6392ffd24a26ecf861cf5b5&quot;,
+  &quot;terraform&quot;: &quot;3bbb90960b3346e23bd13a7aa39a305a87134443ffbc26ffc15339d972a35ad2&quot;,
+  &quot;trustedSources&quot;: {
+    &quot;src/ai.ts&quot;: &quot;3699baee90ceea698c3b94dba5bdef71cc6366ea41189dcd41c7df856821383c&quot;,
+    &quot;src/candidate.ts&quot;: &quot;afa61e5fc05f1dfcf839a0fd377928024b50aa91e06cc49bdc2fff22f7f0b285&quot;,
+    &quot;src/cli.ts&quot;: &quot;dfc12b8b192ee3a4b0e115400e90dd024e18bf7158a592000b43db55dddaa256&quot;,
+    &quot;src/engine.ts&quot;: &quot;ac9a57845a9b8c5f7b840cf8bc42c9c1986d4d48314fdfe76d6ba91b48d04454&quot;,
+    &quot;src/github.ts&quot;: &quot;373694f083ec0c8a80e7858370645004c5ed01945cc3a57d3036801a72174aab&quot;,
+    &quot;src/hcl.ts&quot;: &quot;c358681c59f2e95a8c2dfd41e452f2fdb3a7de5113ec6425796222db5da40997&quot;,
+    &quot;src/pipeline.ts&quot;: &quot;b639538eed441f91a3beab66f8837379a73ab61bde2ce4866690ba7300f25820&quot;,
+    &quot;src/report.ts&quot;: &quot;6ae5baebf49f1836fa026c059f534236f85b4e65ebe85fe72e038a88b7ab2dcc&quot;,
+    &quot;src/spec.ts&quot;: &quot;3022253863a1438e836cf24040d31efe003d3c4783242dfd780bcb223ad98463&quot;,
+    &quot;policy/allowlist.json&quot;: &quot;62b70ac29ea3b40172e622830bce02f84ac1e7e8799c5a1fc56d1bf8f64a0dea&quot;,
+    &quot;policy/scanner-exceptions.json&quot;: &quot;ca5ffa4cf2b2206fd5d3b672eb60d8abf19ade8d4da20bbea325686bb63a93c8&quot;,
+    &quot;policy/v1/plan.rego&quot;: &quot;366bfe0859a2f28d9cfbd3062a514c99b2fa3f3059f705ebb31d978098d7d22f&quot;,
+    &quot;policy/v1/plan_test.rego&quot;: &quot;6323cebf7e1d73c21535516f3568554858aeaff1a002c4bfef20a344ad138f0a&quot;,
+    &quot;trusted/.terraform.lock.hcl&quot;: &quot;bf2ff4cacc82a5b3855036a4a146bf83c8a8d84dfea831792f782e88d5b8dfcb&quot;,
+    &quot;trusted/assertions/audit.hcl&quot;: &quot;d2ba905b9a8861fe701b84b70ff7cfc70bb46b2928f8e2d7462c0bcade2629d3&quot;,
+    &quot;trusted/assertions/compute.hcl&quot;: &quot;a9c8c3f811f3db4624e69e80afe02cf82fd2cea8ce671f0432bb2da9437bd8f4&quot;,
+    &quot;trusted/assertions/iam.hcl&quot;: &quot;fe5cab95dbe4156bbd8c887368218327ee6d55221f718303d9293f87c4de7f54&quot;,
+    &quot;trusted/assertions/load-balancer.hcl&quot;: &quot;f042184a5c59970215e5362404e35cbfae6a1bedcff8691c66f899b96a75b96d&quot;,
+    &quot;trusted/assertions/network.hcl&quot;: &quot;0d001a9086e59d5b09bf61369c5f931beefbd6a25a6e34b6f1c0076b63016484&quot;,
+    &quot;trusted/assertions/platform.hcl&quot;: &quot;fc04d4cc93c1a54f37d19ddf0e96ad2db6431aeb3392c34714969499ebbfa761&quot;,
+    &quot;trusted/assertions/storage.hcl&quot;: &quot;bd577cda8a72448e4a66332dd9d64473fb3076a4f8593885477a45e2e694cb09&quot;,
+    &quot;trusted/security.tftest.hcl&quot;: &quot;ada4c2aaa282bf967218b76e95c692310b0ad98ba2d4c17fda26f1c2e0068047&quot;,
+    &quot;scripts/__pycache__/check_github_boundaries.cpython-314.pyc&quot;: &quot;0a673306cff7b14139bbe3129821414aeab67267f560d776d0b51bfc5a499c94&quot;,
+    &quot;scripts/__pycache__/scan.cpython-314.pyc&quot;: &quot;0971cdd67a16d315cd2417f56cced61842fb72f596984979539ae7afa1ddecf9&quot;,
+    &quot;scripts/adversarial.ts&quot;: &quot;91f7fdbc92d4b7f77e7bb3577107f5378e9a46ba843afddc1d58c10f53ee5070&quot;,
+    &quot;scripts/bootstrap.py&quot;: &quot;442f543a0f7db0f1d3361408ee3280f6e38227672cd004148c4d1a2b80845de0&quot;,
+    &quot;scripts/build_index.ts&quot;: &quot;15f786c14daf89b1010e45b858c18a88cc4fa9ce32619992b55f67d39ba6cb0e&quot;,
+    &quot;scripts/check_github_boundaries.py&quot;: &quot;9d9fdd9f07295605b07a03b9e309f5c9924db22d7e90d7c6ccd47a234dda0716&quot;,
+    &quot;scripts/check_workflows.py&quot;: &quot;8fed3f68286227e9893b5f8aa0e82dbb7049e13cf1415332dc13171a70b29968&quot;,
+    &quot;scripts/configure_github.py&quot;: &quot;89ec97327f54cdfec6c14374c1079fd9c26d86238a4119074abb0a00fb26d5fd&quot;,
+    &quot;scripts/scan.py&quot;: &quot;4c4c57fe4ee7153a5bbd80d212dc67756eb33e90b478bba5829e0c2cb75ea584&quot;,
+    &quot;scripts/scan_repository.py&quot;: &quot;baa7bbbe207a89ccf89cd7329bc15654a42d22695451c996f94a5df287d9be07&quot;,
+    &quot;scripts/validate_generated_pr.ts&quot;: &quot;bc094c4d442c0e506c3c2be3f61c3acb79ab67af6952ca3fd1b10ed75870a882&quot;,
+    &quot;scripts/validate_specs.ts&quot;: &quot;d9b49240e65e47d49b3f94e67b6e97b28e6576769700aae43d57e81b5a4bf650&quot;,
+    &quot;schemas/spec-v1.schema.json&quot;: &quot;da5a84e5b049a55629100285344e14f888a6c705a7e2584120ac317b327bf3bd&quot;,
+    &quot;.github/CODEOWNERS&quot;: &quot;23093c41ebf1b4fa4921c2571acf0fbccda57e105fc95ce5863632ce2b9829b7&quot;,
+    &quot;.github/dependabot.yml&quot;: &quot;2ccdb1d265770e632a75b40d0b47ed80fbd6c5dcbcf53f7b80545bbfc1583b98&quot;,
+    &quot;.github/workflows/ci.yml&quot;: &quot;fa825a440386419ebc56ac92e166cf82b7f68a8175cacd13cb30146bb84451db&quot;,
+    &quot;.github/workflows/generate.yml&quot;: &quot;eb05a657532d61d5f86dca0284c4e4afb0829a0e45cbe645de2125a6b679d730&quot;,
+    &quot;.github/workflows/specifications.yml&quot;: &quot;a6f84f5592b33018ff3c33f81d1f50a2dbbfc0ce5ff748653d0bfcbfbd6814cd&quot;,
+    &quot;.github/workflows/trusted-candidate.yml&quot;: &quot;5f7b442e7917399b42a2af28dd499f82e9380911f662aed72caf58c6f4baaa96&quot;,
+    &quot;tools.lock.json&quot;: &quot;e052500dafb1e1665bb172fec2b1ede1e30d6af30da6b66e9e603036744cd2f7&quot;,
+    &quot;package-lock.json&quot;: &quot;2b4f04bddab7db6155ae8308a4110018b97301723450a21167359ed5bf2f5454&quot;
+  }
+}</pre><h2>Verification scope</h2><p>Terraform mock tests and structured mock plan evidence, validated against real provider schemas. No live AWS validation. Sample AMI, account and certificate identifiers require operator substitution through an approved schema update before deployment. No merge or apply authority is granted.</p><details><summary>Full machine-readable evidence</summary><pre>{
+  &quot;version&quot;: 1,
+  &quot;mode&quot;: &quot;deterministic non-AI&quot;,
+  &quot;spec&quot;: {
+    &quot;version&quot;: 1,
+    &quot;cloud&quot;: &quot;aws&quot;,
+    &quot;kind&quot;: &quot;platform&quot;,
+    &quot;name&quot;: &quot;validated-platform&quot;,
+    &quot;region&quot;: &quot;ca-central-1&quot;,
+    &quot;environment&quot;: &quot;dev&quot;,
+    &quot;encryption&quot;: &quot;aws:kms&quot;,
+    &quot;public&quot;: false,
+    &quot;cidr&quot;: &quot;10.42.0.0/16&quot;,
+    &quot;ami&quot;: &quot;ami-00000000000000001&quot;,
+    &quot;certificateArn&quot;: &quot;arn:aws:acm:ca-central-1:123456789012:certificate/00000000-0000-4000-8000-000000000001&quot;,
+    &quot;accountId&quot;: &quot;123456789012&quot;
+  },
+  &quot;terraform&quot;: {
+    &quot;terraform&quot;: {
+      &quot;required_version&quot;: &quot;= 1.9.8&quot;,
+      &quot;required_providers&quot;: {
+        &quot;aws&quot;: {
+          &quot;source&quot;: &quot;hashicorp/aws&quot;,
+          &quot;version&quot;: &quot;= 5.76.0&quot;
+        }
+      }
+    },
+    &quot;provider&quot;: {
+      &quot;aws&quot;: {
+        &quot;region&quot;: &quot;ca-central-1&quot;,
+        &quot;skip_credentials_validation&quot;: true,
+        &quot;skip_requesting_account_id&quot;: true,
+        &quot;skip_metadata_api_check&quot;: true
+      }
+    },
+    &quot;resource&quot;: {
+      &quot;aws_kms_key&quot;: {
+        &quot;main&quot;: {
+          &quot;description&quot;: &quot;validated-platform encryption&quot;,
+          &quot;enable_key_rotation&quot;: true,
+          &quot;deletion_window_in_days&quot;: 30,
+          &quot;policy&quot;: &quot;{\&quot;Version\&quot;:\&quot;2012-10-17\&quot;,\&quot;Statement\&quot;:[{\&quot;Sid\&quot;:\&quot;AccountKeyAdministration\&quot;,\&quot;Effect\&quot;:\&quot;Allow\&quot;,\&quot;Principal\&quot;:{\&quot;AWS\&quot;:\&quot;arn:aws:iam::123456789012:root\&quot;},\&quot;Action\&quot;:[\&quot;kms:CreateAlias\&quot;,\&quot;kms:DescribeKey\&quot;,\&quot;kms:EnableKeyRotation\&quot;,\&quot;kms:GetKeyPolicy\&quot;,\&quot;kms:PutKeyPolicy\&quot;,\&quot;kms:ScheduleKeyDeletion\&quot;,\&quot;kms:TagResource\&quot;,\&quot;kms:Encrypt\&quot;,\&quot;kms:Decrypt\&quot;,\&quot;kms:GenerateDataKey\&quot;],\&quot;Resource\&quot;:\&quot;*\&quot;},{\&quot;Sid\&quot;:\&quot;CloudTrailEncryption\&quot;,\&quot;Effect\&quot;:\&quot;Allow\&quot;,\&quot;Principal\&quot;:{\&quot;Service\&quot;:\&quot;cloudtrail.amazonaws.com\&quot;},\&quot;Action\&quot;:[\&quot;kms:GenerateDataKey*\&quot;,\&quot;kms:DescribeKey\&quot;],\&quot;Resource\&quot;:\&quot;*\&quot;,\&quot;Condition\&quot;:{\&quot;StringEquals\&quot;:{\&quot;aws:SourceArn\&quot;:\&quot;arn:aws:cloudtrail:ca-central-1:123456789012:trail/validated-platform\&quot;}}},{\&quot;Sid\&quot;:\&quot;CloudWatchLogsEncryption\&quot;,\&quot;Effect\&quot;:\&quot;Allow\&quot;,\&quot;Principal\&quot;:{\&quot;Service\&quot;:\&quot;logs.ca-central-1.amazonaws.com\&quot;},\&quot;Action\&quot;:[\&quot;kms:Encrypt\&quot;,\&quot;kms:Decrypt\&quot;,\&quot;kms:ReEncrypt*\&quot;,\&quot;kms:GenerateDataKey*\&quot;,\&quot;kms:DescribeKey\&quot;],\&quot;Resource\&quot;:\&quot;*\&quot;,\&quot;Condition\&quot;:{\&quot;ArnEquals\&quot;:{\&quot;kms:EncryptionContext:aws:logs:arn\&quot;:\&quot;arn:aws:logs:ca-central-1:123456789012:log-group:/iac/validated-platform\&quot;}}}]}&quot;,
+          &quot;tags&quot;: {
+            &quot;Environment&quot;: &quot;dev&quot;,
+            &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+          }
+        }
+      },
+      &quot;aws_s3_bucket&quot;: {
+        &quot;logs&quot;: {
+          &quot;bucket&quot;: &quot;validated-platform-logs&quot;,
+          &quot;force_destroy&quot;: false,
+          &quot;tags&quot;: {
+            &quot;Environment&quot;: &quot;dev&quot;,
+            &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+          }
+        },
+        &quot;storage&quot;: {
+          &quot;bucket&quot;: &quot;validated-platform-storage&quot;,
+          &quot;force_destroy&quot;: false,
+          &quot;tags&quot;: {
+            &quot;Environment&quot;: &quot;dev&quot;,
+            &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+          }
+        }
+      },
+      &quot;aws_s3_bucket_public_access_block&quot;: {
+        &quot;logs&quot;: {
+          &quot;bucket&quot;: &quot;${aws_s3_bucket.logs.id}&quot;,
+          &quot;block_public_acls&quot;: true,
+          &quot;block_public_policy&quot;: true,
+          &quot;ignore_public_acls&quot;: true,
+          &quot;restrict_public_buckets&quot;: true
+        },
+        &quot;storage&quot;: {
+          &quot;bucket&quot;: &quot;${aws_s3_bucket.storage.id}&quot;,
+          &quot;block_public_acls&quot;: true,
+          &quot;block_public_policy&quot;: true,
+          &quot;ignore_public_acls&quot;: true,
+          &quot;restrict_public_buckets&quot;: true
+        }
+      },
+      &quot;aws_s3_bucket_server_side_encryption_configuration&quot;: {
+        &quot;logs&quot;: {
+          &quot;bucket&quot;: &quot;${aws_s3_bucket.logs.id}&quot;,
+          &quot;rule&quot;: {
+            &quot;apply_server_side_encryption_by_default&quot;: {
+              &quot;sse_algorithm&quot;: &quot;AES256&quot;
+            },
+            &quot;bucket_key_enabled&quot;: true
+          }
+        },
+        &quot;storage&quot;: {
+          &quot;bucket&quot;: &quot;${aws_s3_bucket.storage.id}&quot;,
+          &quot;rule&quot;: {
+            &quot;apply_server_side_encryption_by_default&quot;: {
+              &quot;sse_algorithm&quot;: &quot;aws:kms&quot;,
+              &quot;kms_master_key_id&quot;: &quot;${aws_kms_key.main.arn}&quot;
+            },
+            &quot;bucket_key_enabled&quot;: true
+          }
+        }
+      },
+      &quot;aws_s3_bucket_versioning&quot;: {
+        &quot;logs&quot;: {
+          &quot;bucket&quot;: &quot;${aws_s3_bucket.logs.id}&quot;,
+          &quot;versioning_configuration&quot;: {
+            &quot;status&quot;: &quot;Enabled&quot;
+          }
+        },
+        &quot;storage&quot;: {
+          &quot;bucket&quot;: &quot;${aws_s3_bucket.storage.id}&quot;,
+          &quot;versioning_configuration&quot;: {
+            &quot;status&quot;: &quot;Enabled&quot;
+          }
+        }
+      },
+      &quot;aws_s3_bucket_policy&quot;: {
+        &quot;logs&quot;: {
+          &quot;bucket&quot;: &quot;${aws_s3_bucket.logs.id}&quot;,
+          &quot;policy&quot;: &quot;{\&quot;Version\&quot;:\&quot;2012-10-17\&quot;,\&quot;Statement\&quot;:[{\&quot;Sid\&quot;:\&quot;DenyInsecureTransport\&quot;,\&quot;Effect\&quot;:\&quot;Deny\&quot;,\&quot;Principal\&quot;:\&quot;*\&quot;,\&quot;Action\&quot;:\&quot;s3:*\&quot;,\&quot;Resource\&quot;:[\&quot;${aws_s3_bucket.logs.arn}\&quot;,\&quot;${aws_s3_bucket.logs.arn}/*\&quot;],\&quot;Condition\&quot;:{\&quot;Bool\&quot;:{\&quot;aws:SecureTransport\&quot;:\&quot;false\&quot;}}},{\&quot;Sid\&quot;:\&quot;S3LogDelivery\&quot;,\&quot;Effect\&quot;:\&quot;Allow\&quot;,\&quot;Principal\&quot;:{\&quot;Service\&quot;:\&quot;logging.s3.amazonaws.com\&quot;},\&quot;Action\&quot;:\&quot;s3:PutObject\&quot;,\&quot;Resource\&quot;:\&quot;${aws_s3_bucket.logs.arn}/*\&quot;,\&quot;Condition\&quot;:{\&quot;StringEquals\&quot;:{\&quot;aws:SourceAccount\&quot;:\&quot;123456789012\&quot;},\&quot;ArnLike\&quot;:{\&quot;aws:SourceArn\&quot;:\&quot;arn:aws:s3:::validated-platform-*\&quot;}}},{\&quot;Sid\&quot;:\&quot;VPCLogDelivery\&quot;,\&quot;Effect\&quot;:\&quot;Allow\&quot;,\&quot;Principal\&quot;:{\&quot;Service\&quot;:\&quot;delivery.logs.amazonaws.com\&quot;},\&quot;Action\&quot;:\&quot;s3:PutObject\&quot;,\&quot;Resource\&quot;:\&quot;${aws_s3_bucket.logs.arn}/AWSLogs/123456789012/*\&quot;,\&quot;Condition\&quot;:{\&quot;StringEquals\&quot;:{\&quot;aws:SourceAccount\&quot;:\&quot;123456789012\&quot;,\&quot;s3:x-amz-acl\&quot;:\&quot;bucket-owner-full-control\&quot;},\&quot;ArnLike\&quot;:{\&quot;aws:SourceArn\&quot;:\&quot;arn:aws:logs:ca-central-1:123456789012:*\&quot;}}},{\&quot;Sid\&quot;:\&quot;VPCLogAcl\&quot;,\&quot;Effect\&quot;:\&quot;Allow\&quot;,\&quot;Principal\&quot;:{\&quot;Service\&quot;:\&quot;delivery.logs.amazonaws.com\&quot;},\&quot;Action\&quot;:\&quot;s3:GetBucketAcl\&quot;,\&quot;Resource\&quot;:\&quot;${aws_s3_bucket.logs.arn}\&quot;,\&quot;Condition\&quot;:{\&quot;StringEquals\&quot;:{\&quot;aws:SourceAccount\&quot;:\&quot;123456789012\&quot;}}},{\&quot;Sid\&quot;:\&quot;ALBLogDelivery\&quot;,\&quot;Effect\&quot;:\&quot;Allow\&quot;,\&quot;Principal\&quot;:{\&quot;Service\&quot;:\&quot;logdelivery.elasticloadbalancing.amazonaws.com\&quot;},\&quot;Action\&quot;:\&quot;s3:PutObject\&quot;,\&quot;Resource\&quot;:\&quot;${aws_s3_bucket.logs.arn}/alb/AWSLogs/123456789012/*\&quot;},{\&quot;Sid\&quot;:\&quot;CloudTrailAcl\&quot;,\&quot;Effect\&quot;:\&quot;Allow\&quot;,\&quot;Principal\&quot;:{\&quot;Service\&quot;:\&quot;cloudtrail.amazonaws.com\&quot;},\&quot;Action\&quot;:\&quot;s3:GetBucketAcl\&quot;,\&quot;Resource\&quot;:\&quot;${aws_s3_bucket.logs.arn}\&quot;,\&quot;Condition\&quot;:{\&quot;StringEquals\&quot;:{\&quot;aws:SourceArn\&quot;:\&quot;arn:aws:cloudtrail:ca-central-1:123456789012:trail/validated-platform\&quot;}}},{\&quot;Sid\&quot;:\&quot;CloudTrailDelivery\&quot;,\&quot;Effect\&quot;:\&quot;Allow\&quot;,\&quot;Principal\&quot;:{\&quot;Service\&quot;:\&quot;cloudtrail.amazonaws.com\&quot;},\&quot;Action\&quot;:\&quot;s3:PutObject\&quot;,\&quot;Resource\&quot;:\&quot;${aws_s3_bucket.logs.arn}/AWSLogs/123456789012/*\&quot;,\&quot;Condition\&quot;:{\&quot;StringEquals\&quot;:{\&quot;aws:SourceArn\&quot;:\&quot;arn:aws:cloudtrail:ca-central-1:123456789012:trail/validated-platform\&quot;,\&quot;s3:x-amz-acl\&quot;:\&quot;bucket-owner-full-control\&quot;}}}]}&quot;
+        },
+        &quot;storage&quot;: {
+          &quot;bucket&quot;: &quot;${aws_s3_bucket.storage.id}&quot;,
+          &quot;policy&quot;: &quot;{\&quot;Version\&quot;:\&quot;2012-10-17\&quot;,\&quot;Statement\&quot;:[{\&quot;Sid\&quot;:\&quot;DenyInsecureTransport\&quot;,\&quot;Effect\&quot;:\&quot;Deny\&quot;,\&quot;Principal\&quot;:\&quot;*\&quot;,\&quot;Action\&quot;:\&quot;s3:*\&quot;,\&quot;Resource\&quot;:[\&quot;${aws_s3_bucket.storage.arn}\&quot;,\&quot;${aws_s3_bucket.storage.arn}/*\&quot;],\&quot;Condition\&quot;:{\&quot;Bool\&quot;:{\&quot;aws:SecureTransport\&quot;:\&quot;false\&quot;}}}]}&quot;
+        }
+      },
+      &quot;aws_s3_bucket_logging&quot;: {
+        &quot;storage&quot;: {
+          &quot;bucket&quot;: &quot;${aws_s3_bucket.storage.id}&quot;,
+          &quot;target_bucket&quot;: &quot;${aws_s3_bucket.logs.id}&quot;,
+          &quot;target_prefix&quot;: &quot;storage/&quot;
+        }
+      },
+      &quot;aws_vpc&quot;: {
+        &quot;main&quot;: {
+          &quot;cidr_block&quot;: &quot;10.42.0.0/16&quot;,
+          &quot;enable_dns_hostnames&quot;: true,
+          &quot;enable_dns_support&quot;: true,
+          &quot;tags&quot;: {
+            &quot;Environment&quot;: &quot;dev&quot;,
+            &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+          }
+        }
+      },
+      &quot;aws_subnet&quot;: {
+        &quot;app_a&quot;: {
+          &quot;vpc_id&quot;: &quot;${aws_vpc.main.id}&quot;,
+          &quot;cidr_block&quot;: &quot;10.42.1.0/24&quot;,
+          &quot;availability_zone&quot;: &quot;ca-central-1a&quot;,
+          &quot;map_public_ip_on_launch&quot;: false,
+          &quot;tags&quot;: {
+            &quot;Environment&quot;: &quot;dev&quot;,
+            &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+          }
+        },
+        &quot;app_b&quot;: {
+          &quot;vpc_id&quot;: &quot;${aws_vpc.main.id}&quot;,
+          &quot;cidr_block&quot;: &quot;10.42.2.0/24&quot;,
+          &quot;availability_zone&quot;: &quot;ca-central-1b&quot;,
+          &quot;map_public_ip_on_launch&quot;: false,
+          &quot;tags&quot;: {
+            &quot;Environment&quot;: &quot;dev&quot;,
+            &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+          }
+        },
+        &quot;data_a&quot;: {
+          &quot;vpc_id&quot;: &quot;${aws_vpc.main.id}&quot;,
+          &quot;cidr_block&quot;: &quot;10.42.3.0/24&quot;,
+          &quot;availability_zone&quot;: &quot;ca-central-1a&quot;,
+          &quot;map_public_ip_on_launch&quot;: false,
+          &quot;tags&quot;: {
+            &quot;Environment&quot;: &quot;dev&quot;,
+            &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+          }
+        },
+        &quot;data_b&quot;: {
+          &quot;vpc_id&quot;: &quot;${aws_vpc.main.id}&quot;,
+          &quot;cidr_block&quot;: &quot;10.42.4.0/24&quot;,
+          &quot;availability_zone&quot;: &quot;ca-central-1b&quot;,
+          &quot;map_public_ip_on_launch&quot;: false,
+          &quot;tags&quot;: {
+            &quot;Environment&quot;: &quot;dev&quot;,
+            &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+          }
+        }
+      },
+      &quot;aws_route_table&quot;: {
+        &quot;app&quot;: {
+          &quot;vpc_id&quot;: &quot;${aws_vpc.main.id}&quot;,
+          &quot;tags&quot;: {
+            &quot;Environment&quot;: &quot;dev&quot;,
+            &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+          }
+        },
+        &quot;data&quot;: {
+          &quot;vpc_id&quot;: &quot;${aws_vpc.main.id}&quot;,
+          &quot;tags&quot;: {
+            &quot;Environment&quot;: &quot;dev&quot;,
+            &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+          }
+        }
+      },
+      &quot;aws_route_table_association&quot;: {
+        &quot;app_a&quot;: {
+          &quot;subnet_id&quot;: &quot;${aws_subnet.app_a.id}&quot;,
+          &quot;route_table_id&quot;: &quot;${aws_route_table.app.id}&quot;
+        },
+        &quot;app_b&quot;: {
+          &quot;subnet_id&quot;: &quot;${aws_subnet.app_b.id}&quot;,
+          &quot;route_table_id&quot;: &quot;${aws_route_table.app.id}&quot;
+        },
+        &quot;data_a&quot;: {
+          &quot;subnet_id&quot;: &quot;${aws_subnet.data_a.id}&quot;,
+          &quot;route_table_id&quot;: &quot;${aws_route_table.data.id}&quot;
+        },
+        &quot;data_b&quot;: {
+          &quot;subnet_id&quot;: &quot;${aws_subnet.data_b.id}&quot;,
+          &quot;route_table_id&quot;: &quot;${aws_route_table.data.id}&quot;
+        }
+      },
+      &quot;aws_flow_log&quot;: {
+        &quot;main&quot;: {
+          &quot;vpc_id&quot;: &quot;${aws_vpc.main.id}&quot;,
+          &quot;traffic_type&quot;: &quot;ALL&quot;,
+          &quot;log_destination_type&quot;: &quot;s3&quot;,
+          &quot;log_destination&quot;: &quot;${aws_s3_bucket.logs.arn}&quot;,
+          &quot;max_aggregation_interval&quot;: 60,
+          &quot;tags&quot;: {
+            &quot;Environment&quot;: &quot;dev&quot;,
+            &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+          }
+        }
+      },
+      &quot;aws_default_security_group&quot;: {
+        &quot;default&quot;: {
+          &quot;vpc_id&quot;: &quot;${aws_vpc.main.id}&quot;,
+          &quot;ingress&quot;: [],
+          &quot;egress&quot;: [],
+          &quot;tags&quot;: {
+            &quot;Environment&quot;: &quot;dev&quot;,
+            &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+          }
+        }
+      },
+      &quot;aws_security_group&quot;: {
+        &quot;app&quot;: {
+          &quot;name&quot;: &quot;validated-platform-app&quot;,
+          &quot;description&quot;: &quot;Private application TLS only&quot;,
+          &quot;vpc_id&quot;: &quot;${aws_vpc.main.id}&quot;,
+          &quot;ingress&quot;: [
+            {
+              &quot;description&quot;: &quot;Internal TLS&quot;,
+              &quot;from_port&quot;: 443,
+              &quot;to_port&quot;: 443,
+              &quot;protocol&quot;: &quot;tcp&quot;,
+              &quot;cidr_blocks&quot;: [
+                &quot;10.42.0.0/16&quot;
+              ],
+              &quot;ipv6_cidr_blocks&quot;: [],
+              &quot;prefix_list_ids&quot;: [],
+              &quot;security_groups&quot;: [],
+              &quot;self&quot;: false
+            }
+          ],
+          &quot;egress&quot;: [],
+          &quot;tags&quot;: {
+            &quot;Environment&quot;: &quot;dev&quot;,
+            &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+          }
+        }
+      },
+      &quot;aws_instance&quot;: {
+        &quot;app&quot;: {
+          &quot;ami&quot;: &quot;ami-00000000000000001&quot;,
+          &quot;instance_type&quot;: &quot;t3.micro&quot;,
+          &quot;subnet_id&quot;: &quot;${aws_subnet.app_a.id}&quot;,
+          &quot;vpc_security_group_ids&quot;: [
+            &quot;${aws_security_group.app.id}&quot;
+          ],
+          &quot;associate_public_ip_address&quot;: false,
+          &quot;monitoring&quot;: true,
+          &quot;metadata_options&quot;: {
+            &quot;http_endpoint&quot;: &quot;enabled&quot;,
+            &quot;http_tokens&quot;: &quot;required&quot;,
+            &quot;http_put_response_hop_limit&quot;: 1
+          },
+          &quot;root_block_device&quot;: {
+            &quot;encrypted&quot;: true,
+            &quot;kms_key_id&quot;: &quot;${aws_kms_key.main.arn}&quot;,
+            &quot;volume_type&quot;: &quot;gp3&quot;,
+            &quot;volume_size&quot;: 20
+          },
+          &quot;tags&quot;: {
+            &quot;Environment&quot;: &quot;dev&quot;,
+            &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+          }
+        }
+      },
+      &quot;aws_iam_role&quot;: {
+        &quot;reader&quot;: {
+          &quot;name&quot;: &quot;validated-platform-reader&quot;,
+          &quot;assume_role_policy&quot;: &quot;{\&quot;Version\&quot;:\&quot;2012-10-17\&quot;,\&quot;Statement\&quot;:[{\&quot;Effect\&quot;:\&quot;Allow\&quot;,\&quot;Principal\&quot;:{\&quot;Service\&quot;:\&quot;ec2.amazonaws.com\&quot;},\&quot;Action\&quot;:\&quot;sts:AssumeRole\&quot;}]}&quot;,
+          &quot;tags&quot;: {
+            &quot;Environment&quot;: &quot;dev&quot;,
+            &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+          }
+        }
+      },
+      &quot;aws_iam_role_policy&quot;: {
+        &quot;reader&quot;: {
+          &quot;name&quot;: &quot;read-one-prefix&quot;,
+          &quot;role&quot;: &quot;${aws_iam_role.reader.id}&quot;,
+          &quot;policy&quot;: &quot;{\&quot;Version\&quot;:\&quot;2012-10-17\&quot;,\&quot;Statement\&quot;:[{\&quot;Effect\&quot;:\&quot;Allow\&quot;,\&quot;Action\&quot;:[\&quot;s3:GetObject\&quot;],\&quot;Resource\&quot;:[\&quot;arn:aws:s3:::validated-platform-logs/approved/*\&quot;]}]}&quot;
+        }
+      },
+      &quot;aws_lb&quot;: {
+        &quot;app&quot;: {
+          &quot;name&quot;: &quot;validated-platform&quot;,
+          &quot;internal&quot;: true,
+          &quot;load_balancer_type&quot;: &quot;application&quot;,
+          &quot;subnets&quot;: [
+            &quot;${aws_subnet.app_a.id}&quot;,
+            &quot;${aws_subnet.app_b.id}&quot;
+          ],
+          &quot;security_groups&quot;: [
+            &quot;${aws_security_group.app.id}&quot;
+          ],
+          &quot;drop_invalid_header_fields&quot;: true,
+          &quot;enable_deletion_protection&quot;: true,
+          &quot;access_logs&quot;: {
+            &quot;bucket&quot;: &quot;${aws_s3_bucket.logs.id}&quot;,
+            &quot;prefix&quot;: &quot;alb&quot;,
+            &quot;enabled&quot;: true
+          },
+          &quot;tags&quot;: {
+            &quot;Environment&quot;: &quot;dev&quot;,
+            &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+          }
+        }
+      },
+      &quot;aws_lb_listener&quot;: {
+        &quot;https&quot;: {
+          &quot;load_balancer_arn&quot;: &quot;${aws_lb.app.arn}&quot;,
+          &quot;port&quot;: 443,
+          &quot;protocol&quot;: &quot;HTTPS&quot;,
+          &quot;ssl_policy&quot;: &quot;ELBSecurityPolicy-TLS13-1-2-2021-06&quot;,
+          &quot;certificate_arn&quot;: &quot;arn:aws:acm:ca-central-1:123456789012:certificate/00000000-0000-4000-8000-000000000001&quot;,
+          &quot;default_action&quot;: {
+            &quot;type&quot;: &quot;fixed-response&quot;,
+            &quot;fixed_response&quot;: {
+              &quot;content_type&quot;: &quot;text/plain&quot;,
+              &quot;message_body&quot;: &quot;Private service&quot;,
+              &quot;status_code&quot;: &quot;200&quot;
+            }
+          }
+        }
+      },
+      &quot;aws_cloudwatch_log_group&quot;: {
+        &quot;audit&quot;: {
+          &quot;name&quot;: &quot;/iac/validated-platform&quot;,
+          &quot;retention_in_days&quot;: 365,
+          &quot;kms_key_id&quot;: &quot;${aws_kms_key.main.arn}&quot;,
+          &quot;tags&quot;: {
+            &quot;Environment&quot;: &quot;dev&quot;,
+            &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+          }
+        }
+      },
+      &quot;aws_cloudtrail&quot;: {
+        &quot;audit&quot;: {
+          &quot;name&quot;: &quot;validated-platform&quot;,
+          &quot;s3_bucket_name&quot;: &quot;${aws_s3_bucket.logs.id}&quot;,
+          &quot;is_multi_region_trail&quot;: true,
+          &quot;include_global_service_events&quot;: true,
+          &quot;enable_log_file_validation&quot;: true,
+          &quot;enable_logging&quot;: true,
+          &quot;kms_key_id&quot;: &quot;${aws_kms_key.main.arn}&quot;,
+          &quot;tags&quot;: {
+            &quot;Environment&quot;: &quot;dev&quot;,
+            &quot;ManagedBy&quot;: &quot;ai-validated-iac-pipeline&quot;
+          },
+          &quot;depends_on&quot;: [
+            &quot;aws_s3_bucket_policy.logs&quot;
+          ]
+        }
+      }
+    }
+  },
+  &quot;passed&quot;: false,
+  &quot;gates&quot;: [
+    {
+      &quot;name&quot;: &quot;Specification admission&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;Verified&quot;
+    },
+    {
+      &quot;name&quot;: &quot;Generated output allowlist&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;Verified&quot;
+    },
+    {
+      &quot;name&quot;: &quot;Reproducibility&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;Verified&quot;
+    },
+    {
+      &quot;name&quot;: &quot;Tool integrity&quot;,
+      &quot;passed&quot;: false,
+      &quot;detail&quot;: &quot;Exit 1; see gate log&quot;
+    },
+    {
+      &quot;name&quot;: &quot;Trusted source integrity&quot;,
+      &quot;passed&quot;: true,
+      &quot;detail&quot;: &quot;Compare trusted source hashes before and after evaluation&quot;
+    }
+  ],
+  &quot;decisions&quot;: {},
+  &quot;hashes&quot;: {
+    &quot;spec&quot;: &quot;24eeeb16b671f3388d57d4e96e3f9f6e74bd510fc6392ffd24a26ecf861cf5b5&quot;,
+    &quot;terraform&quot;: &quot;3bbb90960b3346e23bd13a7aa39a305a87134443ffbc26ffc15339d972a35ad2&quot;,
+    &quot;trustedSources&quot;: {
+      &quot;src/ai.ts&quot;: &quot;3699baee90ceea698c3b94dba5bdef71cc6366ea41189dcd41c7df856821383c&quot;,
+      &quot;src/candidate.ts&quot;: &quot;afa61e5fc05f1dfcf839a0fd377928024b50aa91e06cc49bdc2fff22f7f0b285&quot;,
+      &quot;src/cli.ts&quot;: &quot;dfc12b8b192ee3a4b0e115400e90dd024e18bf7158a592000b43db55dddaa256&quot;,
+      &quot;src/engine.ts&quot;: &quot;ac9a57845a9b8c5f7b840cf8bc42c9c1986d4d48314fdfe76d6ba91b48d04454&quot;,
+      &quot;src/github.ts&quot;: &quot;373694f083ec0c8a80e7858370645004c5ed01945cc3a57d3036801a72174aab&quot;,
+      &quot;src/hcl.ts&quot;: &quot;c358681c59f2e95a8c2dfd41e452f2fdb3a7de5113ec6425796222db5da40997&quot;,
+      &quot;src/pipeline.ts&quot;: &quot;b639538eed441f91a3beab66f8837379a73ab61bde2ce4866690ba7300f25820&quot;,
+      &quot;src/report.ts&quot;: &quot;6ae5baebf49f1836fa026c059f534236f85b4e65ebe85fe72e038a88b7ab2dcc&quot;,
+      &quot;src/spec.ts&quot;: &quot;3022253863a1438e836cf24040d31efe003d3c4783242dfd780bcb223ad98463&quot;,
+      &quot;policy/allowlist.json&quot;: &quot;62b70ac29ea3b40172e622830bce02f84ac1e7e8799c5a1fc56d1bf8f64a0dea&quot;,
+      &quot;policy/scanner-exceptions.json&quot;: &quot;ca5ffa4cf2b2206fd5d3b672eb60d8abf19ade8d4da20bbea325686bb63a93c8&quot;,
+      &quot;policy/v1/plan.rego&quot;: &quot;366bfe0859a2f28d9cfbd3062a514c99b2fa3f3059f705ebb31d978098d7d22f&quot;,
+      &quot;policy/v1/plan_test.rego&quot;: &quot;6323cebf7e1d73c21535516f3568554858aeaff1a002c4bfef20a344ad138f0a&quot;,
+      &quot;trusted/.terraform.lock.hcl&quot;: &quot;bf2ff4cacc82a5b3855036a4a146bf83c8a8d84dfea831792f782e88d5b8dfcb&quot;,
+      &quot;trusted/assertions/audit.hcl&quot;: &quot;d2ba905b9a8861fe701b84b70ff7cfc70bb46b2928f8e2d7462c0bcade2629d3&quot;,
+      &quot;trusted/assertions/compute.hcl&quot;: &quot;a9c8c3f811f3db4624e69e80afe02cf82fd2cea8ce671f0432bb2da9437bd8f4&quot;,
+      &quot;trusted/assertions/iam.hcl&quot;: &quot;fe5cab95dbe4156bbd8c887368218327ee6d55221f718303d9293f87c4de7f54&quot;,
+      &quot;trusted/assertions/load-balancer.hcl&quot;: &quot;f042184a5c59970215e5362404e35cbfae6a1bedcff8691c66f899b96a75b96d&quot;,
+      &quot;trusted/assertions/network.hcl&quot;: &quot;0d001a9086e59d5b09bf61369c5f931beefbd6a25a6e34b6f1c0076b63016484&quot;,
+      &quot;trusted/assertions/platform.hcl&quot;: &quot;fc04d4cc93c1a54f37d19ddf0e96ad2db6431aeb3392c34714969499ebbfa761&quot;,
+      &quot;trusted/assertions/storage.hcl&quot;: &quot;bd577cda8a72448e4a66332dd9d64473fb3076a4f8593885477a45e2e694cb09&quot;,
+      &quot;trusted/security.tftest.hcl&quot;: &quot;ada4c2aaa282bf967218b76e95c692310b0ad98ba2d4c17fda26f1c2e0068047&quot;,
+      &quot;scripts/__pycache__/check_github_boundaries.cpython-314.pyc&quot;: &quot;0a673306cff7b14139bbe3129821414aeab67267f560d776d0b51bfc5a499c94&quot;,
+      &quot;scripts/__pycache__/scan.cpython-314.pyc&quot;: &quot;0971cdd67a16d315cd2417f56cced61842fb72f596984979539ae7afa1ddecf9&quot;,
+      &quot;scripts/adversarial.ts&quot;: &quot;91f7fdbc92d4b7f77e7bb3577107f5378e9a46ba843afddc1d58c10f53ee5070&quot;,
+      &quot;scripts/bootstrap.py&quot;: &quot;442f543a0f7db0f1d3361408ee3280f6e38227672cd004148c4d1a2b80845de0&quot;,
+      &quot;scripts/build_index.ts&quot;: &quot;15f786c14daf89b1010e45b858c18a88cc4fa9ce32619992b55f67d39ba6cb0e&quot;,
+      &quot;scripts/check_github_boundaries.py&quot;: &quot;9d9fdd9f07295605b07a03b9e309f5c9924db22d7e90d7c6ccd47a234dda0716&quot;,
+      &quot;scripts/check_workflows.py&quot;: &quot;8fed3f68286227e9893b5f8aa0e82dbb7049e13cf1415332dc13171a70b29968&quot;,
+      &quot;scripts/configure_github.py&quot;: &quot;89ec97327f54cdfec6c14374c1079fd9c26d86238a4119074abb0a00fb26d5fd&quot;,
+      &quot;scripts/scan.py&quot;: &quot;4c4c57fe4ee7153a5bbd80d212dc67756eb33e90b478bba5829e0c2cb75ea584&quot;,
+      &quot;scripts/scan_repository.py&quot;: &quot;baa7bbbe207a89ccf89cd7329bc15654a42d22695451c996f94a5df287d9be07&quot;,
+      &quot;scripts/validate_generated_pr.ts&quot;: &quot;bc094c4d442c0e506c3c2be3f61c3acb79ab67af6952ca3fd1b10ed75870a882&quot;,
+      &quot;scripts/validate_specs.ts&quot;: &quot;d9b49240e65e47d49b3f94e67b6e97b28e6576769700aae43d57e81b5a4bf650&quot;,
+      &quot;schemas/spec-v1.schema.json&quot;: &quot;da5a84e5b049a55629100285344e14f888a6c705a7e2584120ac317b327bf3bd&quot;,
+      &quot;.github/CODEOWNERS&quot;: &quot;23093c41ebf1b4fa4921c2571acf0fbccda57e105fc95ce5863632ce2b9829b7&quot;,
+      &quot;.github/dependabot.yml&quot;: &quot;2ccdb1d265770e632a75b40d0b47ed80fbd6c5dcbcf53f7b80545bbfc1583b98&quot;,
+      &quot;.github/workflows/ci.yml&quot;: &quot;fa825a440386419ebc56ac92e166cf82b7f68a8175cacd13cb30146bb84451db&quot;,
+      &quot;.github/workflows/generate.yml&quot;: &quot;eb05a657532d61d5f86dca0284c4e4afb0829a0e45cbe645de2125a6b679d730&quot;,
+      &quot;.github/workflows/specifications.yml&quot;: &quot;a6f84f5592b33018ff3c33f81d1f50a2dbbfc0ce5ff748653d0bfcbfbd6814cd&quot;,
+      &quot;.github/workflows/trusted-candidate.yml&quot;: &quot;5f7b442e7917399b42a2af28dd499f82e9380911f662aed72caf58c6f4baaa96&quot;,
+      &quot;tools.lock.json&quot;: &quot;e052500dafb1e1665bb172fec2b1ede1e30d6af30da6b66e9e603036744cd2f7&quot;,
+      &quot;package-lock.json&quot;: &quot;2b4f04bddab7db6155ae8308a4110018b97301723450a21167359ed5bf2f5454&quot;
+    }
+  },
+  &quot;scope&quot;: {
+    &quot;mockProvider&quot;: true,
+    &quot;realProviderSchema&quot;: true,
+    &quot;liveCloud&quot;: false,
+    &quot;provisioned&quot;: false,
+    &quot;humanReviewRequired&quot;: true
+  }
+}</pre></details><footer>Policy v1.0.0 · Generated output remains subject to human review · No external assets or scripts</footer></main></body></html>

@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "cloud": "aws",
+  "kind": "network",
+  "name": "validated-network",
+  "region": "ca-central-1",
+  "environment": "dev",
+  "encryption": "aws:kms",
+  "public": false,
+  "cidr": "10.42.0.0/16",
+  "ami": "ami-00000000000000001",
+  "certificateArn": "arn:aws:acm:ca-central-1:123456789012:certificate/00000000-0000-4000-8000-000000000001",
+  "accountId": "123456789012"
+}

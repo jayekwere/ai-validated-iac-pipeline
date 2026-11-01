@@ -1,0 +1,16 @@
+{
+  "allow": false,
+  "findings": [
+    {
+      "address": "aws_s3_bucket.logs",
+      "id": "MISSING_ENCRYPTION",
+      "message": "Bucket needs an encryption companion"
+    },
+    {
+      "address": "aws_s3_bucket.storage",
+      "id": "MISSING_ENCRYPTION",
+      "message": "Bucket needs an encryption companion"
+    }
+  ],
+  "version": "1.0.0"
+}

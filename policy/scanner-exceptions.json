@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "exceptions": [
+    {
+      "id": "AWS-0132",
+      "resource": "aws_s3_bucket_server_side_encryption_configuration.logs",
+      "reason": "Service access log destination must use SSE-S3. ALB and S3 server access logging do not support SSE-KMS log destinations. Only this closed-grammar private log sink is exempt from the CMK recommendation; encryption is mandatory.",
+      "source": "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/enable-access-logging.html"
+    }
+  ]
+}

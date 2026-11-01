@@ -1,0 +1,26 @@
+{
+  "SchemaVersion": 2,
+  "Trivy": {
+    "Version": "0.72.0"
+  },
+  "ReportID": "01a19526-3cdd-7e40-96bf-5e765a9d8429",
+  "CreatedAt": "2026-10-31T20:27:53.565935-07:00",
+  "ArtifactName": "/Users/jayekwere/Documents/ChatGPT/Github Portfolio Engineer/repos/ai-validated-iac-pipeline/.work/run-qXZOUX/scanner",
+  "ArtifactType": "filesystem",
+  "Results": [
+    {
+      "Target": ".",
+      "Class": "config",
+      "Type": "terraform",
+      "MisconfSummary": {
+        "Successes": 62,
+        "Failures": 0
+      }
+    }
+  ]
+}
+2026-10-31T20:27:53-07:00	INFO	[misconfig] Misconfiguration scanning is enabled
+2026-10-31T20:27:53-07:00	INFO	[checks-client] No downloadable checks were loaded as --skip-check-update is enabled, loading from existing cache...
+2026-10-31T20:27:53-07:00	ERROR	[misconfig] Falling back to embedded checks	err="failed to check cache: cache does not exist at \"/var/folders/vv/rvszq3v97535vv6kzlj6f7700000gn/T/iac-ac7iLt/Library/Caches/trivy/policy/content\""
+2026-10-31T20:27:53-07:00	INFO	[terraform scanner] Scanning root module	file_path="."
+2026-10-31T20:27:53-07:00	INFO	Detected config files	num=1

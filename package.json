@@ -1,0 +1,25 @@
+{
+  "name": "ai-validated-iac-pipeline",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.18.0 <27"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test test/*.test.ts",
+    "coverage": "node --experimental-strip-types --experimental-test-coverage --test --test-coverage-exclude=\"test/**\" test/*.test.ts",
+    "demo": "node --experimental-strip-types src/cli.ts demo",
+    "verify": "npm run typecheck && npm run coverage && python3 -m unittest discover -s test -p \"test_*.py\" && npm run demo",
+    "bootstrap": "python3 scripts/bootstrap.py"
+  },
+  "dependencies": {
+    "yaml": "2.9.1"
+  },
+  "devDependencies": {
+    "typescript": "7.0.2",
+    "@types/node": "26.6.6"
+  }
+}

@@ -1,0 +1,568 @@
+{
+  "SchemaVersion": 2,
+  "Trivy": {
+    "Version": "0.72.0"
+  },
+  "ReportID": "01a19524-32b8-722a-a55a-01dcaaf63c7d",
+  "CreatedAt": "2026-10-31T20:25:39.896142-07:00",
+  "ArtifactName": "/Users/jayekwere/Documents/ChatGPT/Github Portfolio Engineer/repos/ai-validated-iac-pipeline",
+  "ArtifactType": "filesystem",
+  "Results": [
+    {
+      "Target": "package-lock.json",
+      "Class": "lang-pkgs",
+      "Type": "npm",
+      "Packages": [
+        {
+          "ID": "@types/node@26.6.6",
+          "Name": "@types/node",
+          "Identifier": {
+            "PURL": "pkg:npm/%40types/node@26.6.6",
+            "UID": "30eae4e5e741ffaa"
+          },
+          "Version": "26.6.6",
+          "Dev": true,
+          "Licenses": [
+            "MIT"
+          ],
+          "Relationship": "direct",
+          "DependsOn": [
+            "undici-types@8.9.0"
+          ],
+          "Locations": [
+            {
+              "StartLine": 22,
+              "EndLine": 31
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "typescript@7.0.2",
+          "Name": "typescript",
+          "Identifier": {
+            "PURL": "pkg:npm/typescript@7.0.2",
+            "UID": "e64c03f847a2410f"
+          },
+          "Version": "7.0.2",
+          "Dev": true,
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Relationship": "direct",
+          "DependsOn": [
+            "@typescript/typescript-aix-ppc64@7.0.2",
+            "@typescript/typescript-darwin-arm64@7.0.2",
+            "@typescript/typescript-darwin-x64@7.0.2",
+            "@typescript/typescript-freebsd-arm64@7.0.2",
+            "@typescript/typescript-freebsd-x64@7.0.2",
+            "@typescript/typescript-linux-arm64@7.0.2",
+            "@typescript/typescript-linux-arm@7.0.2",
+            "@typescript/typescript-linux-loong64@7.0.2",
+            "@typescript/typescript-linux-mips64el@7.0.2",
+            "@typescript/typescript-linux-ppc64@7.0.2",
+            "@typescript/typescript-linux-riscv64@7.0.2",
+            "@typescript/typescript-linux-s390x@7.0.2",
+            "@typescript/typescript-linux-x64@7.0.2",
+            "@typescript/typescript-netbsd-arm64@7.0.2",
+            "@typescript/typescript-netbsd-x64@7.0.2",
+            "@typescript/typescript-openbsd-arm64@7.0.2",
+            "@typescript/typescript-openbsd-x64@7.0.2",
+            "@typescript/typescript-sunos-x64@7.0.2",
+            "@typescript/typescript-win32-arm64@7.0.2",
+            "@typescript/typescript-win32-x64@7.0.2"
+          ],
+          "Locations": [
+            {
+              "StartLine": 372,
+              "EndLine": 406
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "yaml@2.9.1",
+          "Name": "yaml",
+          "Identifier": {
+            "PURL": "pkg:npm/yaml@2.9.1",
+            "UID": "bdea45864c5940c"
+          },
+          "Version": "2.9.1",
+          "Licenses": [
+            "ISC"
+          ],
+          "Relationship": "direct",
+          "Locations": [
+            {
+              "StartLine": 414,
+              "EndLine": 428
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@typescript/typescript-aix-ppc64@7.0.2",
+          "Name": "@typescript/typescript-aix-ppc64",
+          "Identifier": {
+            "PURL": "pkg:npm/%40typescript/typescript-aix-ppc64@7.0.2",
+            "UID": "1457f92797c108ca"
+          },
+          "Version": "7.0.2",
+          "Dev": true,
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 32,
+              "EndLine": 48
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@typescript/typescript-darwin-arm64@7.0.2",
+          "Name": "@typescript/typescript-darwin-arm64",
+          "Identifier": {
+            "PURL": "pkg:npm/%40typescript/typescript-darwin-arm64@7.0.2",
+            "UID": "b5956ade64036710"
+          },
+          "Version": "7.0.2",
+          "Dev": true,
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 49,
+              "EndLine": 65
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@typescript/typescript-darwin-x64@7.0.2",
+          "Name": "@typescript/typescript-darwin-x64",
+          "Identifier": {
+            "PURL": "pkg:npm/%40typescript/typescript-darwin-x64@7.0.2",
+            "UID": "3e2debcef0d06186"
+          },
+          "Version": "7.0.2",
+          "Dev": true,
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 66,
+              "EndLine": 82
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@typescript/typescript-freebsd-arm64@7.0.2",
+          "Name": "@typescript/typescript-freebsd-arm64",
+          "Identifier": {
+            "PURL": "pkg:npm/%40typescript/typescript-freebsd-arm64@7.0.2",
+            "UID": "28f5e2cb9f8dc22d"
+          },
+          "Version": "7.0.2",
+          "Dev": true,
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 83,
+              "EndLine": 99
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@typescript/typescript-freebsd-x64@7.0.2",
+          "Name": "@typescript/typescript-freebsd-x64",
+          "Identifier": {
+            "PURL": "pkg:npm/%40typescript/typescript-freebsd-x64@7.0.2",
+            "UID": "2d30593a652c2dd4"
+          },
+          "Version": "7.0.2",
+          "Dev": true,
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 100,
+              "EndLine": 116
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@typescript/typescript-linux-arm@7.0.2",
+          "Name": "@typescript/typescript-linux-arm",
+          "Identifier": {
+            "PURL": "pkg:npm/%40typescript/typescript-linux-arm@7.0.2",
+            "UID": "2f0449b07f82bfd3"
+          },
+          "Version": "7.0.2",
+          "Dev": true,
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 117,
+              "EndLine": 133
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@typescript/typescript-linux-arm64@7.0.2",
+          "Name": "@typescript/typescript-linux-arm64",
+          "Identifier": {
+            "PURL": "pkg:npm/%40typescript/typescript-linux-arm64@7.0.2",
+            "UID": "1354bf79d7519f34"
+          },
+          "Version": "7.0.2",
+          "Dev": true,
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 134,
+              "EndLine": 150
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@typescript/typescript-linux-loong64@7.0.2",
+          "Name": "@typescript/typescript-linux-loong64",
+          "Identifier": {
+            "PURL": "pkg:npm/%40typescript/typescript-linux-loong64@7.0.2",
+            "UID": "d0a139775aede5f2"
+          },
+          "Version": "7.0.2",
+          "Dev": true,
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 151,
+              "EndLine": 167
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@typescript/typescript-linux-mips64el@7.0.2",
+          "Name": "@typescript/typescript-linux-mips64el",
+          "Identifier": {
+            "PURL": "pkg:npm/%40typescript/typescript-linux-mips64el@7.0.2",
+            "UID": "c72d20d5ee5cb6c1"
+          },
+          "Version": "7.0.2",
+          "Dev": true,
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 168,
+              "EndLine": 184
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@typescript/typescript-linux-ppc64@7.0.2",
+          "Name": "@typescript/typescript-linux-ppc64",
+          "Identifier": {
+            "PURL": "pkg:npm/%40typescript/typescript-linux-ppc64@7.0.2",
+            "UID": "e08564c7a89af223"
+          },
+          "Version": "7.0.2",
+          "Dev": true,
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 185,
+              "EndLine": 201
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@typescript/typescript-linux-riscv64@7.0.2",
+          "Name": "@typescript/typescript-linux-riscv64",
+          "Identifier": {
+            "PURL": "pkg:npm/%40typescript/typescript-linux-riscv64@7.0.2",
+            "UID": "9529a9d582c6ad6a"
+          },
+          "Version": "7.0.2",
+          "Dev": true,
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 202,
+              "EndLine": 218
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@typescript/typescript-linux-s390x@7.0.2",
+          "Name": "@typescript/typescript-linux-s390x",
+          "Identifier": {
+            "PURL": "pkg:npm/%40typescript/typescript-linux-s390x@7.0.2",
+            "UID": "94b56b688cc8aebb"
+          },
+          "Version": "7.0.2",
+          "Dev": true,
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 219,
+              "EndLine": 235
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@typescript/typescript-linux-x64@7.0.2",
+          "Name": "@typescript/typescript-linux-x64",
+          "Identifier": {
+            "PURL": "pkg:npm/%40typescript/typescript-linux-x64@7.0.2",
+            "UID": "ffb19a0ca05de804"
+          },
+          "Version": "7.0.2",
+          "Dev": true,
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 236,
+              "EndLine": 252
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@typescript/typescript-netbsd-arm64@7.0.2",
+          "Name": "@typescript/typescript-netbsd-arm64",
+          "Identifier": {
+            "PURL": "pkg:npm/%40typescript/typescript-netbsd-arm64@7.0.2",
+            "UID": "9408d6185a476a43"
+          },
+          "Version": "7.0.2",
+          "Dev": true,
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 253,
+              "EndLine": 269
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@typescript/typescript-netbsd-x64@7.0.2",
+          "Name": "@typescript/typescript-netbsd-x64",
+          "Identifier": {
+            "PURL": "pkg:npm/%40typescript/typescript-netbsd-x64@7.0.2",
+            "UID": "a7e0a5f26f575f8b"
+          },
+          "Version": "7.0.2",
+          "Dev": true,
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 270,
+              "EndLine": 286
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@typescript/typescript-openbsd-arm64@7.0.2",
+          "Name": "@typescript/typescript-openbsd-arm64",
+          "Identifier": {
+            "PURL": "pkg:npm/%40typescript/typescript-openbsd-arm64@7.0.2",
+            "UID": "d011e916b7e2ed35"
+          },
+          "Version": "7.0.2",
+          "Dev": true,
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 287,
+              "EndLine": 303
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@typescript/typescript-openbsd-x64@7.0.2",
+          "Name": "@typescript/typescript-openbsd-x64",
+          "Identifier": {
+            "PURL": "pkg:npm/%40typescript/typescript-openbsd-x64@7.0.2",
+            "UID": "bd76eaf40f549402"
+          },
+          "Version": "7.0.2",
+          "Dev": true,
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 304,
+              "EndLine": 320
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@typescript/typescript-sunos-x64@7.0.2",
+          "Name": "@typescript/typescript-sunos-x64",
+          "Identifier": {
+            "PURL": "pkg:npm/%40typescript/typescript-sunos-x64@7.0.2",
+            "UID": "de1f80bc7f7b05fe"
+          },
+          "Version": "7.0.2",
+          "Dev": true,
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 321,
+              "EndLine": 337
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@typescript/typescript-win32-arm64@7.0.2",
+          "Name": "@typescript/typescript-win32-arm64",
+          "Identifier": {
+            "PURL": "pkg:npm/%40typescript/typescript-win32-arm64@7.0.2",
+            "UID": "4a2e7d09650126be"
+          },
+          "Version": "7.0.2",
+          "Dev": true,
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 338,
+              "EndLine": 354
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "@typescript/typescript-win32-x64@7.0.2",
+          "Name": "@typescript/typescript-win32-x64",
+          "Identifier": {
+            "PURL": "pkg:npm/%40typescript/typescript-win32-x64@7.0.2",
+            "UID": "fd2a586cfc9cecab"
+          },
+          "Version": "7.0.2",
+          "Dev": true,
+          "Licenses": [
+            "Apache-2.0"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 355,
+              "EndLine": 371
+            }
+          ],
+          "AnalyzedBy": "npm"
+        },
+        {
+          "ID": "undici-types@8.9.0",
+          "Name": "undici-types",
+          "Identifier": {
+            "PURL": "pkg:npm/undici-types@8.9.0",
+            "UID": "6e3c93087be47c4a"
+          },
+          "Version": "8.9.0",
+          "Dev": true,
+          "Licenses": [
+            "MIT"
+          ],
+          "Indirect": true,
+          "Relationship": "indirect",
+          "Locations": [
+            {
+              "StartLine": 407,
+              "EndLine": 413
+            }
+          ],
+          "AnalyzedBy": "npm"
+        }
+      ]
+    }
+  ]
+}

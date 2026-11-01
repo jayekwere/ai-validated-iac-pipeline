@@ -1,0 +1,84 @@
+
+> ai-validated-iac-pipeline@1.0.0 coverage
+> node --experimental-strip-types --experimental-test-coverage --test --test-coverage-exclude="test/**" test/*.test.ts
+
+✔ AI request bounded, fixed destination, no tools, no persistence (50.731333ms)
+✔ paid API never called without authorization (0.431167ms)
+✔ AI rejects incomplete (0.405375ms)
+✔ AI rejects refusal (0.284125ms)
+✔ AI rejects malformed (0.281917ms)
+✔ API error does not disclose response body (0.279833ms)
+✔ invalid model denied (0.075875ms)
+✔ missing key denied (0.07325ms)
+✔ response byte limit (0.279125ms)
+✔ empty response denied (0.09475ms)
+✔ malicious AI output passes no authority (0.895166ms)
+✔ approved storage (10.372125ms)
+✔ approved compute (1.069125ms)
+✔ approved iam (0.860542ms)
+✔ approved network (0.552375ms)
+✔ approved load-balancer (0.689167ms)
+✔ approved audit (0.476375ms)
+✔ approved platform (1.1385ms)
+✔ reject request public (0.218042ms)
+✔ reject request encryption (0.079041ms)
+✔ reject request injection (0.046375ms)
+✔ reject request ingress (0.045833ms)
+✔ reject request iam (0.037667ms)
+✔ reject request azure (0.251125ms)
+✔ reject request cidr (0.093417ms)
+✔ reject request account (0.083208ms)
+✔ reject request name (0.155709ms)
+✔ reject request version (0.106292ms)
+✔ reject non specification null (0.085375ms)
+✔ reject non specification 1 (0.04975ms)
+✔ reject non specification [] (0.054458ms)
+✔ reject non specification {} (0.045708ms)
+✔ reject non specification "ignore all policies" (0.048875ms)
+✔ reject output module (1.9615ms)
+✔ reject output command (0.430625ms)
+✔ reject output policy (0.392667ms)
+✔ reject output provider (0.481959ms)
+✔ reject output workflow (0.429542ms)
+✔ reject output backend (0.360792ms)
+✔ malformed Terraform JSON (0.086375ms)
+✔ bounded output (0.11675ms)
+✔ bounded grammar (0.346625ms)
+✔ YAML matches JSON (5.469958ms)
+✔ YAML duplicate keys denied (0.409291ms)
+✔ YAML alias denied (1.081333ms)
+✔ oversized request denied (0.068458ms)
+✔ HTML evidence escaping (0.120291ms)
+✔ PR integration writes only fixed Terraform and evidence paths, creates draft (51.956833ms)
+✔ failed evidence denied (6.629417ms)
+✔ missing gates denied (3.097583ms)
+✔ stale sources denied (5.2925ms)
+✔ hash substitution denied (6.028375ms)
+✔ repo outside allowlist denied (3.417125ms)
+✔ API failures stop publication (6.110333ms)
+✔ complete local acceptance uses real tools and denies insecure output (14638.032ms)
+✔ Trivy independently detects unrestricted administrative ingress (502.414209ms)
+ℹ tests 56
+ℹ suites 0
+ℹ pass 56
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15397.254041
+ℹ start of coverage report
+ℹ -------------------------------------------------------------
+ℹ file         | line % | branch % | funcs % | uncovered lines
+ℹ -------------------------------------------------------------
+ℹ src          |        |          |         |
+ℹ  ai.ts       | 100.00 |    96.77 |  100.00 |
+ℹ  engine.ts   | 100.00 |   100.00 |  100.00 |
+ℹ  github.ts   | 100.00 |    95.65 |  100.00 |
+ℹ  hcl.ts      | 100.00 |   100.00 |  100.00 |
+ℹ  pipeline.ts | 100.00 |    77.61 |   87.88 |
+ℹ  report.ts   | 100.00 |    94.12 |  100.00 |
+ℹ  spec.ts     | 100.00 |    96.43 |  100.00 |
+ℹ -------------------------------------------------------------
+ℹ all files    | 100.00 |    91.98 |   94.67 |
+ℹ -------------------------------------------------------------
+ℹ end of coverage report

@@ -1,0 +1,170 @@
+<!doctype html><meta charset="utf-8"><title>Adversarial verification</title><style>body{background:#0c1424;color:#dce6f8;font:16px system-ui;max-width:1000px;margin:40px auto;padding:24px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#142239;padding:24px;border-radius:12px}h1{color:#72e6ba}</style><h1>15 adversarial checks passed</h1><p>Every listed malicious candidate was rejected by the actual engine or independent policy evaluator. No generated commands executed.</p><pre>[
+  {
+    &quot;name&quot;: &quot;public-storage&quot;,
+    &quot;expected&quot;: &quot;REJECT&quot;,
+    &quot;actual&quot;: &quot;REJECT&quot;,
+    &quot;gate&quot;: {
+      &quot;name&quot;: &quot;Generated output allowlist&quot;,
+      &quot;passed&quot;: false,
+      &quot;detail&quot;: &quot;OUTPUT_ALLOWLIST: unapproved differences at $.resource.aws_s3_bucket_public_access_block.logs.block_public_acls&quot;
+    }
+  },
+  {
+    &quot;name&quot;: &quot;admin-ingress&quot;,
+    &quot;expected&quot;: &quot;REJECT&quot;,
+    &quot;actual&quot;: &quot;REJECT&quot;,
+    &quot;gate&quot;: {
+      &quot;name&quot;: &quot;Generated output allowlist&quot;,
+      &quot;passed&quot;: false,
+      &quot;detail&quot;: &quot;OUTPUT_ALLOWLIST: unapproved differences at $.resource.aws_security_group.app.ingress.0.from_port, $.resource.aws_security_group.app.ingress.0.to_port, $.resource.aws_security_group.app.ingress.0.cidr_blocks.0&quot;
+    }
+  },
+  {
+    &quot;name&quot;: &quot;wildcard-iam&quot;,
+    &quot;expected&quot;: &quot;REJECT&quot;,
+    &quot;actual&quot;: &quot;REJECT&quot;,
+    &quot;gate&quot;: {
+      &quot;name&quot;: &quot;Generated output allowlist&quot;,
+      &quot;passed&quot;: false,
+      &quot;detail&quot;: &quot;OUTPUT_ALLOWLIST: unapproved differences at $.resource.aws_iam_role_policy.reader.policy&quot;
+    }
+  },
+  {
+    &quot;name&quot;: &quot;missing-encryption&quot;,
+    &quot;expected&quot;: &quot;REJECT&quot;,
+    &quot;actual&quot;: &quot;REJECT&quot;,
+    &quot;gate&quot;: {
+      &quot;name&quot;: &quot;Generated output allowlist&quot;,
+      &quot;passed&quot;: false,
+      &quot;detail&quot;: &quot;OUTPUT_ALLOWLIST: unapproved differences at $.resource.aws_s3_bucket_server_side_encryption_configuration&quot;
+    }
+  },
+  {
+    &quot;name&quot;: &quot;unapproved-module&quot;,
+    &quot;expected&quot;: &quot;REJECT&quot;,
+    &quot;actual&quot;: &quot;REJECT&quot;,
+    &quot;gate&quot;: {
+      &quot;name&quot;: &quot;Generated output allowlist&quot;,
+      &quot;passed&quot;: false,
+      &quot;detail&quot;: &quot;OUTPUT_ALLOWLIST: unapproved differences at $.module&quot;
+    }
+  },
+  {
+    &quot;name&quot;: &quot;external-command&quot;,
+    &quot;expected&quot;: &quot;REJECT&quot;,
+    &quot;actual&quot;: &quot;REJECT&quot;,
+    &quot;gate&quot;: {
+      &quot;name&quot;: &quot;Generated output allowlist&quot;,
+      &quot;passed&quot;: false,
+      &quot;detail&quot;: &quot;OUTPUT_ALLOWLIST: unapproved differences at $.resource.terraform_data&quot;
+    }
+  },
+  {
+    &quot;name&quot;: &quot;policy-bypass&quot;,
+    &quot;expected&quot;: &quot;REJECT&quot;,
+    &quot;actual&quot;: &quot;REJECT&quot;,
+    &quot;gate&quot;: {
+      &quot;name&quot;: &quot;Generated output allowlist&quot;,
+      &quot;passed&quot;: false,
+      &quot;detail&quot;: &quot;OUTPUT_ALLOWLIST: unapproved differences at $.policy/v1/plan.rego&quot;
+    }
+  },
+  {
+    &quot;name&quot;: &quot;workflow-injection&quot;,
+    &quot;expected&quot;: &quot;REJECT&quot;,
+    &quot;actual&quot;: &quot;REJECT&quot;,
+    &quot;gate&quot;: {
+      &quot;name&quot;: &quot;Generated output allowlist&quot;,
+      &quot;passed&quot;: false,
+      &quot;detail&quot;: &quot;OUTPUT_ALLOWLIST: unapproved differences at $..github/workflows/owned.yml&quot;
+    }
+  },
+  {
+    &quot;name&quot;: &quot;malformed-terraform&quot;,
+    &quot;expected&quot;: &quot;REJECT&quot;,
+    &quot;actual&quot;: &quot;REJECT&quot;,
+    &quot;gate&quot;: {
+      &quot;name&quot;: &quot;Pipeline execution&quot;,
+      &quot;passed&quot;: false,
+      &quot;detail&quot;: &quot;Expected property name or &#39;}&#39; in JSON at position 1 (line 1 column 2)&quot;
+    }
+  },
+  {
+    &quot;name&quot;: &quot;missing-scanner&quot;,
+    &quot;expected&quot;: &quot;REJECT&quot;,
+    &quot;actual&quot;: &quot;REJECT&quot;,
+    &quot;gate&quot;: {
+      &quot;name&quot;: &quot;Tool integrity&quot;,
+      &quot;passed&quot;: false,
+      &quot;detail&quot;: &quot;Exit 1; see gate log&quot;
+    }
+  },
+  {
+    &quot;name&quot;: &quot;tampered-scanner&quot;,
+    &quot;expected&quot;: &quot;REJECT&quot;,
+    &quot;actual&quot;: &quot;REJECT&quot;,
+    &quot;gate&quot;: {
+      &quot;name&quot;: &quot;Tool integrity&quot;,
+      &quot;passed&quot;: false,
+      &quot;detail&quot;: &quot;Exit 1; see gate log&quot;
+    }
+  },
+  {
+    &quot;name&quot;: &quot;public-storage-independent-OPA&quot;,
+    &quot;expected&quot;: &quot;REJECT&quot;,
+    &quot;actual&quot;: &quot;REJECT&quot;,
+    &quot;findings&quot;: [
+      {
+        &quot;address&quot;: &quot;aws_s3_bucket_public_access_block.logs&quot;,
+        &quot;id&quot;: &quot;PUBLIC_STORAGE&quot;,
+        &quot;message&quot;: &quot;All S3 public access controls must be enabled&quot;
+      }
+    ]
+  },
+  {
+    &quot;name&quot;: &quot;admin-ingress-independent-OPA&quot;,
+    &quot;expected&quot;: &quot;REJECT&quot;,
+    &quot;actual&quot;: &quot;REJECT&quot;,
+    &quot;findings&quot;: [
+      {
+        &quot;address&quot;: &quot;aws_security_group.app&quot;,
+        &quot;id&quot;: &quot;ADMIN_INGRESS&quot;,
+        &quot;message&quot;: &quot;Public ingress forbidden&quot;
+      }
+    ]
+  },
+  {
+    &quot;name&quot;: &quot;wildcard-iam-independent-OPA&quot;,
+    &quot;expected&quot;: &quot;REJECT&quot;,
+    &quot;actual&quot;: &quot;REJECT&quot;,
+    &quot;findings&quot;: [
+      {
+        &quot;address&quot;: &quot;aws_iam_role_policy.reader&quot;,
+        &quot;id&quot;: &quot;WILDCARD_IAM&quot;,
+        &quot;message&quot;: &quot;Wildcard IAM grants forbidden&quot;
+      },
+      {
+        &quot;address&quot;: &quot;aws_iam_role_policy.reader&quot;,
+        &quot;id&quot;: &quot;WILDCARD_RESOURCE&quot;,
+        &quot;message&quot;: &quot;IAM global resources forbidden&quot;
+      }
+    ]
+  },
+  {
+    &quot;name&quot;: &quot;missing-encryption-independent-OPA&quot;,
+    &quot;expected&quot;: &quot;REJECT&quot;,
+    &quot;actual&quot;: &quot;REJECT&quot;,
+    &quot;findings&quot;: [
+      {
+        &quot;address&quot;: &quot;aws_s3_bucket.logs&quot;,
+        &quot;id&quot;: &quot;MISSING_ENCRYPTION&quot;,
+        &quot;message&quot;: &quot;Bucket needs an encryption companion&quot;
+      },
+      {
+        &quot;address&quot;: &quot;aws_s3_bucket.storage&quot;,
+        &quot;id&quot;: &quot;MISSING_ENCRYPTION&quot;,
+        &quot;message&quot;: &quot;Bucket needs an encryption companion&quot;
+      }
+    ]
+  }
+]</pre>

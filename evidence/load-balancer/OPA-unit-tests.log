@@ -1,0 +1,8 @@
+/Users/jayekwere/Documents/ChatGPT/Github Portfolio Engineer/repos/ai-validated-iac-pipeline/policy/v1/plan_test.rego:4:
+data.iac.v1_test.test_bad_format: PASS (3.678542ms)
+/Users/jayekwere/Documents/ChatGPT/Github Portfolio Engineer/repos/ai-validated-iac-pipeline/policy/v1/plan_test.rego:5:
+data.iac.v1_test.test_empty: PASS (3.675584ms)
+/Users/jayekwere/Documents/ChatGPT/Github Portfolio Engineer/repos/ai-validated-iac-pipeline/policy/v1/plan_test.rego:6:
+data.iac.v1_test.test_public_bucket: PASS (3.703708ms)
+--------------------------------------------------------------------------------
+PASS: 3/3

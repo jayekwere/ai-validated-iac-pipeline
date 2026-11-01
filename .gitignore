@@ -1,0 +1,11 @@
+.tools/
+node_modules/
+.work/
+coverage/
+.env
+*.tfstate*
+*.tfplan
+__pycache__/
+evidence/terraform/
+Library/
+*.pyc

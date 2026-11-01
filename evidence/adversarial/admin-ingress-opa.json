@@ -1,0 +1,11 @@
+{
+  "allow": false,
+  "findings": [
+    {
+      "address": "aws_security_group.app",
+      "id": "ADMIN_INGRESS",
+      "message": "Public ingress forbidden"
+    }
+  ],
+  "version": "1.0.0"
+}

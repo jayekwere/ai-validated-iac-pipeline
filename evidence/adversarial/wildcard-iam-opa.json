@@ -1,0 +1,16 @@
+{
+  "allow": false,
+  "findings": [
+    {
+      "address": "aws_iam_role_policy.reader",
+      "id": "WILDCARD_IAM",
+      "message": "Wildcard IAM grants forbidden"
+    },
+    {
+      "address": "aws_iam_role_policy.reader",
+      "id": "WILDCARD_RESOURCE",
+      "message": "IAM global resources forbidden"
+    }
+  ],
+  "version": "1.0.0"
+}

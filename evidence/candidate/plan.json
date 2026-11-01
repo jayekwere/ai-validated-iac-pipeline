@@ -1,0 +1,522 @@
+{
+  "plan_format_version": "1.2",
+  "resource_changes": [
+    {
+      "address": "aws_kms_key.main",
+      "mode": "managed",
+      "type": "aws_kms_key",
+      "name": "main",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "bypass_policy_lockout_safety_check": null,
+          "custom_key_store_id": null,
+          "customer_master_key_spec": null,
+          "deletion_window_in_days": 30,
+          "description": "validated-storage encryption",
+          "enable_key_rotation": true,
+          "is_enabled": null,
+          "key_usage": null,
+          "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Sid\":\"AccountKeyAdministration\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::123456789012:root\"},\"Action\":[\"kms:CreateAlias\",\"kms:DescribeKey\",\"kms:EnableKeyRotation\",\"kms:GetKeyPolicy\",\"kms:PutKeyPolicy\",\"kms:ScheduleKeyDeletion\",\"kms:TagResource\",\"kms:Encrypt\",\"kms:Decrypt\",\"kms:GenerateDataKey\"],\"Resource\":\"*\"}]}",
+          "tags": {
+            "Environment": "dev",
+            "ManagedBy": "ai-validated-iac-pipeline"
+          },
+          "timeouts": null,
+          "xks_key_id": null
+        },
+        "after_unknown": {
+          "arn": true,
+          "id": true,
+          "key_id": true,
+          "multi_region": true,
+          "rotation_period_in_days": true,
+          "tags": {},
+          "tags_all": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {
+          "tags": {},
+          "tags_all": {}
+        }
+      }
+    },
+    {
+      "address": "aws_s3_bucket.logs",
+      "mode": "managed",
+      "type": "aws_s3_bucket",
+      "name": "logs",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "bucket": "validated-storage-logs",
+          "cors_rule": [],
+          "force_destroy": false,
+          "grant": [],
+          "lifecycle_rule": [],
+          "logging": [],
+          "object_lock_configuration": [],
+          "replication_configuration": [],
+          "server_side_encryption_configuration": [],
+          "tags": {
+            "Environment": "dev",
+            "ManagedBy": "ai-validated-iac-pipeline"
+          },
+          "timeouts": null,
+          "versioning": [],
+          "website": []
+        },
+        "after_unknown": {
+          "acceleration_status": true,
+          "acl": true,
+          "arn": true,
+          "bucket_domain_name": true,
+          "bucket_prefix": true,
+          "bucket_regional_domain_name": true,
+          "cors_rule": [],
+          "grant": [],
+          "hosted_zone_id": true,
+          "id": true,
+          "lifecycle_rule": [],
+          "logging": [],
+          "object_lock_configuration": [],
+          "object_lock_enabled": true,
+          "policy": true,
+          "region": true,
+          "replication_configuration": [],
+          "request_payer": true,
+          "server_side_encryption_configuration": [],
+          "tags": {},
+          "tags_all": true,
+          "versioning": [],
+          "website": [],
+          "website_domain": true,
+          "website_endpoint": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {
+          "cors_rule": [],
+          "grant": [],
+          "lifecycle_rule": [],
+          "logging": [],
+          "object_lock_configuration": [],
+          "replication_configuration": [],
+          "server_side_encryption_configuration": [],
+          "tags": {},
+          "tags_all": {},
+          "versioning": [],
+          "website": []
+        }
+      }
+    },
+    {
+      "address": "aws_s3_bucket.storage",
+      "mode": "managed",
+      "type": "aws_s3_bucket",
+      "name": "storage",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "bucket": "validated-storage-storage",
+          "cors_rule": [],
+          "force_destroy": false,
+          "grant": [],
+          "lifecycle_rule": [],
+          "logging": [],
+          "object_lock_configuration": [],
+          "replication_configuration": [],
+          "server_side_encryption_configuration": [],
+          "tags": {
+            "Environment": "dev",
+            "ManagedBy": "ai-validated-iac-pipeline"
+          },
+          "timeouts": null,
+          "versioning": [],
+          "website": []
+        },
+        "after_unknown": {
+          "acceleration_status": true,
+          "acl": true,
+          "arn": true,
+          "bucket_domain_name": true,
+          "bucket_prefix": true,
+          "bucket_regional_domain_name": true,
+          "cors_rule": [],
+          "grant": [],
+          "hosted_zone_id": true,
+          "id": true,
+          "lifecycle_rule": [],
+          "logging": [],
+          "object_lock_configuration": [],
+          "object_lock_enabled": true,
+          "policy": true,
+          "region": true,
+          "replication_configuration": [],
+          "request_payer": true,
+          "server_side_encryption_configuration": [],
+          "tags": {},
+          "tags_all": true,
+          "versioning": [],
+          "website": [],
+          "website_domain": true,
+          "website_endpoint": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {
+          "cors_rule": [],
+          "grant": [],
+          "lifecycle_rule": [],
+          "logging": [],
+          "object_lock_configuration": [],
+          "replication_configuration": [],
+          "server_side_encryption_configuration": [],
+          "tags": {},
+          "tags_all": {},
+          "versioning": [],
+          "website": []
+        }
+      }
+    },
+    {
+      "address": "aws_s3_bucket_logging.storage",
+      "mode": "managed",
+      "type": "aws_s3_bucket_logging",
+      "name": "storage",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "expected_bucket_owner": null,
+          "target_grant": [],
+          "target_object_key_format": [],
+          "target_prefix": "storage/"
+        },
+        "after_unknown": {
+          "bucket": true,
+          "id": true,
+          "target_bucket": true,
+          "target_grant": [],
+          "target_object_key_format": []
+        },
+        "before_sensitive": false,
+        "after_sensitive": {
+          "target_grant": [],
+          "target_object_key_format": []
+        }
+      }
+    },
+    {
+      "address": "aws_s3_bucket_policy.logs",
+      "mode": "managed",
+      "type": "aws_s3_bucket_policy",
+      "name": "logs",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {},
+        "after_unknown": {
+          "bucket": true,
+          "id": true,
+          "policy": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "aws_s3_bucket_policy.storage",
+      "mode": "managed",
+      "type": "aws_s3_bucket_policy",
+      "name": "storage",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {},
+        "after_unknown": {
+          "bucket": true,
+          "id": true,
+          "policy": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "aws_s3_bucket_public_access_block.logs",
+      "mode": "managed",
+      "type": "aws_s3_bucket_public_access_block",
+      "name": "logs",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "block_public_acls": true,
+          "block_public_policy": true,
+          "ignore_public_acls": true,
+          "restrict_public_buckets": true
+        },
+        "after_unknown": {
+          "bucket": true,
+          "id": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "aws_s3_bucket_public_access_block.storage",
+      "mode": "managed",
+      "type": "aws_s3_bucket_public_access_block",
+      "name": "storage",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "block_public_acls": true,
+          "block_public_policy": true,
+          "ignore_public_acls": true,
+          "restrict_public_buckets": true
+        },
+        "after_unknown": {
+          "bucket": true,
+          "id": true
+        },
+        "before_sensitive": false,
+        "after_sensitive": {}
+      }
+    },
+    {
+      "address": "aws_s3_bucket_server_side_encryption_configuration.logs",
+      "mode": "managed",
+      "type": "aws_s3_bucket_server_side_encryption_configuration",
+      "name": "logs",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "expected_bucket_owner": null,
+          "rule": [
+            {
+              "apply_server_side_encryption_by_default": [
+                {
+                  "kms_master_key_id": null,
+                  "sse_algorithm": "AES256"
+                }
+              ],
+              "bucket_key_enabled": true
+            }
+          ]
+        },
+        "after_unknown": {
+          "bucket": true,
+          "id": true,
+          "rule": [
+            {
+              "apply_server_side_encryption_by_default": [
+                {}
+              ]
+            }
+          ]
+        },
+        "before_sensitive": false,
+        "after_sensitive": {
+          "rule": [
+            {
+              "apply_server_side_encryption_by_default": [
+                {}
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "address": "aws_s3_bucket_server_side_encryption_configuration.storage",
+      "mode": "managed",
+      "type": "aws_s3_bucket_server_side_encryption_configuration",
+      "name": "storage",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "expected_bucket_owner": null,
+          "rule": [
+            {
+              "apply_server_side_encryption_by_default": [
+                {
+                  "sse_algorithm": "aws:kms"
+                }
+              ],
+              "bucket_key_enabled": true
+            }
+          ]
+        },
+        "after_unknown": {
+          "bucket": true,
+          "id": true,
+          "rule": [
+            {
+              "apply_server_side_encryption_by_default": [
+                {
+                  "kms_master_key_id": true
+                }
+              ]
+            }
+          ]
+        },
+        "before_sensitive": false,
+        "after_sensitive": {
+          "rule": [
+            {
+              "apply_server_side_encryption_by_default": [
+                {}
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "address": "aws_s3_bucket_versioning.logs",
+      "mode": "managed",
+      "type": "aws_s3_bucket_versioning",
+      "name": "logs",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "expected_bucket_owner": null,
+          "mfa": null,
+          "versioning_configuration": [
+            {
+              "status": "Enabled"
+            }
+          ]
+        },
+        "after_unknown": {
+          "bucket": true,
+          "id": true,
+          "versioning_configuration": [
+            {
+              "mfa_delete": true
+            }
+          ]
+        },
+        "before_sensitive": false,
+        "after_sensitive": {
+          "versioning_configuration": [
+            {}
+          ]
+        }
+      }
+    },
+    {
+      "address": "aws_s3_bucket_versioning.storage",
+      "mode": "managed",
+      "type": "aws_s3_bucket_versioning",
+      "name": "storage",
+      "provider_name": "registry.terraform.io/hashicorp/aws",
+      "change": {
+        "actions": [
+          "create"
+        ],
+        "before": null,
+        "after": {
+          "expected_bucket_owner": null,
+          "mfa": null,
+          "versioning_configuration": [
+            {
+              "status": "Enabled"
+            }
+          ]
+        },
+        "after_unknown": {
+          "bucket": true,
+          "id": true,
+          "versioning_configuration": [
+            {
+              "mfa_delete": true
+            }
+          ]
+        },
+        "before_sensitive": false,
+        "after_sensitive": {
+          "versioning_configuration": [
+            {}
+          ]
+        }
+      }
+    }
+  ],
+  "relevant_attributes": [
+    {
+      "resource": "aws_s3_bucket.logs",
+      "attribute": [
+        "arn"
+      ]
+    },
+    {
+      "resource": "aws_kms_key.main",
+      "attribute": [
+        "arn"
+      ]
+    },
+    {
+      "resource": "aws_s3_bucket.storage",
+      "attribute": [
+        "arn"
+      ]
+    },
+    {
+      "resource": "aws_s3_bucket.logs",
+      "attribute": [
+        "id"
+      ]
+    },
+    {
+      "resource": "aws_s3_bucket.storage",
+      "attribute": [
+        "id"
+      ]
+    }
+  ],
+  "provider_format_version": "1.0",
+  "provider_schema_sha256": "1447c9770fca27898ea1c6f0ee76031b53b6ea4f722a282a069822fda3e8baa1",
+  "format_version": "1.2"
+}

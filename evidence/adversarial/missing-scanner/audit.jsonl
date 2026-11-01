@@ -1,0 +1,5 @@
+{"sequence":0,"event":"verification_gate","name":"Specification admission","passed":true,"detail":"Verified","specHash":"24eeeb16b671f3388d57d4e96e3f9f6e74bd510fc6392ffd24a26ecf861cf5b5"}
+{"sequence":1,"event":"verification_gate","name":"Generated output allowlist","passed":true,"detail":"Verified","specHash":"24eeeb16b671f3388d57d4e96e3f9f6e74bd510fc6392ffd24a26ecf861cf5b5"}
+{"sequence":2,"event":"verification_gate","name":"Reproducibility","passed":true,"detail":"Verified","specHash":"24eeeb16b671f3388d57d4e96e3f9f6e74bd510fc6392ffd24a26ecf861cf5b5"}
+{"sequence":3,"event":"verification_gate","name":"Tool integrity","passed":false,"detail":"Exit 1; see gate log","specHash":"24eeeb16b671f3388d57d4e96e3f9f6e74bd510fc6392ffd24a26ecf861cf5b5"}
+{"sequence":4,"event":"verification_gate","name":"Trusted source integrity","passed":true,"detail":"Compare trusted source hashes before and after evaluation","specHash":"24eeeb16b671f3388d57d4e96e3f9f6e74bd510fc6392ffd24a26ecf861cf5b5"}

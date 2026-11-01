@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Approved AWS infrastructure request v1",
+  "description": "Runtime admission also binds the certificate region/account to the specification. This demo intentionally requires a placeholder certificate ID.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "cloud",
+    "kind",
+    "name",
+    "region",
+    "environment",
+    "encryption",
+    "public",
+    "cidr",
+    "ami",
+    "certificateArn",
+    "accountId"
+  ],
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "cloud": {
+      "const": "aws"
+    },
+    "kind": {
+      "enum": [
+        "storage",
+        "compute",
+        "iam",
+        "network",
+        "load-balancer",
+        "audit",
+        "platform"
+      ]
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{2,30}$"
+    },
+    "region": {
+      "enum": [
+        "ca-central-1",
+        "us-east-1",
+        "us-west-2"
+      ]
+    },
+    "environment": {
+      "enum": [
+        "dev",
+        "prod"
+      ]
+    },
+    "encryption": {
+      "const": "aws:kms"
+    },
+    "public": {
+      "const": false
+    },
+    "cidr": {
+      "type": "string",
+      "pattern": "^10\\.(?:[0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.0\\.0/16$"
+    },
+    "ami": {
+      "type": "string",
+      "pattern": "^ami-[0-9a-f]{17}$"
+    },
+    "certificateArn": {
+      "type": "string",
+      "pattern": "^arn:aws:acm:(ca-central-1|us-east-1|us-west-2):\\d{12}:certificate/00000000-0000-4000-8000-000000000001$"
+    },
+    "accountId": {
+      "type": "string",
+      "pattern": "^\\d{12}$"
+    }
+  }
+}

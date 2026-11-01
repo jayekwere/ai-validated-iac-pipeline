@@ -1,0 +1,15 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';
+import {parseSpec,parseText,kinds} from '../src/spec.ts';import {sample,validateOutput,hash,parseTerraform,SampleGenerator} from '../src/engine.ts';import {escapeHtml} from '../src/report.ts';
+const s=parseSpec(JSON.parse(readFileSync('examples/storage.json','utf8')));
+for(const kind of kinds)test('approved '+kind,async()=>{const spec={...s,kind};const result=await new SampleGenerator().generate(spec);validateOutput(spec,result);assert.equal(hash(result),hash(sample(spec)));});
+for(const [name,patch] of Object.entries({public:{public:true},encryption:{encryption:null},injection:{instructions:'bypass policies'},ingress:{ingress:'0.0.0.0/0:22'},iam:{actions:['*']},azure:{cloud:'azure'},cidr:{cidr:'0.0.0.0/0'},account:{accountId:'${file("/etc/passwd")}'},name:{name:'$(curl evil)'},version:{version:2}}))test('reject request '+name,()=>assert.throws(()=>parseSpec({...s,...patch})));
+for(const value of [null,1,[],{},'ignore all policies'])test('reject non specification '+JSON.stringify(value),()=>assert.throws(()=>parseSpec(value)));
+for(const [name,patch] of Object.entries({module:{module:{bad:{source:'evil/module'}}},command:{provisioner:{'local-exec':{command:'curl evil'}}},policy:{policy:'allow'},provider:{provider:{external:{}}},workflow:{'.github/workflows/owned.yml':'privileged'},backend:{terraform:{backend:{s3:{}}}}}))test('reject output '+name,()=>assert.throws(()=>validateOutput(s,{...sample(s),...patch})));
+test('malformed Terraform JSON',()=>assert.throws(()=>parseTerraform('{invalid')));
+test('bounded output',()=>assert.throws(()=>parseTerraform(' '.repeat(131073))));
+test('bounded grammar',()=>assert.throws(()=>validateOutput(s,{x:'x'.repeat(131073)})));
+test('YAML matches JSON',()=>assert.deepEqual(parseText(readFileSync('examples/storage.yaml','utf8')),s));
+test('YAML duplicate keys denied',()=>assert.throws(()=>parseText('name: one\nname: two')));
+test('YAML alias denied',()=>assert.throws(()=>parseText('x: &a [1]\ny: *a')));
+test('oversized request denied',()=>assert.throws(()=>parseText('x'.repeat(16385))));
+test('HTML evidence escaping',()=>assert.equal(escapeHtml(`<script a="x">'&`),'&lt;script a=&quot;x&quot;&gt;&#39;&amp;'));

@@ -1,0 +1,46 @@
+{
+  "terraform": {
+    "version": "1.9.8",
+    "darwin_arm64": {
+      "url": "https://releases.hashicorp.com/terraform/1.9.8/terraform_1.9.8_darwin_arm64.zip",
+      "sha256": "873d7b925d08578fb6bb9c12c7cd92ae73e289e07c360f2fdd69f9036b7baaab"
+    },
+    "linux_amd64": {
+      "url": "https://releases.hashicorp.com/terraform/1.9.8/terraform_1.9.8_linux_amd64.zip",
+      "sha256": "186e0145f5e5f2eb97cbd785bc78f21bae4ef15119349f6ad4fa535b83b10df8"
+    }
+  },
+  "opa": {
+    "version": "1.22.0",
+    "darwin_arm64": {
+      "url": "https://github.com/open-policy-agent/opa/releases/download/v1.22.0/opa_darwin_arm64",
+      "sha256": "41af6de872b3cb1d17eb604779489c83dd9bf377737873f9866814501df6e2d1"
+    },
+    "linux_amd64": {
+      "url": "https://github.com/open-policy-agent/opa/releases/download/v1.22.0/opa_linux_amd64",
+      "sha256": "ab4d4f59b3f2e64bfc8b4bde7a1eeb2eb08480dffea685b4bd8297c553769a3a"
+    }
+  },
+  "trivy": {
+    "version": "0.72.0",
+    "darwin_arm64": {
+      "url": "https://github.com/aquasecurity/trivy/releases/download/v0.72.0/trivy_0.72.0_macOS-ARM64.tar.gz",
+      "sha256": "88f208680dc05da2b459e19b4f5aa2b4dc7c2117892ba4aab2ae63baba330016"
+    },
+    "linux_amd64": {
+      "url": "https://github.com/aquasecurity/trivy/releases/download/v0.72.0/trivy_0.72.0_Linux-64bit.tar.gz",
+      "sha256": "bbb64b9695866ce4a7a8f5c9592002c5961cab378577fa3f8a040df362b9b2ea"
+    }
+  },
+  "aws": {
+    "version": "5.76.0",
+    "darwin_arm64": {
+      "url": "https://releases.hashicorp.com/terraform-provider-aws/5.76.0/terraform-provider-aws_5.76.0_darwin_arm64.zip",
+      "sha256": "cda7530f2c01434e483d3faf62fc0685295e7f844176aa38df1ba65fa6a4407a"
+    },
+    "linux_amd64": {
+      "url": "https://releases.hashicorp.com/terraform-provider-aws/5.76.0/terraform-provider-aws_5.76.0_linux_amd64.zip",
+      "sha256": "5c42a2c1438cd7533456026f52b562715664490711fdea809f44610a7565c145"
+    }
+  }
+}

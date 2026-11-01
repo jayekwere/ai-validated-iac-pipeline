@@ -1,0 +1,19 @@
+{
+  "localStatus": "PASS",
+  "awsExamples": 7,
+  "gatesPerExample": 18,
+  "typescriptTests": 56,
+  "pythonTests": 19,
+  "opaTests": 3,
+  "adversarialDemonstrations": 15,
+  "coverage": {
+    "loadedSourceLinesPercent": 100,
+    "branchesPercent": 91.98,
+    "note": "Coverage includes imported verification modules. CLI entrypoints are exercised separately through end-to-end commands."
+  },
+  "dependencyAudit": "PASS: no npm vulnerabilities",
+  "repositoryScanner": "PASS: no high/critical dependency findings or detected secrets",
+  "ai": "HTTP contract tests only. No paid API calls.",
+  "cloud": "Real provider schemas and supported mock plans. No AWS API verification or provisioning.",
+  "github": "Publication, remote protection setup and hosted Actions verification pending authentication"
+}

@@ -1,0 +1,12 @@
+{
+  "version": "1.0.0",
+  "terraform": "1.9.8",
+  "providers": {
+    "registry.terraform.io/hashicorp/aws": "5.76.0"
+  },
+  "modules": [],
+  "generatedFiles": [
+    "main.tf.json"
+  ],
+  "network": "No data sources, provisioners, backend, imports, remote state, external functions or arbitrary expressions. Only exact compiler expressions accepted."
+}
