@@ -31,13 +31,13 @@ The independent Python scanner (`scripts/scan.py`) uses separate code for overla
 | --- | --- | --- |
 | `PUBLIC_COMPUTE` | An instance whose `associate_public_ip_address` is not explicitly `false` | Unset can assign a public IP in a public subnet |
 | `DISK_ENCRYPTION` | A root block device not explicitly encrypted | Protects data at rest on the instance volume |
-| `IMDS` | Instance metadata without `http_tokens = "required"` | IMDSv2 blocks SSRF-based credential theft |
+| `IMDS` | Instance metadata without `http_tokens = "required"` | IMDSv2 reduces exposure to SSRF-based credential theft |
 
 ## Network
 
 | Rule ID | Denies | Why |
 | --- | --- | --- |
-| `INGRESS_UNKNOWN` | A security group without a known ingress array | An unknown rule set cannot be approved |
+| `INGRESS_UNKNOWN` | A security group without a known ingress array, object entries or string CIDR arrays | An unknown rule set cannot be approved |
 | `ADMIN_INGRESS` | Security group ingress from `0.0.0.0/0` or `::/0` | Open ingress on either address family exposes the port to the internet |
 | `PUBLIC_LB` | A load balancer not explicitly `internal = true` | AWS creates internet-facing load balancers when the flag is unset |
 | `TLS` | A listener not using `HTTPS` | Traffic must be encrypted in transit |
