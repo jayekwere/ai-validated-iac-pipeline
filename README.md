@@ -105,6 +105,8 @@ Four workflows provide specification admission, complete unprivileged PR CI, and
 
 All Actions are pinned to immutable commits. Checkout does not persist credentials. Shell commands do not interpolate event data; controlled inputs pass through environment variables and strict validation. Untrusted PR tests have read-only permissions and no repository secrets. A separate trusted-base workflow verifies generated data without executing candidate code.
 
+The active main ruleset has no bypass actors and pins required status checks to GitHub Actions. The runtime boundary check reads effective active rules using metadata read access. Mark generated draft PRs ready for review to start required validation, since GITHUB_TOKEN-created events do not themselves trigger Actions.
+
 Before enabling publication, configure the protected `ai-generation` and `pr-publication` environments with required reviewers and disallow self-review. Protect `main` with required status checks, code owner review, one approving review, stale approval dismissal and administrator enforcement. The boundary checker fails closed if those controls are absent. Setup and publication instructions are in [docs/publication.md](docs/publication.md).
 
 ## Evidence and reproducibility
