@@ -11,7 +11,7 @@ The independent Python scanner (`scripts/scan.py`) uses separate code for overla
 | Rule ID | Denies | Why |
 | --- | --- | --- |
 | `PLAN_FORMAT` | Input without a `resource_changes` array | Anything else is not a Terraform plan and cannot be evaluated |
-| `UNKNOWN_VALUES` | A resource change with no known planned values | Unknown values cannot be checked, so they cannot be approved |
+| `UNKNOWN_VALUES` | A resource change whose `change.after` is absent or not an object | Unknown values cannot be checked, so they cannot be approved |
 | `PROVIDER` | Any provider other than `hashicorp/aws` | Keeps generated code inside the reviewed provider surface |
 | `MODULE` | Any resource address under `module.` | Modules pull in code the policy has not reviewed |
 

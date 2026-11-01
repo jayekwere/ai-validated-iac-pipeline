@@ -1,5 +1,7 @@
 # Hosted publication evidence
 
+The run records below describe baseline verification before the six-change policy review. The [current rule catalog](policy-rules.md) documents the revised policies, including paired coverage for all 22 finding IDs and expiring scanner exceptions. Inspect [main verification runs](https://github.com/jayekwere/ai-validated-iac-pipeline/actions/workflows/ci.yml?query=branch%3Amain) and their commit hashes for the revised policy evidence; baseline results are not substituted for new verification.
+
 Published publicly on 2026-11-01 as `jayekwere/ai-validated-iac-pipeline`. GitHub authentication is valid; the earlier apparent authentication failure was caused by restricted network access.
 
 Baseline source commit: `06a71a029cb31e63b5d276f0b8f6e0f94a0f024a`.
