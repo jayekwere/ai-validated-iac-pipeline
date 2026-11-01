@@ -2,9 +2,9 @@
 
 `policy/v1/plan.rego` evaluates the Terraform plan JSON after the generator has finished. It has no knowledge of the specification or the AI response; it sees only the planned resources. Any finding sets `decision.allow` to `false` and blocks the candidate.
 
-Every rule fails closed: a missing or unknown attribute is treated as non-compliant, never as a pass. Each rule has a violating and a compliant case in `policy/v1/rules_test.rego`, and bypass regressions live in `policy/v1/plan_test.rego`. Run them with `.tools/opa test policy/v1 -v`.
+Security attributes covered by these rules must be known and compliant. The rule tests cover both compliant and violating inputs, with malformed IAM documents and unknown ingress rejected explicitly. This catalog is not a claim of live AWS deployability or exhaustive Terraform plan validation. Each rule has a violating and a compliant case in `policy/v1/rules_test.rego`, and bypass regressions live in `policy/v1/plan_test.rego`. Run them with `.tools/opa test policy/v1 -v`.
 
-The independent Python scanner (`scripts/scan.py`) enforces the same intent with separate code, so a defect in one gate is not shared by the other.
+The independent Python scanner (`scripts/scan.py`) uses separate code for overlapping security checks. Its checks complement OPA; they are not a one-to-one implementation of this catalog. Both gates must pass.
 
 ## Plan integrity
 
@@ -37,6 +37,7 @@ The independent Python scanner (`scripts/scan.py`) enforces the same intent with
 
 | Rule ID | Denies | Why |
 | --- | --- | --- |
+| `INGRESS_UNKNOWN` | A security group without a known ingress array | An unknown rule set cannot be approved |
 | `ADMIN_INGRESS` | Security group ingress from `0.0.0.0/0` or `::/0` | Open ingress on either address family exposes the port to the internet |
 | `PUBLIC_LB` | A load balancer not explicitly `internal = true` | AWS creates internet-facing load balancers when the flag is unset |
 | `TLS` | A listener not using `HTTPS` | Traffic must be encrypted in transit |
@@ -45,6 +46,7 @@ The independent Python scanner (`scripts/scan.py`) enforces the same intent with
 
 | Rule ID | Denies | Why |
 | --- | --- | --- |
+| `IAM_DOCUMENT` | Malformed JSON, missing or invalid statement structure, effects, actions or resources | An invalid document must not pass through undefined rule evaluation |
 | `UNKNOWN_IAM` | A role policy whose document is not known at plan time | An unknown document cannot be checked for privilege |
 | `WILDCARD_IAM` | An Allow statement with `*` in any action | Wildcard actions grant more than the workload needs |
 | `WILDCARD_RESOURCE` | An Allow statement with `Resource = "*"` | Grants must name the resources they apply to |
@@ -61,7 +63,7 @@ The independent Python scanner (`scripts/scan.py`) enforces the same intent with
 ## Adding a rule
 
 1. Add the rule to `policy/v1/plan.rego`, reading attributes with `object.get` and a `null` default so a missing value is denied.
-2. Add `test_<rule>_denied` and `test_<rule>_allowed` to `policy/v1/rules_test.rego`.
+2. Add `test_<rule>_denied` and `test_<rule>_allowed` to `policy/v1/rules_test.rego`. Run `python3 scripts/check_policy_coverage.py` to detect omissions, then execute the tests using OPA.
 3. Add the equivalent check to `scripts/scan.py` and a case to `test/test_scan.py`.
 4. Confirm every compliant `evidence/*/plan.json` still produces no findings.
 5. Add a row to this catalog.
