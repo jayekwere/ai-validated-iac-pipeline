@@ -1,6 +1,6 @@
 # Publication and protected review
 
-The repository is now public and baseline hosted CI passed. See [the publication record](hosted-publication.md) for exact runs and the solo-maintainer manual approval flow. The instructions below also describe setup for a fresh copy.
+The repository is public, and the full hosted generation and publication flow passed with explicit solo-maintainer approvals. See [the publication record](hosted-publication.md) for exact runs and the solo-maintainer manual approval flow. The instructions below also describe setup for a fresh copy.
 
 The local implementation can be verified without GitHub authentication. Publication, repository settings, environment protection, hosted Actions runs and actual PR URLs require authenticated access to `jayekwere/ai-validated-iac-pipeline`.
 
