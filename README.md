@@ -114,3 +114,7 @@ The solo maintainer approves manually through `maintainer-approval`, `ai-generat
 The report includes SHA-256 hashes of the normalized specification and Terraform plus every trusted source file, policy, tool lock and dependency lock. Hash equality is tested independently of object key order. Tool installation uses verified release archives, the AWS provider lock includes both supported platform hashes, and provider installation has no direct network fallback. Plan timestamps and tool logs vary between runs; the specification and generated source hashes remain reproducible. Audit JSONL is a sequence of decisions with specification hashes, not a tamper-proof external audit service.
 
 See [SECURITY.md](SECURITY.md) for the threat boundary and [docs/verification.md](docs/verification.md) for the local acceptance procedure. This repository contains no deployment authority.
+
+---
+
+**AI assistance:** AI tools helped with code or documentation.
